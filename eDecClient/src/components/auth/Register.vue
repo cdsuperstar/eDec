@@ -102,7 +102,7 @@
                        :disabled="errors.any()"
                        :label="$t('auth.register')">
                 </q-btn>
-              <q-btn color="secondary" v-go-back=" '/' ">{{$t('common.cancel')}}</q-btn>
+              <q-btn color="secondary" @click="$router.go('/')">{{$t('common.cancel')}}</q-btn>
             </div>
 
         </form>
@@ -115,7 +115,6 @@
 <script>
 // require(`https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit&hl=es`);
 import { mapState, mapActions, mapGetters } from 'vuex'
-import { GoBack } from 'quasar'
 export default {
   name: 'register',
   $_veeValidate: {
@@ -141,9 +140,6 @@ export default {
         this.showRegister(value)
       }
     }
-  },
-  directive: {
-    GoBack
   },
   watch: {
     lang (value) {

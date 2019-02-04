@@ -64,7 +64,7 @@ const routes = [
       }
     ],
     beforeEnter (to, from, next) {
-      AuthManager.optionalAuth(to, from, next)
+      // AuthManager.optionalAuth(to, from, next)
     }
   },
   {
