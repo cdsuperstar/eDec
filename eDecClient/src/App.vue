@@ -1,4 +1,5 @@
 <template>
+  <div id="q-app">
   <q-layout view="hHh Lpr lFf">
 
     <q-layout-header>
@@ -10,6 +11,7 @@
     </q-page-container>
     <router-view name="app-footer"></router-view>
   </q-layout>
+  </div>
 </template>
 
 <script>
