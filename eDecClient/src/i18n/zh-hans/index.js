@@ -2,6 +2,9 @@
 // so you can safely delete all default props below
 
 export default {
+  common: {
+    cancel: '取消'
+  },
   toolbar: {
     name: '导航',
     login: '登录',

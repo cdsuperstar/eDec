@@ -40,6 +40,7 @@
                             :disabled="errors.any()"
                             :label="$t('auth.submit')">
                     </q-btn>
+                    <q-btn color="secondary" v-go-back=" '/' ">{{$t('common.cancel')}}</q-btn>
                 </div>
 
             </form>
@@ -51,6 +52,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { GoBack } from 'quasar'
 export default {
   name: 'login',
   $_veeValidate: {
@@ -82,6 +84,7 @@ export default {
       }
     }
   },
+  directives: { GoBack },
   methods: {
     ...mapActions('auth', [
       'showLogin',
