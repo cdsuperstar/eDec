@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lff">
     <q-layout-header>
       <q-toolbar
         color="primary"
@@ -17,9 +17,11 @@
         </q-btn>
 
         <q-toolbar-title>
-          Quasar App
-          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+          {{ $t('toolbar.name') }}
         </q-toolbar-title>
+        <lang-manager></lang-manager>
+        <login></login>
+        <register></register>
       </q-toolbar>
     </q-layout-header>
 
@@ -57,26 +59,46 @@
     </q-layout-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view></router-view>
     </q-page-container>
+    <router-view name="app-footer"></router-view>
   </q-layout>
 </template>
 
 <script>
-import { openURL } from 'quasar'
+import { mapActions, mapState } from 'vuex'
+import LangManager from '../components/common/LangManager'
+import Login from '../components/auth/Login'
+import Register from '../components/auth/Register'
 
 export default {
   name: 'MyLayout',
+  components: {
+    Register,
+    LangManager,
+    Login
+    // Register
+  },
+  watch: {
+    auth (value) {
+      if (value) {
+        this.getUserInfo()
+      }
+    }
+  },
+  computed: {
+    ...mapState('auth', ['auth'])
+  },
+  methods: {
+    ...mapActions('auth', ['getUserInfo'])
+  },
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop
     }
-  },
-  methods: {
-    openURL
   }
 }
 </script>
 
-<style>
+<style scoped>
 </style>

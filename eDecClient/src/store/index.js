@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import example from './module-example'
-
+import lang from './lang'
+import auth from './auth'
 Vue.use(Vuex)
 
 /*
@@ -13,7 +13,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      example
+      lang,
+      auth
     }
   })
 
