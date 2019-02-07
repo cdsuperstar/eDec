@@ -21,13 +21,12 @@
 Route::get('/', function () {
     return response()->json([
         'copyright' => 'xxx',
-        'author' => 'Emanuel Chablé Concepción',
-        'email' => 'manfred@manfred047.com',
-        'website' => 'https://manfred047.com',
-        'github' => 'https://github.com/Manfred047'
+        'author' => 'lucifer',
+        'email' => '181977814@qq.com',
+        'website' => 'website',
+        'github' => 'cdsuperstar'
     ]);
 });
-
 Route::name('api.')
     ->prefix('/v1')
     ->middleware(['client.oauth', 'auth:api'])

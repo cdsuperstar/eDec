@@ -54,117 +54,117 @@
     </q-modal>
 </template>
 
-
 <script>
-    import {mapActions, mapState} from 'vuex';
+import { mapActions, mapState } from 'vuex'
 
-    export default {
-        name: 'login',
-        $_veeValidate: {
-            validator: 'new'
-        },
-        computed: {
-            ...mapState('auth', ['show_login']),
-            show: {
-                get() {
-                    if (!this.show_login) {
-                        this.clean();
-                    }
-                    return this.show_login;
-                },
-                set(value) {
-                    this.showLogin(value);
-                }
-            }
-        },
-        watch: {
-            "form.username"(val) {
-                if (this.errors.firstByRule('password', 'auth')) {
-                    this.errors.remove('password');
-                }
-            },
-            "form.password"(val) {
-                if (this.errors.firstByRule('username', 'auth')) {
-                    this.errors.remove('username');
-                }
-            }
-        },
-        methods: {
-            ...mapActions('auth', [
-                'showLogin',
-                'setAuthStatus',
-                'reloadAuthStatus'
-            ]),
-            validateForm() {
-                this.$validator.validateAll()
-                    .then((result) => {
-                        if (result) {
-                            this.login();
-                            return false;
-                        }
-                    }).catch(() => {
-                });
-            },
-            login() {
-                this.reloadAuthStatus();
-                this.loader = true;
-                this.$axios({
-                    method: 'post',
-                    url: this.$master.api('/oauth/token'),
-                    data: this.form
-                }).then((response) => {
-                    this.setAuthStatus(true);
-                    this.show = false;
-                    this.$q.notify({
-                        message: this.$t('login.success_login'),
-                        type: 'positive'
-                    });
-                }).catch((errors) => {
-                    let list = this.$master.hasErrors(errors);
-                    if (list) {
-                        let message = this.$master.getValue(errors, ['response', 'data', 'message']);
-                        let type = message;
-                        for (const key of Object.keys(list)) {
-                            if (list.hasOwnProperty(key)) {
-                                type = ((message === 'invalid_credentials') ? 'auth' : key);
-                                this.errors.add({
-                                    field: key,
-                                    msg: list[key][0],
-                                    rule: type
-                                });
-                            }
-                        }
-                    }
-                }).finally(() => {
-                    this.loader = false;
-                });
-            },
-            clean() {
-                this.form = {
-                    username: null,
-                    password: null,
-                    grant_type: 'password'
-                };
-                setTimeout(() => {
-                    this.errors.clear();
-                }, 100);
-            }
-        },
-        data() {
-            return {
-                loader: false,
-                form: {
-                    username: null,
-                    password: null,
-                    grant_type: 'password'
-                },
-                form_rules: {
-                    username: 'required|max:50',
-                    password: 'required|min:8'
-                }
-            }
+export default {
+  name: 'login',
+  $_veeValidate: {
+    validator: 'new'
+  },
+  computed: {
+    ...mapState('auth', ['show_login']),
+    show: {
+      get () {
+        if (!this.show_login) {
+          this.clean()
         }
+        return this.show_login
+      },
+      set (value) {
+        this.showLogin(value)
+      }
     }
+  },
+  watch: {
+    'form.username' (val) {
+      if (this.errors.firstByRule('password', 'auth')) {
+        this.errors.remove('password')
+      }
+    },
+    'form.password' (val) {
+      if (this.errors.firstByRule('username', 'auth')) {
+        this.errors.remove('username')
+      }
+    }
+  },
+  methods: {
+    ...mapActions('auth', [
+      'showLogin',
+      'setAuthStatus',
+      'reloadAuthStatus'
+    ]),
+    validateForm () {
+      this.$validator.validateAll()
+        .then((result) => {
+          if (result) {
+            this.login()
+            return false
+          }
+        }).catch(() => {
+        })
+    },
+    login () {
+      this.reloadAuthStatus()
+      this.loader = true
+      console.log(this.$master.api('/oauth/token'))
+      this.$axios({
+        method: 'post',
+        url: this.$master.api('/oauth/token'),
+        data: this.form
+      }).then((response) => {
+        this.setAuthStatus(true)
+        this.show = false
+        this.$q.notify({
+          message: this.$t('login.success_login'),
+          type: 'positive'
+        })
+      }).catch((errors) => {
+        let list = this.$master.hasErrors(errors)
+        if (list) {
+          let message = this.$master.getValue(errors, ['response', 'data', 'message'])
+          let type = message
+          for (const key of Object.keys(list)) {
+            if (list.hasOwnProperty(key)) {
+              type = ((message === 'invalid_credentials') ? 'auth' : key)
+              this.errors.add({
+                field: key,
+                msg: list[key][0],
+                rule: type
+              })
+            }
+          }
+        }
+      }).finally(() => {
+        this.loader = false
+      })
+    },
+    clean () {
+      this.form = {
+        username: null,
+        password: null,
+        grant_type: 'password'
+      }
+      setTimeout(() => {
+        this.errors.clear()
+      }, 100)
+    }
+  },
+  data () {
+    return {
+      loader: false,
+      form: {
+        username: null,
+        password: null,
+        grant_type: 'password'
+      },
+      form_rules: {
+        username: 'required|max:50',
+        password: 'required|min:8'
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>

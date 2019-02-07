@@ -22,7 +22,8 @@
             </q-btn>
             <q-btn v-else
                    flat dense
-                   :label="userInfo.username">
+                   label="我的管理">
+                   <!--:label="userInfo.username">-->
             </q-btn>
             <q-btn v-if="!isAuth"
                    flat

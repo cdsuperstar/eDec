@@ -22,7 +22,7 @@
             <q-btn v-else
                    flat
                    dense
-                   :label="userInfo.username"
+                   label="我的管理"
                    @click="$router.replace({name: 'user.index'})">
             </q-btn>
             <q-btn v-if="!isAuth"
@@ -45,9 +45,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Login from '../../auth/Login'
 import Register from '../../auth/Register'
-import { mapActions, mapGetters } from 'vuex'
 import LangManager from '../LangManager'
 export default {
   name: 'welcome-toolbar',

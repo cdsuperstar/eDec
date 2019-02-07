@@ -1,12 +1,12 @@
 <template>
     <q-page>
-        <h1>{{ $t('welcome.greetings') }}</h1>
+        <h1>我的供应商</h1>
     </q-page>
 </template>
 
 <script>
 export default {
-  name: 'welcome'
+  name: 'my-vendor'
 }
 </script>
 
