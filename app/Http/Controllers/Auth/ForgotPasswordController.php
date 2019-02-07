@@ -1,32 +1,55 @@
 <?php
+/**
+ * @copyright 2018 Manfred047
+ * @author Emanuel Chablé Concepción <manfred@manfred047.com>
+ * @version 1.0.0
+ * @website: https://manfred047.com
+ * @github https://github.com/Manfred047
+ */
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Http\Requests\RecoveryRequest;
+use App\Library\Master;
+use App\Mail\Recovery;
+use App\PasswordReset;
+use App\User;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset emails and
-    | includes a trait which assists in sending these notifications from
-    | your application to your users. Feel free to explore this trait.
-    |
-    */
-
-    use SendsPasswordResetEmails;
 
     /**
-     * Create a new controller instance.
+     * Send recovery email
      *
-     * @return void
+     * @param RecoveryRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function __construct()
+    public function store(RecoveryRequest $request)
     {
-        $this->middleware('guest');
+        // Get user data
+        $user = User::where('email', $request->get('email'))
+            ->firstOrFail();
+        // Generate secure token
+        $token = str_random(20);
+        // Store recovery info
+        $reset = new PasswordReset();
+        $reset->email = $user->email;
+        $reset->user_id = $user->id;
+        $reset->token = $token;
+        $reset->saveOrFail();
+        // Send email
+        $data = (object) [
+            'username' => $user->username,
+            'email' => $user->email,
+            'token' => $token
+        ];
+        Mail::to($user->email)
+            ->send(new Recovery($data));
+        // Response
+        return Master::success();
     }
+
 }

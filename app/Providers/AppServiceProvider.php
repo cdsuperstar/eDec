@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Library\Master;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Carbon::setLocale(config('app.locale'));
+
+        Passport::tokensExpireIn(Master::PassportTokenLifetime());
+
+        Passport::refreshTokensExpireIn(Master::PassportRefreshTokenLifetime());
+
+        Schema::defaultStringLength(191);
     }
 
     /**

@@ -1,56 +1,54 @@
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require("./bootstrap");
-
-window.Vue = require("vue");
+import Vue from 'vue'
+// Vue.config.devtools = true
 
 /**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ * Vue JS Plugins (Custom)
  */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-//Vue.component("example-component", require("./components/ExampleComponent.vue").default);
+import './plugins/plugins'
 
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * Vue JS Directives
  */
-require("quasar-framework/dist/quasar.ios.styl");
+import './directives/directives'
 
-//import Quasar from "quasar-framework";
-//import Vue from 'vue'
+/**
+ * Vue JS Filters
+ */
+import './filters/filters'
+/**
+ * Vue Components
+ */
+import './components/components'
+/**
+ * Router an Vuex
+ */
+import { router } from './routes/router'
+import { store } from './store/store'
+import { i18n } from './lang/i18n'
 
+/**
+ * Master App
+ */
+import App from './components/App'
 
-import Quasar from "quasar-framework/dist/quasar.ios.esm.js";
+import { mapActions, mapGetters } from 'vuex'
 
-Vue.use(Quasar);
+export const bus = new Vue()
 
-
-import VueRouter from 'vue-router'
-//import VueRouter from 'vue-router/dist/vue-router.common.js'
-Vue.use(VueRouter)
-
-import App from './components/App.vue'
-//Vue.component('App', App);
-
-Vue.component('VueRouter','vue-router/dist/vue-router.esm.js');
-const app = new Vue(
-    {
-        el: '#app',
-        components: {
-          App
-        }
-    }
-);
+const app = new Vue({
+  el: '#app',
+  router,
+  store,
+  i18n,
+  render: h => h(App),
+  created () {
+    this.setLanguage(this.langCookie)
+  },
+  methods: {
+    ...mapActions('lang', ['setLanguage'])
+  },
+  computed: {
+    ...mapGetters('lang', ['langCookie'])
+  }
+})
