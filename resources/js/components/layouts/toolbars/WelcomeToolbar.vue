@@ -10,7 +10,7 @@
             <lang-manager></lang-manager>
             <q-btn flat
                    dense
-                   label="See 404"
+                   label="测试404"
                    @click="$router.replace({name: 'e404'})">
             </q-btn>
             <q-btn v-if="!isAuth"
@@ -34,7 +34,7 @@
             <q-btn v-else
                    flat
                    dense
-                   label="Sign out"
+                   :label="$t('login.logout')"
                    @click="logout()">
             </q-btn>
         </q-toolbar>

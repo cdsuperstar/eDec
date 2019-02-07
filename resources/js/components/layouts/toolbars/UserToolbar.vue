@@ -11,13 +11,13 @@
             <lang-manager></lang-manager>
             <q-btn flat
                    dense
-                   label="Go to Welcome"
+                   label="转去欢迎"
                    @click="$router.replace({name: 'public.index'})">
             </q-btn>
             <q-btn v-if="!isAuth"
                    flat
                    dense
-                   label="Log in"
+                   :label="$t('login.login')"
                    @click="showLogin(true)">
             </q-btn>
             <q-btn v-else
@@ -33,7 +33,7 @@
             <q-btn v-else
                    flat
                    dense
-                   label="Sign out"
+                   :label="$t('login.logout')"
                    @click="logout()">
             </q-btn>
         </q-toolbar>
