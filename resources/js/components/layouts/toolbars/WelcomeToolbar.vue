@@ -1,20 +1,32 @@
 <template>
     <div>
-        <q-toolbar         color="primary"
-                           :glossy="$q.theme === 'mat'"
-                           :inverted="$q.theme === 'ios'"
->
+        <q-toolbar color="primary"
+                   class="row items-start"
+                   :glossy="$q.theme === 'mat'"
+                   :inverted="$q.theme === 'ios'"
+        >
             <q-toolbar-title>
-                <span>欢迎！</span>
+                <!--<span>欢迎！</span>-->
             </q-toolbar-title>
-            <lang-manager></lang-manager>
+            <!--<lang-manager></lang-manager>-->
             <q-btn flat
                    dense
-                   label="测试404"
-                   @click="$router.replace({name: 'e404'})">
+                   label="主材"
+                   class="col"
+                   icon="shopping_cart"
+                   @click="$router.push('/products')">
+            </q-btn>
+            <q-btn flat
+                   dense
+                   class="col"
+                   label="装修套餐"
+                   icon="card_giftcard"
+                   @click="$router.push('/packages')">
             </q-btn>
             <q-btn v-if="!isAuth"
                    flat
+                   class="col"
+                   icon="vpn_key"
                    dense
                    :label="$t('login.title')"
                    @click="showLogin(true)">
@@ -22,17 +34,23 @@
             <q-btn v-else
                    flat
                    dense
+                   class="col"
+                   icon="extension"
                    label="我的管理"
                    @click="$router.replace({name: 'user.index'})">
             </q-btn>
             <q-btn v-if="!isAuth"
                    flat
                    dense
+                   icon="assignment_ind"
+                   class="col"
                    :label="$t('register.title')"
                    @click="showRegister(true)">
             </q-btn>
             <q-btn v-else
                    flat
+                   icon="exit_to_app"
+                   class="col"
                    dense
                    :label="$t('login.logout')"
                    @click="logout()">
@@ -49,6 +67,7 @@ import { mapActions, mapGetters } from 'vuex'
 import Login from '../../auth/Login'
 import Register from '../../auth/Register'
 import LangManager from '../LangManager'
+
 export default {
   name: 'welcome-toolbar',
   components: {

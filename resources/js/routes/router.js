@@ -17,6 +17,16 @@ const router = new VueRouter({
           path: '/',
           name: 'public.index',
           component: All.Welcome
+        },
+        {
+          path: 'products',
+          name: 'public.products',
+          component: All.Products
+        },
+        {
+          path: 'packages',
+          name: 'public.packages',
+          component: All.Packages
         }
       ],
       beforeEnter (to, from, next) {

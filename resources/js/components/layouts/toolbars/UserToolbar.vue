@@ -8,10 +8,11 @@
             <q-toolbar-title>
                 <span>功能导航</span>
             </q-toolbar-title>
-            <lang-manager></lang-manager>
+            <!--<lang-manager></lang-manager>-->
             <q-btn flat
                    dense
-                   label="转去欢迎"
+                   icon="home"
+                   label="主界面"
                    @click="$router.replace({name: 'public.index'})">
             </q-btn>
             <q-btn v-if="!isAuth"
@@ -20,20 +21,21 @@
                    :label="$t('login.login')"
                    @click="showLogin(true)">
             </q-btn>
-            <q-btn v-else
-                   flat dense
-                   label="我的管理">
+            <!--<q-btn v-else-->
+                   <!--flat dense-->
+                   <!--label="菜单">-->
                    <!--:label="userInfo.username">-->
-            </q-btn>
+            <!--</q-btn>-->
             <q-btn v-if="!isAuth"
                    flat
                    dense
-                   label="Sign in"
+                   label="登录"
                    @click="showRegister(true)">
             </q-btn>
             <q-btn v-else
                    flat
                    dense
+                   icon="exit_to_app"
                    :label="$t('login.logout')"
                    @click="logout()">
             </q-btn>

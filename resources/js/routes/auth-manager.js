@@ -17,7 +17,7 @@ export const AuthManager = {
     }).catch((error) => {
       router.app.$store.dispatch('auth/setAuthStatus', false)
       router.app.$store.dispatch('auth/reloadAuthStatus')
-      throw 422
+      throw error.code
     })
   },
   forceAuth (to, from, next) {

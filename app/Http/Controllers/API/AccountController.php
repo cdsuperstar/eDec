@@ -15,6 +15,11 @@ class AccountController extends Controller
     public function index()
     {
         //
+        $info = [
+            'data' => "there's a story tobe told."
+        ];
+        dump($info);
+        return response()->json($info);
     }
 
     /**

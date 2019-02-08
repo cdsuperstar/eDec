@@ -1,12 +1,12 @@
 <template>
     <q-page>
-        <h1>欢迎啊，队长！ </h1>
+        <h1>装修套餐</h1>
     </q-page>
 </template>
 
 <script>
 export default {
-  name: 'welcome'
+  name: 'packages'
 }
 </script>
 

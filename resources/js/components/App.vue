@@ -1,6 +1,6 @@
 <template>
     <div>
-    <q-layout view="lHh Lpr fff">
+    <q-layout view="lHh Lpr lFf">
         <q-layout-header>
             <router-view name="top-menu"></router-view>
         </q-layout-header>

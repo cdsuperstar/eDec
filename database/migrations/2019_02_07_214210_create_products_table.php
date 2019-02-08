@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->string('avatar7', 100);
             $table->string('avatar8', 100);
             $table->string('avatar9', 100);
+            $table->float('price', 10, 2);
             $table->text('memo')->nullable();
 
             $table->timestamps();

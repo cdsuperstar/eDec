@@ -36,3 +36,17 @@ Route::name('api.')
             ->only('index');
 
     });
+
+Route::name('api.business.')
+    ->namespace('API')
+    ->prefix('/v1')
+    ->group(function () {
+        // Controllers Within The "App\Http\Controllers\Admin" Namespace
+        Route::apiResource('/companys','CompanyController');
+        Route::apiResource('/vendors','VendorController');
+        Route::apiResource('/cavatars','CavatarController');
+        Route::apiResource('/vavatars','VavatarController');
+        Route::apiResource('/products','ProductController');
+        Route::apiResource('/packages','PackageController');
+        Route::apiResource('/accounts','AccountController');
+    });
