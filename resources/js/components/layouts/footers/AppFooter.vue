@@ -29,8 +29,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
     a {
         text-decoration: none;
     }
+    .animate-blink
+        animation q-blink 2s steps(5, start) infinite /* rtl:ignore */
 </style>
