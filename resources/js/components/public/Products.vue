@@ -1,6 +1,6 @@
 <template>
     <q-page class="card-examples row items-start">
-        <q-card inline class="q-ma-sm" v-for="n in 10">
+        <q-card inline class="q-ma-sm" v-for="n in 30">
             <q-card-media>
                 <img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=e8f4de87612762d09433acedc185639f/95eef01f3a292df5a1e6cdb1be315c6034a87368.jpg">
             </q-card-media>
@@ -34,7 +34,7 @@
                         </q-item-side>
                         <q-item-main>
                             <q-item-tile label>打折劵</q-item-tile>
-                            <q-item-tile sublabel>满1000元9折劵X10 满5000元8折劵 满10000元7折劵</q-item-tile>
+                            <q-item-tile sublabel>满1000元9折劵 满5000元8折劵 满10000元7折劵</q-item-tile>
                         </q-item-main>
                     </q-item>
                 </q-list>
