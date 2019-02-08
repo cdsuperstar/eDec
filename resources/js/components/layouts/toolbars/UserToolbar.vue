@@ -50,13 +50,13 @@
 import Login from '../../auth/Login'
 import Register from '../../auth/Register'
 import { mapActions, mapGetters } from 'vuex'
-import LangManager from '../LangManager'
+// import LangManager from '../LangManager'
 import Drawer from '../../layouts/master-layouts/Drawer'
 
 export default {
   name: 'user-toolbar',
   components: {
-    LangManager,
+    // LangManager,
     Login,
     Register,
     Drawer

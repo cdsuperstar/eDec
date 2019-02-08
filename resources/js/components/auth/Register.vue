@@ -1,5 +1,5 @@
 <template>
-    <q-modal v-model="show">
+    <q-modal v-model="show" position="top">
         <form class="layout-padding" @submit.prevent="validateForm">
             <q-field
                 class="q-mb-md"
@@ -105,7 +105,7 @@
                 <q-btn
                     color="secondary"
                     v-close-overlay
-                    label="Close"
+                    label="关闭"
                 />
             </div>
 
@@ -119,7 +119,7 @@
 <script>
 // require(`https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit&hl=es`);
 import { mapState, mapActions, mapGetters } from 'vuex'
-import VueRecaptcha from 'vue-recaptcha'
+// import VueRecaptcha from 'vue-recaptcha'
 
 export default {
   name: 'register',

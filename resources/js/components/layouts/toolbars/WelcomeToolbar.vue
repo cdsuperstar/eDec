@@ -14,14 +14,15 @@
                    label="主材"
                    class="col"
                    icon="shopping_cart"
-                   @click="$router.push('/products')">
+                   to="/products"
+                   >
             </q-btn>
             <q-btn flat
                    dense
                    class="col"
                    label="装修套餐"
                    icon="card_giftcard"
-                   @click="$router.push('/packages')">
+                   to="/packages">
             </q-btn>
             <q-btn v-if="!isAuth"
                    flat
@@ -66,12 +67,12 @@
 import { mapActions, mapGetters } from 'vuex'
 import Login from '../../auth/Login'
 import Register from '../../auth/Register'
-import LangManager from '../LangManager'
+// import LangManager from '../LangManager'
 
 export default {
   name: 'welcome-toolbar',
   components: {
-    LangManager,
+    // LangManager,
     Login,
     Register
   },

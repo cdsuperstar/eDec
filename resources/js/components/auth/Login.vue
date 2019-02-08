@@ -1,5 +1,5 @@
 <template>
-    <q-modal v-model="show">
+    <q-modal v-model="show" position="top">
         <form class="layout-padding" @submit.prevent="validateForm">
             <q-field
                 class="q-mb-md"
@@ -43,7 +43,7 @@
                 <q-btn
                     color="secondary"
                     v-close-overlay
-                    label="Close"
+                    label="关闭"
                 />
             </div>
 
