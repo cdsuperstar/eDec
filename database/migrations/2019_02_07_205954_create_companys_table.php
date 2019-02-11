@@ -24,7 +24,9 @@ class CreateCompanysTable extends Migration
             $table->string('owner',50);
             $table->string('tel',15)->nullable();
             $table->string('phone',15)->nullable();
+            //介绍
             $table->text('memo')->nullable();
+            //工艺流程介绍
             $table->text('aomemo')->nullable();
 
             $table->string('stat',10)->default('申请中。。。');

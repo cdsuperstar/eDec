@@ -46,6 +46,15 @@ Route::name('api.business.')
         Route::get('getMyaccount', 'API\AccountController@getMyAccount')->name('getallAccounts');
         Route::post('updateAccount','API\AccountController@updateUserAccount')->name('updateUserAccount');
 
+        Route::prefix('/company')->group(function(){
+            Route::post('apply','API\CompanyController@apply')->name('companyApply');
+            Route::get('mine','API\CompanyController@mine')->name('companyMine');
+        });
+
+        Route::prefix('/vendor')->group(function(){
+            Route::post('apply','API\VendorController@apply')->name('vendorApply');
+            Route::get('mine','API\VendorController@mine')->name('vendorMine');
+        });
 //        Route::apiResource('/companys','CompanyController');
 //        Route::apiResource('/vendors','VendorController');
 //        Route::apiResource('/cavatars','CavatarController');

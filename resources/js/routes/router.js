@@ -47,6 +47,11 @@ const router = new VueRouter({
           component: All.User
         },
         {
+          path: 'applyb',
+          name: 'user.applyb',
+          component: All.ApplyB
+        },
+        {
           path: 'mycompany',
           name: 'user.mycompany',
           component: All.MyCompany

@@ -2,37 +2,36 @@
     <q-page>
         <form @submit.prevent="handleSubmit" class="docs-input row justify-center layout-padding" >
             <div style="width: 500px; max-width: 90vw;">
-                <q-chip :avatar=form.avatar color="grey-4" text-color="black">{{ form.name }}</q-chip>
                 <q-field
-                        class="autofocus"
-                        helper="请上传头像"
+                        icon="vibration"
+                        helper="请选需要申请的商户类型"
+                        label="商户类型"
                 >
-                    <q-uploader
-                            ref="fileuper"
-                            auto-expand
-                            :datasrc=form.avatar
-                            hide-upload-button
-                            hide-upload-progress
-                            extensions=".gif,.jpg,.jpeg,.png,.bmp"
-                            color="amber" float-label="个人头像"
-                            url=""
-                            >
-                    </q-uploader>
+                    <q-option-group
+                            type="radio"
+                            color="secondary"
+                            v-model="form.applyapi"
+                            :options="[
+            { label: '主材商户', value: '/api/v1/vendor/apply' },
+            { label: '装修公司', value: '/api/v1/company/apply' },
+          ]"
+                    />
                 </q-field>
+
                 <q-field
                     :count="30"
-                    helper="请填写姓名"
+                    helper="请填写公司(商铺)名称"
                     :error="errors.has('name')"
                     :error-label="errors.first('name')"
                 >
                     <q-input
-                        float-label="称呼"
+                        float-label="公司(商铺)名称"
                         name="name"
                         v-model="form.name"
                         ref="name"
                         v-validate="form_rules.name"
-                        data-vv-as="称呼"
-                        stack-label="称呼"
+                        data-vv-as="公司(商铺)名称"
+                        stack-label="公司(商铺)名称"
                     />
                 </q-field>
 
@@ -53,12 +52,32 @@
                 </q-field>
 
                 <q-field
+                    :count="50"
+                    helper="请填写公司负责人"
+                >
+                    <q-input float-label="公司负责人"
+                             name="owner"
+                             v-model="form.owner"
+                     />
+                </q-field>
+
+                <q-field
+                    :count="15"
+                    helper="请填写公司固定电话"
+                >
+                    <q-input float-label="固定电话"
+                             name="tel"
+                             v-model="form.tel"
+                     />
+                </q-field>
+
+                <q-field
                     :count="15"
                     helper="请填写联系电话"
                     :error="errors.has('phone')"
                     :error-label="errors.first('phone')"
                 >
-                    <q-input float-label="电话"
+                    <q-input float-label="移动电话"
                              name="phone"
                              v-model="form.phone"
                              data-vv-as="电话不得长于15位."
@@ -76,7 +95,7 @@
                     <q-btn
                         type="submit"
                         color="primary"
-                        label=" 更 新 ">
+                        label=" 开 始 申 请 ">
                     </q-btn>
                 </div>
 
@@ -92,27 +111,13 @@
 
 <script>
 export default {
-  name: 'my-account',
+  name: 'apply-b',
   $_veeValidate: {
-    validator: 'new'
+    validator: 'newapply'
   },
   created: function () {
-    this.initData()
   },
   methods: {
-    initData: function () {
-      this.$axios({
-        method: 'get',
-        url: '/api/v1/getMyaccount'
-      }).then((response) => {
-        if (response) {
-          let resAcc = response.data
-          for (let key in resAcc) {
-            this.form[key] = resAcc[key]
-          }
-        }
-      })
-    },
     handleSubmit: function (submitEvent) {
       this.$validator.validateAll()
         .then((result) => {
@@ -122,27 +127,25 @@ export default {
           } else {
             console.log(result, 'validate failed.')
           }
-        }).catch(() => {
-          console.log(this.errors, 'validate exception line 109.')
+        }).catch((e) => {
           this.loader = false
+          console.log(this.errors, 'validate exception line 109.',e)
         })
     },
     updateaccount () {
       this.loader = true
       let formData = new FormData()
-      formData.append('avatar', this.$refs.fileuper.files[0])
       for (let key in this.form) {
         formData.append(key, this.form[key])
       }
       this.$axios({
         method: 'post',
-        url: '/api/v1/updateAccount/',
+        url: this.form.applyapi,
         data: formData
       }
       ).then((response) => {
-        this.initData()
         this.$q.notify({
-          message: '更新成功',
+          message: response.data.messages,
           type: 'positive'
         })
         this.loader = false
@@ -169,24 +172,16 @@ export default {
     }
   },
   watch: {
-    // 'form.name' (val) {
-    //   if (this.errors.firstByRule('name', 'auth')) {
-    //     this.errors.remove('name')
-    //   }
-    // },
-    // 'form.address' (val) {
-    //   if (this.errors.firstByRule('address', 'auth')) {
-    //     this.errors.remove('addresss')
-    //   }
-    // }
   },
   data () {
     return {
       loader: false,
       form: {
+        applyapi: '/api/v1/company/apply',
         name: '',
-        avatar: '',
         address: '',
+        owner: '',
+        tel: '',
         phone: '',
         memo: ''
       },

@@ -36,30 +36,35 @@ class AccountController extends Controller
 
     public function getMyAccount()
     {
-        $colAccount=Account::where(["user_id" => auth()->guard('api')->user()->id])->first();
+        $oItem=Account::where(["user_id" => auth()->guard('api')->user()->id])->first();
 
-        if($colAccount->hasMedia('userAvatars')){
-            $colAccount->avatar=$colAccount->getMedia('userAvatars')[0]->getFullUrl();
+        if($oItem->hasMedia('userAvatars')){
+            $oItem->avatar=$oItem->getMedia('userAvatars')[0]->getFullUrl();
         }
-        return response()->json($colAccount);
+        return response()->json($oItem);
     }
     public function updateUserAccount(Request $request)
     {
-        $AccoutItem = Account::firstOrNew(["user_id" => auth()->guard('api')->user()->id]);
-        $AccoutItem->user_id=auth()->guard('api')->user()->id;
-        $AccoutItem->fill($request->input());
+        $oItem = Account::firstOrNew(["user_id" => auth()->guard('api')->user()->id]);
+        $oItem->user_id=auth()->guard('api')->user()->id;
+        $oItem->fill($request->input());
 
 
-        if($AccoutItem->save()){
+        if($oItem->save()){
             if(is_file($request->file('avatar'))){
-                $AccoutItem
+                $oItem
                     ->addMediaFromRequest('avatar')
                     ->usingName('avatar')
                     ->toMediaCollection('userAvatars');
             }
-            return $request->json($request->input());
+            return response()->json(array_merge([
+                    'messages' => '保存成功，ID:'.$oItem->id,
+                    'success' => true,
+                ], $oItem->toArray()
+                )
+            );
         }else{
-            return "error";
+            return response()->json(['message' => $oItem->errors()->all()]);
         }
     }
     /**

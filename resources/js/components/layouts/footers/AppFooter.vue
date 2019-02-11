@@ -10,14 +10,15 @@
                    class="col"
                    label="我的优惠劵"
                    icon="receipt"
-                   @click="$router.push('/products')">
+                   >
             </q-btn>
             <q-btn flat
                    class="col animate-blink"
                    dense
+                   to="/user/applyb"
                    label="商户入驻"
                    icon="input"
-                   @click="$router.push('/packages')">
+                   >
             </q-btn>
         </q-toolbar>
     </q-layout-footer>
@@ -34,5 +35,5 @@ export default {
         text-decoration: none;
     }
     .animate-blink
-        animation q-blink 2s steps(5, start) infinite /* rtl:ignore */
+        animation q-blink 2s steps(5, start) infinite
 </style>

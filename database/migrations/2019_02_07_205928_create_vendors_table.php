@@ -25,6 +25,9 @@ class CreateVendorsTable extends Migration
             $table->string('tel',15)->nullable();
             $table->string('phone',15)->nullable();
 
+            //介绍
+            $table->text('memo')->nullable();
+
             $table->string('stat',10)->default('申请中。。。');
 
             $table->timestamps();

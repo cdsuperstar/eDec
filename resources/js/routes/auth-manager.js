@@ -26,7 +26,7 @@ export const AuthManager = {
         next()
       } else {
         router.app.$q.notify({
-          message: 'Se requiere inicio de sesion',
+          message: '请您先登录。',
           type: 'warning'
         })
         next({
@@ -35,7 +35,7 @@ export const AuthManager = {
       }
     }).catch((e) => {
       router.app.$q.notify({
-        message: 'Se requiere inicio de sesion',
+        message: '请您先登录。',
         type: 'warning'
       })
       next({

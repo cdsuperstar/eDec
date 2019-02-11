@@ -4,6 +4,8 @@ const User = () => import('../../components/auth/user/User')
 const NotFound = () => import('../../components/error-pages/NotFound')
 
 // bussiness
+const ApplyB = () => import('../../components/public/ApplyB')
+
 const MyCompany = () => import('../../components/public/MyCompany')
 const MyAccount = () => import('../../components/public/MyAccount')
 const MyVendor = () => import('../../components/public/MyVendor')
@@ -27,6 +29,7 @@ export {
   Welcome,
   Packages,
   Products,
+  ApplyB,
   MyCompany,
   MyAccount,
   MyVendor,
