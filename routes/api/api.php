@@ -38,15 +38,17 @@ Route::name('api.')
     });
 
 Route::name('api.business.')
-    ->namespace('API')
+//    ->namespace('API')
     ->prefix('/v1')
+    ->middleware(['client.oauth', 'auth:api'])
     ->group(function () {
-        // Controllers Within The "App\Http\Controllers\Admin" Namespace
-        Route::apiResource('/companys','CompanyController');
-        Route::apiResource('/vendors','VendorController');
-        Route::apiResource('/cavatars','CavatarController');
-        Route::apiResource('/vavatars','VavatarController');
-        Route::apiResource('/products','ProductController');
-        Route::apiResource('/packages','PackageController');
-        Route::apiResource('/accounts','AccountController');
+        Route::get('accounts', 'API\AccountController@index')->name('getallAccounts');
+        Route::post('updateAccount','API\AccountController@updateUserAccount')->name('updateUserAccount');
+
+//        Route::apiResource('/companys','CompanyController');
+//        Route::apiResource('/vendors','VendorController');
+//        Route::apiResource('/cavatars','CavatarController');
+//        Route::apiResource('/vavatars','VavatarController');
+//        Route::apiResource('/products','ProductController');
+//        Route::apiResource('/packages','PackageController');
     });

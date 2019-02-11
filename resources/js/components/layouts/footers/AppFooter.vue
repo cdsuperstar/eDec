@@ -7,13 +7,13 @@
         >
             <q-btn flat
                    dense
-                   class="col animate-blink"
+                   class="col"
                    label="我的优惠劵"
                    icon="receipt"
                    @click="$router.push('/products')">
             </q-btn>
             <q-btn flat
-                   class="col"
+                   class="col animate-blink"
                    dense
                    label="商户入驻"
                    icon="input"

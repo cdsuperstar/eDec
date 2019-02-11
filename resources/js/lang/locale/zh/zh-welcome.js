@@ -1,3 +1,3 @@
 export const zh_welcome = {
-    "greetings": "领导好！！"
-};
+  'greetings': '欢迎！'
+}

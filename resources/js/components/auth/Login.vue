@@ -107,7 +107,6 @@ export default {
     login () {
       this.reloadAuthStatus()
       this.loader = true
-      console.log(this.$master.api('/oauth/token'))
       this.$axios({
         method: 'post',
         url: this.$master.api('/oauth/token'),

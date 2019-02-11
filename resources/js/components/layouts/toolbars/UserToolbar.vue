@@ -1,6 +1,6 @@
 <template>
     <div>
-        <q-toolbar c        color="primary"
+        <q-toolbar          color="primary"
                             :glossy="$q.theme === 'mat'"
                             :inverted="$q.theme === 'ios'"
 >

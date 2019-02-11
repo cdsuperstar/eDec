@@ -21,3 +21,4 @@
 Route::view('/', 'app');
 Route::view('{all}', 'app')
     ->where(['all' => '^(?!api).*$']);
+

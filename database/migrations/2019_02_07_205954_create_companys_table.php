@@ -16,7 +16,7 @@ class CreateCompanysTable extends Migration
         Schema::create('companys', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('user_id');
 
             $table->string('name',50)->unique();
             $table->string('address',200)->nullable();
@@ -30,6 +30,8 @@ class CreateCompanysTable extends Migration
             $table->string('stat',10)->default('申请中。。。');
 
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -15,7 +15,8 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedInteger('user_id');
 
             $table->string('avatar', 100)->default('default_avatar.jpg');
             $table->string('name',30)->default('请设置昵称');
@@ -26,6 +27,7 @@ class CreateAccountsTable extends Migration
 
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

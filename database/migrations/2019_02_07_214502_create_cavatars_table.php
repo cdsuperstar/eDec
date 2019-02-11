@@ -15,11 +15,14 @@ class CreateCavatarsTable extends Migration
     {
         Schema::create('cavatars', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('company_id')->references('id')->on('companys')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('company_id');
+
             $table->string('avatar', 100);
             $table->text('memo')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companys')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

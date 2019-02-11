@@ -15,7 +15,7 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('company_id')->references('id')->on('companys')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('company_id');
             $table->string('avatar1', 100);
             $table->string('avatar2', 100);
             $table->string('avatar3', 100);
@@ -30,6 +30,7 @@ class CreatePackagesTable extends Migration
             $table->text('memo')->nullable();
 
             $table->timestamps();
+            $table->foreign('company_id')->references('id')->on('companys')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

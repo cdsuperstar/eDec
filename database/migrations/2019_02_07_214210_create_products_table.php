@@ -15,7 +15,8 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('vendor_id');
+
             $table->string('avatar1', 100);
             $table->string('avatar2', 100);
             $table->string('avatar3', 100);
@@ -29,6 +30,8 @@ class CreateProductsTable extends Migration
             $table->text('memo')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

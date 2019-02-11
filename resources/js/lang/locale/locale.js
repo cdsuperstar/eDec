@@ -1,9 +1,9 @@
-import zh from './zh/zh';
-import en from './en/en';
+import zh from './zh/zh'
+import en from './en/en'
 
 const language = {
-    en,
-    zh
-};
+  en,
+  zh
+}
 
-export default language;
+export default language

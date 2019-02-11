@@ -1,6 +1,6 @@
 <template>
     <q-page>
-        <h1>{{ $t('welcome.greetings') }} user's name {{ userInfo.username }}</h1>
+        <h1>{{ $t('welcome.greetings') }} 测试用户名 {{ userInfo.username }}</h1>
     </q-page>
 </template>
 

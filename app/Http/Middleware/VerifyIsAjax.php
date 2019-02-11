@@ -22,10 +22,11 @@ class VerifyIsAjax
      */
     public function handle($request, Closure $next)
     {
+//        return $next($request);
         if ($request->ajax())
         {
             return $next($request);
         }
-        return response()->json(['error' => 'Method Not Allowed'], 405);
+        return response()->json(['error' => 'Method Not Allowed oh shit!'], 405);
     }
 }

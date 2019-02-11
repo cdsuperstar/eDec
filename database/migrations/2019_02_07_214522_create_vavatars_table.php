@@ -15,11 +15,13 @@ class CreateVavatarsTable extends Migration
     {
         Schema::create('vavatars', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('vavatar_id')->references('id')->on('avatars')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedInteger('vendor_id');
             $table->string('avatar', 100);
             $table->text('memo')->nullable();
 
             $table->timestamps();
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
