@@ -144,6 +144,7 @@ export default {
           message: '更新成功',
           type: 'positive'
         })
+        this.loader = false
       }).catch((errors) => {
         let list = this.$master.hasErrors(errors)
         if (list) {
