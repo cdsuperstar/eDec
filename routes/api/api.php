@@ -43,6 +43,7 @@ Route::name('api.business.')
     ->middleware(['client.oauth', 'auth:api'])
     ->group(function () {
         Route::get('accounts', 'API\AccountController@index')->name('getallAccounts');
+        Route::get('getMyaccount', 'API\AccountController@getMyAccount')->name('getallAccounts');
         Route::post('updateAccount','API\AccountController@updateUserAccount')->name('updateUserAccount');
 
 //        Route::apiResource('/companys','CompanyController');

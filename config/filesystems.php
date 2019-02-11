@@ -47,7 +47,12 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        'webpublic' => [
+            'driver' => 'local',
+            'root' => public_path('img/media'),
+            'url' => env('APP_URL').'img/media',
+            'visibility' => 'public',
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

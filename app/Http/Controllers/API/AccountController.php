@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Account;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 
 class AccountController extends Controller
 {
@@ -35,6 +34,15 @@ class AccountController extends Controller
         //
     }
 
+    public function getMyAccount()
+    {
+        $colAccount=Account::where(["user_id" => auth()->guard('api')->user()->id])->first();
+
+        if($colAccount->hasMedia('userAvatars')){
+            $colAccount->avatar=$colAccount->getMedia('userAvatars')[0]->getFullUrl();
+        }
+        return response()->json($colAccount);
+    }
     public function updateUserAccount(Request $request)
     {
         $AccoutItem = Account::firstOrNew(["user_id" => auth()->guard('api')->user()->id]);

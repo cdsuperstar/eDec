@@ -5,11 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="keywords" content="Manfred,Manfred047,Laravel,Quasar,Vue,SPA,API">
-        <meta name="twitter:title" content="Laravel - Quasar by Manfred047">
-        <meta name="description" content="Laravel - Quasar by Manfred047">
-        <meta property="og:title" content="Laravel - Quasar by Manfred047">
-        <meta property="og:description" content="Laravel - Quasar by Manfred047">
+        <meta name="keywords" content="eDec By lucifer">
+        <meta name="description" content="eDec By lucifer">
+        <meta property="og:title" content="eDec By lucifer">
+        <meta property="og:description" content="eDec By lucifer">
 
         <title>Laravel - Quasar by Manfred047</title>
 

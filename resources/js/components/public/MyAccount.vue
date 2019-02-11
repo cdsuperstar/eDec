@@ -2,6 +2,7 @@
     <q-page>
         <form @submit.prevent="handleSubmit" class="docs-input row justify-center layout-padding" >
             <div style="width: 500px; max-width: 90vw;">
+                <q-chip :avatar=form.avatar color="grey-4" text-color="black">{{ form.name }}</q-chip>
                 <q-field
                         class="autofocus"
                         helper="请上传头像"
@@ -9,6 +10,7 @@
                     <q-uploader
                             ref="fileuper"
                             auto-expand
+                            :datasrc=form.avatar
                             hide-upload-button
                             hide-upload-progress
                             extensions=".gif,.jpg,.jpeg,.png,.bmp"
@@ -94,7 +96,23 @@ export default {
   $_veeValidate: {
     validator: 'new'
   },
+  created: function () {
+    this.initData()
+  },
   methods: {
+    initData: function () {
+      this.$axios({
+        method: 'get',
+        url: '/api/v1/getMyaccount'
+      }).then((response) => {
+        if (response) {
+          let resAcc = response.data
+          for (let key in resAcc) {
+            this.form[key] = resAcc[key]
+          }
+        }
+      })
+    },
     handleSubmit: function (submitEvent) {
       this.$validator.validateAll()
         .then((result) => {
@@ -121,6 +139,7 @@ export default {
         data: formData
       }
       ).then((response) => {
+        this.initData()
         this.$q.notify({
           message: '更新成功',
           type: 'positive'
