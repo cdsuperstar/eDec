@@ -15,23 +15,14 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('vendor_id');
+            $table->unsignedInteger('company_id');
 
-            $table->string('avatar1', 100);
-            $table->string('avatar2', 100);
-            $table->string('avatar3', 100);
-            $table->string('avatar4', 100);
-            $table->string('avatar5', 100);
-            $table->string('avatar6', 100);
-            $table->string('avatar7', 100);
-            $table->string('avatar8', 100);
-            $table->string('avatar9', 100);
             $table->float('price', 10, 2);
             $table->text('memo')->nullable();
 
             $table->timestamps();
 
-            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('company_id')->references('id')->on('companys')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

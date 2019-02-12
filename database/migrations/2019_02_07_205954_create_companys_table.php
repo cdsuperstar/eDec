@@ -19,6 +19,7 @@ class CreateCompanysTable extends Migration
             $table->unsignedInteger('user_id');
 
             $table->string('name',50)->unique();
+            $table->string('ctype',30);
             $table->string('address',200)->nullable();
 
             $table->string('owner',50);

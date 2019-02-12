@@ -10,10 +10,10 @@
                     <q-option-group
                             type="radio"
                             color="secondary"
-                            v-model="form.applyapi"
+                            v-model="form.ctype"
                             :options="[
-            { label: '主材商户', value: '/api/v1/vendor/apply' },
-            { label: '装修公司', value: '/api/v1/company/apply' },
+            { label: '主材商户', value: '主材商户' },
+            { label: '装修公司', value: '装修公司' },
           ]"
                     />
                 </q-field>
@@ -140,7 +140,7 @@ export default {
       }
       this.$axios({
         method: 'post',
-        url: this.form.applyapi,
+        url: '/api/v1/company/apply',
         data: formData
       }
       ).then((response) => {
@@ -177,7 +177,7 @@ export default {
     return {
       loader: false,
       form: {
-        applyapi: '/api/v1/company/apply',
+        ctype: '主材商户',
         name: '',
         address: '',
         owner: '',

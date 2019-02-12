@@ -8,7 +8,7 @@
                              name="owner"
                              readonly
                              aria-disabled="true"
-                             value="装修公司"
+                             v-model="form.ctype"
                     />
                 </q-field>
 
@@ -201,7 +201,7 @@ export default {
     return {
       loader: false,
       form: {
-        applyapi: '',
+        ctype: '',
         name: '',
         address: '',
         owner: '',
