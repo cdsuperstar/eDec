@@ -100,6 +100,7 @@ export default {
       })
     },
     initData: function () {
+      this.selectedSecond = []
       this.$axios({
         method: 'get',
         url: '/api/v1/product/getMyProducts'
