@@ -105,9 +105,41 @@ class ProductController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id){
+
+    }
+
+
+    public function updateProduct(Request $request)
     {
         //
+        try {
+            $oItem = Product::find($request->input('id'));
+            $oItem->company_id = auth()->guard('api')->user()->company->id;
+            $oItem->fill($request->input());
+        } catch (Exception $e) {
+            return response()->json([
+                'messages' => "错误啦！ " . $e->getCode(),
+                'success' => false,
+            ]);
+        }
+
+        if ($oItem->save()) {
+            if ($request->files->count() > 0) {
+                $oMedias = $oItem->addAllMediaFromRequest();
+                foreach ($oMedias as $key => $oMedia) {
+                    $oMedia->toMediaCollection('productAvatars');
+                }
+            }
+            return response()->json(array_merge([
+                    'messages' => '保存成功，ID:' . $oItem->id,
+                    'success' => true,
+                ], $oItem->toArray()
+                )
+            );
+        } else {
+            return response()->json(['messages' => $oItem->errors()->all()]);
+        }
     }
 
     /**

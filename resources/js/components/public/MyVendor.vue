@@ -21,8 +21,8 @@
                         />
                         <q-btn color="secondary" flat label="增加" @click="addshow=!addshow" class="q-mr-sm" />
                     </template>
-                    <template slot="top-selection" slot-scope="props">
-                        <q-btn color="secondary" flat label="修改" />
+                    <template slot="top-selection" >
+                        <q-btn color="secondary" flat label="修改" v-if="selectedSecond.length>=0" @click="updateshow=!updateshow" />
                         <q-btn color="negative" flat round icon="delete" @click="deleteRow" />
                         <div class="col" />
                     </template>
@@ -32,7 +32,7 @@
                                 arrows
                                 height="80px"
                         >
-                            <q-carousel-slide v-for="item in props.value" :img-src="'/img/media/'+item.id+'/'+item.file_name">
+                            <q-carousel-slide v-for="item in props.value" :key="item.id" :img-src="'/img/media/'+item.id+'/'+item.file_name">
                             </q-carousel-slide>
                         </q-carousel>
                     </q-td>
@@ -41,17 +41,20 @@
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
         <addprod :addshow="addshow" v-on:refreshPData="initData" v-on:childByValue="childByValue"></addprod>
+        <updateprod :updateshow="updateshow" :selectedRows="selectedSecond" v-on:refreshPData="initData" v-on:childByValueUpdate="childByValueUpdate"></updateprod>
 
     </q-page>
 </template>
 
 <script>
 import addprod from '../business/addprod'
+import updateprod from '../business/updateprod'
 
 export default {
   name: 'my-vendor',
   components: {
-    addprod
+    addprod,
+    updateprod
   },
   $_veeValidate: {
     validator: 'newapply'
@@ -62,6 +65,9 @@ export default {
   methods: {
     childByValue: function (childValue) {
       this.addshow = childValue
+    },
+    childByValueUpdate: function (childValue) {
+      this.updateshow = childValue
     },
     deleteRow () {
       this.$q.dialog({
@@ -185,6 +191,7 @@ export default {
   data () {
     return {
       addshow: false,
+      updateshow: false,
       loader: false,
       tableData: [],
       columns: [

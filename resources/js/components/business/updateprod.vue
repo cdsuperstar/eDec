@@ -1,6 +1,15 @@
 <template>
     <q-modal v-model="show" position="">
-        <form class="layout-padding" @submit.prevent="validateForm">
+        <form class="layout-padding" @submit.prevent="validateForm" v-if="selectedRows.length>0">
+            <q-carousel
+                    color="white"
+                    arrows
+                    height="80px"
+            >
+                <q-carousel-slide v-for="item in selectedRows[0].media" :key="item.id" :img-src="'/img/media/'+item.id+'/'+item.file_name">
+                </q-carousel-slide>
+            </q-carousel>
+
             <q-field
                 class="q-mb-md"
                 >
@@ -65,12 +74,12 @@
             <div class="row justify-center q-mt-md">
                 <q-btn type="submit"
                        color="primary"
-                       label=" 添加商品 ">
+                       label=" 保存商品 ">
                 </q-btn>
                 <div class="col" />
                 <q-btn
                     color="secondary"
-                    @click="$emit('childByValue', false)"
+                    @click="$emit('childByValueUpdate', false)"
                     label="关闭"
                 />
             </div>
@@ -84,8 +93,8 @@
 
 <script>
 export default {
-  name: 'addprod',
-  props: ['addshow'],
+  name: 'updateprod',
+  props: ['updateshow', 'selectedRows'],
   $_veeValidate: {
     validator: 'new'
   },
@@ -95,16 +104,17 @@ export default {
   computed: {
     show: {
       get: function () {
-        return this.addshow
+        return this.updateshow
       },
       set: function (show) {
-        this.$emit('childByValue', false)
+        this.$emit('childByValueUpdate', false)
       }
     }
   },
   watch: {
     selectedRows (value) {
-      // this.$master.setRecaptchaLang(this.$refs.recaptcha.$el, value);
+      this.form = value[0]
+      console.log(value.length)
     }
   },
   methods: {
@@ -129,7 +139,7 @@ export default {
       }
       this.$axios({
         method: 'post',
-        url: this.$master.api('/product/add'),
+        url: this.$master.api('/product/updateProduct'),
         data: formData
       }).then((response) => {
         if (response.data.success) {
