@@ -114,7 +114,6 @@ export default {
   watch: {
     selectedRows (value) {
       this.form = value[0]
-      console.log(value.length)
     }
   },
   methods: {
