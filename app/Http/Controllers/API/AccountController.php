@@ -64,7 +64,7 @@ class AccountController extends Controller
                 )
             );
         }else{
-            return response()->json(['message' => $oItem->errors()->all()]);
+            return response()->json(['messages' => $oItem->errors()->all()]);
         }
     }
     /**

@@ -1,120 +1,58 @@
 <template>
-    <q-page>
-        <form @submit.prevent="handleSubmit" class="docs-input row justify-center layout-padding" >
-            <div style="width: 500px; max-width: 90vw;">
-                <q-field
+    <q-page padding class="docs-table">
+                <p class="caption">您的商品（服务）列表</p>
+                <q-table
+                        :data="tableData"
+                        ref="dataTable"
+                        :columns="columns"
+                        :filter="filter"
+                        selection="multiple"
+                        :selected.sync="selectedSecond"
+                        row-key="id"
+                        color="secondary"
+                        title="请选择数据"
                 >
-                    <q-input float-label="申请类型"
-                             name="owner"
-                             readonly
-                             aria-disabled="true"
-                             value="商户"
-                    />
-                </q-field>
-
-                <q-field
-                        :count="30"
-                        helper="公司名称申请后不得更改，如需变更请联系后台。"
-                >
-                    <q-input
-                            float-label="公司(商铺)名称"
-                            name="name"
-                            v-model="form.name"
-                            readonly=""
-                            ref="name"
-                            stack-label="公司(商铺)名称"
-                    />
-                </q-field>
-
-                <q-field
-                >
-                    <q-input
-                            float-label="后台审核状态"
-                            name="name"
-                            v-model="form.stat"
-                            readonly=""
-                            ref="name"
-                            stack-label="后台审核状态"
-                    />
-                </q-field>
-
-                <q-field
-                        :count="200"
-                        helper="请填写联系地址"
-                        :error="errors.has('address')"
-                        :error-label="errors.first('address')"
-                >
-                    <q-input
-                            float-label="地址"
-                            name="address"
-                            data-vv-as="地址不得大于200."
-                            v-model="form.address"
-                            ref="address"
-                            v-validate="form_rules.address"
-                    />
-                </q-field>
-
-                <q-field
-                        helper="公司负责人申请后不得更改，如需变更请联系后台。"
-                >
-                    <q-input float-label="公司负责人"
-                             name="owner"
-                             readonly=""
-                             v-model="form.owner"
-                    />
-                </q-field>
-
-                <q-field
-                        :count="15"
-                        helper="请填写公司固定电话"
-                >
-                    <q-input float-label="固定电话"
-                             name="tel"
-                             v-model="form.tel"
-                    />
-                </q-field>
-
-                <q-field
-                        :count="15"
-                        helper="请填写联系电话"
-                        :error="errors.has('phone')"
-                        :error-label="errors.first('phone')"
-                >
-                    <q-input float-label="移动电话"
-                             name="phone"
-                             v-model="form.phone"
-                             data-vv-as="电话不得长于15位."
-                             v-validate="form_rules.phone"
-                    />
-                </q-field>
-
-                <q-field
-                        helper="请填写介绍及说明"
-                >
-                    <q-input float-label="介绍及说明" v-model="form.memo" type="textarea" />
-                </q-field>
-
-                <div class="row justify-center q-mt-md">
-                    <q-btn
-                            type="submit"
-                            color="primary"
-                            label=" 修 改 公 司 信 息 ">
-                    </q-btn>
-                </div>
-
-            </div>
-
-        </form>
+                    <template slot="top-left" slot-scope="props">
+                        <q-search
+                                hide-underline
+                                color="secondary"
+                                v-model="filter"
+                                class="col-6"
+                        />
+                        <q-btn color="secondary" flat label="增加" @click="addshow=!addshow" class="q-mr-sm" />
+                    </template>
+                    <template slot="top-selection" slot-scope="props">
+                        <q-btn color="secondary" flat label="修改" />
+                        <q-btn color="negative" flat round icon="delete" @click="deleteRow" />
+                        <div class="col" />
+                    </template>
+                    <q-td slot="body-cell-media" slot-scope="props" :props="props">
+                        <q-carousel
+                                color="white"
+                                arrows
+                                height="80px"
+                        >
+                            <q-carousel-slide v-for="item in props.value" :img-src="'/img/media/'+item.id+'/'+item.file_name">
+                            </q-carousel-slide>
+                        </q-carousel>
+                    </q-td>
+                </q-table>
         <q-inner-loading :visible="loader">
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
+        <addprod :addshow="addshow" v-on:refreshPData="initData" v-on:childByValue="childByValue"></addprod>
 
     </q-page>
 </template>
 
 <script>
+import addprod from '../business/addprod'
+
 export default {
   name: 'my-vendor',
+  components: {
+    addprod
+  },
   $_veeValidate: {
     validator: 'newapply'
   },
@@ -122,19 +60,58 @@ export default {
     this.initData()
   },
   methods: {
+    childByValue: function (childValue) {
+      this.addshow = childValue
+    },
+    deleteRow () {
+      this.$q.dialog({
+        title: '删除确认',
+        message: '确定要删除所选记录吗？',
+        ok: '确定',
+        cancel: '取消'
+      }).then(() => {
+        this.$axios({
+          method: 'delete',
+          url: '/api/v1/product/delMany',
+          data: { toDel: this.selectedSecond }
+        }).then((response) => {
+          if (response.data.success) {
+            this.initData()
+            this.$q.notify({
+              message: response.data.messages,
+              type: 'positive'
+            })
+            // this.$refs.dataTable.loading = false
+          } else {
+            this.$q.notify({
+              message: '数据删除失败',
+              type: 'negative'
+            })
+          }
+        })
+      }).catch(() => {
+        // this.$q.notify('Disagreed...')
+      })
+    },
     initData: function () {
       this.$axios({
         method: 'get',
-        url: '/api/v1/vendor/mine'
+        url: '/api/v1/product/getMyProducts'
       }).then((response) => {
-        if (response) {
-          let resAcc = response.data
-          for (let key in resAcc) {
-            this.form[key] = resAcc[key]
-          }
+        if (response.data.success) {
+          let resAcc = response.data.data
+          // console.log(resAcc[0].media)
+          this.tableData = resAcc
+          // this.$refs.dataTable.loading = false
+        } else {
+          this.$q.notify({
+            message: '数据获取失败',
+            type: 'negative'
+          })
         }
       })
     },
+
     handleSubmit: function (submitEvent) {
       this.$validator.validateAll()
         .then((result) => {
@@ -190,24 +167,55 @@ export default {
     }
   },
   watch: {
+    'paginationControl.page' (page) {
+      this.$q.notify({
+        color: 'secondary',
+        message: `Navigated to page ${page}`,
+        actions: page < 4
+          ? [{
+            label: 'Go to last page',
+            handler: () => {
+              this.paginationControl.page = 4
+            }
+          }]
+          : null
+      })
+    }
   },
   data () {
     return {
+      addshow: false,
       loader: false,
-      form: {
-        applyapi: '',
-        name: '',
-        address: '',
-        owner: '',
-        tel: '',
-        phone: '',
-        memo: ''
-      },
-      form_rules: {
-        // name: 'required|max:30',
-        phone: 'required|max:15|numeric',
-        address: 'required|max:200'
-      }
+      tableData: [],
+      columns: [
+        {
+          name: 'media',
+          required: true,
+          label: '图片',
+          align: 'left',
+          field: 'media',
+          sortable: true
+        },
+        {
+          name: 'name',
+          required: true,
+          label: '商品（服务）名',
+          align: 'left',
+          field: 'name',
+          sortable: true
+        },
+        { name: 'price', label: '价格', field: 'price', sortable: true },
+        { name: 'unit', label: '单位', field: 'unit', sortable: true },
+        { name: 'memo', label: '说明介绍', field: 'memo' }
+      ],
+
+      filter: '',
+      visibleColumns: ['name', 'price', 'unit', 'memo'],
+      separator: 'horizontal',
+      paginationControl: { rowsPerPage: 3, page: 1 },
+      loading: false,
+      selectedSecond: [],
+      dark: true
     }
   }
 }

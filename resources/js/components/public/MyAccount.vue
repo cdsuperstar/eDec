@@ -10,7 +10,6 @@
                     <q-uploader
                             ref="fileuper"
                             auto-expand
-                            :datasrc=form.avatar
                             hide-upload-button
                             hide-upload-progress
                             extensions=".gif,.jpg,.jpeg,.png,.bmp"

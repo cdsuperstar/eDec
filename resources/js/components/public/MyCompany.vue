@@ -95,7 +95,7 @@
                 </q-field>
 
                 <q-field
-                        helper="公司装修工艺介绍"
+                        helper="公司商品、装修工艺介绍等"
                 >
                     <q-input float-label="介绍及说明" v-model="form.aomemo" type="textarea" />
                 </q-field>
@@ -133,11 +133,13 @@ export default {
         method: 'get',
         url: '/api/v1/company/mine'
       }).then((response) => {
-        if (response) {
+        if (response.data.id) {
           let resAcc = response.data
           for (let key in resAcc) {
             this.form[key] = resAcc[key]
           }
+        } else {
+          this.$router.push('/user/applyb')
         }
       })
     },

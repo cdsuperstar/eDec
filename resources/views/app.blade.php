@@ -10,7 +10,7 @@
         <meta property="og:title" content="eDec By lucifer">
         <meta property="og:description" content="eDec By lucifer">
 
-        <title>Laravel - Quasar by Manfred047</title>
+        <title>eDec By lucifer</title>
 
         <link rel="shortcut icon" type="image/jpg" href="{{ asset('img/logo.jpg') }}">
 

@@ -17,7 +17,10 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('company_id');
 
+            $table->string('name',30)->default('请设置商品名称');
+            $table->string('avatar', 100)->default('default_avatar.jpg');
             $table->float('price', 10, 2);
+            $table->string('unit',10);
             $table->text('memo')->nullable();
 
             $table->timestamps();

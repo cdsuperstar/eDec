@@ -51,9 +51,11 @@ Route::name('api.business.')
             Route::get('mine','API\CompanyController@mine')->name('companyMine');
         });
 
-        Route::prefix('/vendor')->group(function(){
-            Route::post('apply','API\VendorController@apply')->name('vendorApply');
-            Route::get('mine','API\VendorController@mine')->name('vendorMine');
+        Route::prefix('/product')->group(function(){
+            Route::post('add','API\ProductController@add')->name('productAdd');
+            Route::get('getMyProducts','API\ProductController@getMyProducts')->name('productMyProducts');
+            Route::delete('delMany','API\ProductController@delMany')->name('productDelMany');
+
         });
 //        Route::apiResource('/companys','CompanyController');
 //        Route::apiResource('/vendors','VendorController');

@@ -16,4 +16,8 @@ class Company extends Model
         return $this->belongsTo('App\User')->withDefault();
     }
 
+    public function products(){
+        return $this->hasMany('App\Product');
+    }
+
 }
