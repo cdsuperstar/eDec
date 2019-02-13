@@ -156,11 +156,12 @@ class ProductController extends Controller
     public function delMany( Request $request )
     {
         try{
-            $oItems=Product::whereIn('id',collect($request->input('toDel'))->pluck('id'))->delete();
-
-            dump($oItems);
-
+            $aItems=Product::whereIn('id',collect($request->input('toDel'))->pluck('id'))->get();
+            $oItems=$aItems->count();
             if($oItems>0){
+                foreach ($aItems as $key =>$val){
+                    $val->delete();
+                }
                 return response()->json([
                         'messages' => '删除成功，记录:' . $oItems,
                         'success' => true,
