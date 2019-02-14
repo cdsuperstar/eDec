@@ -15,7 +15,7 @@
                 </q-card-media>
                 <q-card-title>
                     {{ prod.name }}
-                    <!--<span slot="subtitle">{{ prod.name }} 类别</span>-->
+                    <span slot="subtitle">{{ prod.name }} {{ index}}</span>
                 </q-card-title>
                 <q-card-main>
                     <q-list>

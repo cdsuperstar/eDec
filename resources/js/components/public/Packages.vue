@@ -15,7 +15,7 @@
                 </q-card-media>
                 <q-card-title>
                     {{ prod.name }}
-                    <!--<span slot="subtitle">{{ prod.name }} 类别</span>-->
+                    <span slot="subtitle">{{ prod.name }} {{ index }}</span>
                 </q-card-title>
                 <q-card-main>
                     <q-list>
@@ -128,12 +128,12 @@ export default {
 
 <style lang="stylus" scoped>
     .card-examples
-    .q-card
-    width 300px
-             .bigger
-             width 450px
-                      max-width 90vw
-    @media (max-width $breakpoint-xs-max)
         .q-card
-        width 100%
+            width 300px
+        .bigger
+            width 450px
+            max-width 90vw
+        @media (max-width $breakpoint-xs-max)
+            .q-card
+                width 100%
 </style>
