@@ -15,7 +15,7 @@
                 </q-card-media>
                 <q-card-title>
                     {{ prod.name }}
-                    <span slot="subtitle"> 公司：{{ prod.company.name }} （电话：{{prod.company.tel}}） </span>
+                    <span slot="subtitle"> 公司：{{ prod.company.name }}（<q-icon name="local_phone" class="fa-sm" />{{prod.company.tel}}） </span>
                 </q-card-title>
                 <q-card-main>
                     <q-list>
@@ -72,7 +72,7 @@ export default {
     initData: function () {
       this.$axios({
         method: 'get',
-        url: '/api/v1/product/getAllProducts'
+        url: '/api/v1/product/getAllProducts/装修公司'
       }).then((response) => {
         if (response.data.success) {
           let resAcc = response.data.data
