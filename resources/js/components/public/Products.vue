@@ -15,7 +15,7 @@
                 </q-card-media>
                 <q-card-title>
                     {{ prod.name }}
-                    <span slot="subtitle">{{ prod.name }} {{ index}}</span>
+                    <span slot="subtitle"> 公司：{{ prod.company.name }} （电话：{{prod.company.tel}}） </span>
                 </q-card-title>
                 <q-card-main>
                     <q-list>

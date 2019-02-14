@@ -12,7 +12,7 @@
                         color="secondary"
                         title="请选择数据"
                 >
-                    <template slot="top-left" slot-scope="props">
+                    <template slot="top-left" >
                         <q-search
                                 hide-underline
                                 color="secondary"

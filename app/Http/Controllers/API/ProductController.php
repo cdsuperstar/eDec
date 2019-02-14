@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function getAllProducts()
     {
-        $oItems = Product::with('media')->get();
+        $oItems = Product::with('media','company')->get();
         return response()->json([
             'success' => true,
             'data' => $oItems->toArray()
