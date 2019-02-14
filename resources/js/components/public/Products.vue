@@ -1,37 +1,45 @@
 <template>
     <q-page class="card-examples row items-start">
-        <div v-for="(item,index) in 31" v-bind:key="index">
+        <div v-for="(prod , index ) in tableData" :key="prod.id">
+
             <q-card inline class="q-ma-sm" >
                 <q-card-media>
-                    <img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=e8f4de87612762d09433acedc185639f/95eef01f3a292df5a1e6cdb1be315c6034a87368.jpg">
+                    <q-carousel
+                            color="white"
+                            arrows
+                            height="120px"
+                    >
+                        <q-carousel-slide v-for="item in prod.media" :key="item.id" :img-src="'/img/media/'+item.id+'/'+item.file_name">
+                        </q-carousel-slide>
+                    </q-carousel>
                 </q-card-media>
                 <q-card-title>
-                    地板
-                    <span slot="subtitle">实木地板{{ item }}</span>
+                    {{ prod.name }}
+                    <!--<span slot="subtitle">{{ prod.name }} 类别</span>-->
                 </q-card-title>
                 <q-card-main>
                     <q-list>
                         <q-item>
                             <q-item-side>
-                                <q-item-tile color="primary" icon="local bar" />
+                                <q-item-tile color="primary" icon="euro_symbol" />
                             </q-item-side>
                             <q-item-main>
                                 <q-item-tile label>价格</q-item-tile>
-                                <q-item-tile sublabel>1000</q-item-tile>
+                                <q-item-tile sublabel>{{ prod.price}}</q-item-tile>
                             </q-item-main>
                         </q-item>
                         <q-item>
                             <q-item-side>
-                                <q-item-tile color="primary" icon="local bar" />
+                                <q-item-tile color="black" icon="event_note" />
                             </q-item-side>
                             <q-item-main>
                                 <q-item-tile label>介绍</q-item-tile>
-                                <q-item-tile sublabel>实木地板是天然木材经烘干、加工后形成的地面装饰材料。又名原木地板，是用实木直接加工成的地板。它具有木材自然生长的纹理，是热的不良导体，能起到冬暖夏凉的作用</q-item-tile>
+                                <q-item-tile sublabel>{{ prod.memo }}</q-item-tile>
                             </q-item-main>
                         </q-item>
                         <q-item>
                             <q-item-side>
-                                <q-item-tile color="primary" icon="local bar" />
+                                <q-item-tile color="secondary" icon="card_giftcard" />
                             </q-item-side>
                             <q-item-main>
                                 <q-item-tile label>打折劵</q-item-tile>
@@ -41,13 +49,80 @@
                     </q-list>
                 </q-card-main>
             </q-card>
+
         </div>
+
+        <q-inner-loading :visible="loader">
+            <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
+        </q-inner-loading>
     </q-page>
 </template>
 
 <script>
 export default {
-  name: 'products'
+  name: 'products',
+  components: {
+  },
+  $_veeValidate: {
+  },
+  created: function () {
+    this.initData()
+  },
+  methods: {
+    initData: function () {
+      this.$axios({
+        method: 'get',
+        url: '/api/v1/product/getAllProducts'
+      }).then((response) => {
+        if (response.data.success) {
+          let resAcc = response.data.data
+          this.tableData = resAcc
+        } else {
+          this.$q.notify({
+            message: '数据获取失败',
+            type: 'negative'
+          })
+        }
+      })
+    },
+    handleSubmit: function (submitEvent) {
+    }
+  },
+  watch: {
+  },
+  data () {
+    return {
+      loader: false,
+      tableData: [],
+      columns: [
+        {
+          name: 'media',
+          required: true,
+          label: '图片',
+          align: 'left',
+          field: 'media',
+          sortable: true
+        },
+        {
+          name: 'name',
+          required: true,
+          label: '商品（服务）名',
+          align: 'left',
+          field: 'name',
+          sortable: true
+        },
+        { name: 'price', label: '价格', field: 'price', sortable: true },
+        { name: 'unit', label: '单位', field: 'unit', sortable: true },
+        { name: 'memo', label: '说明介绍', field: 'memo' }
+      ],
+      filter: '',
+      visibleColumns: ['name', 'price', 'unit', 'memo'],
+      separator: 'horizontal',
+      paginationControl: { rowsPerPage: 3, page: 1 },
+      selectedSecond: [],
+      dark: true
+    }
+  }
 }
 </script>
 

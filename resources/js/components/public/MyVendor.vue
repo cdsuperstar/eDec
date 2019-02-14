@@ -22,7 +22,7 @@
                         <q-btn color="secondary" flat label="增加" @click="addshow=!addshow" class="q-mr-sm" />
                     </template>
                     <template slot="top-selection" >
-                        <q-btn color="secondary" flat label="修改" v-if="selectedSecond.length>=0" @click="updateshow=!updateshow" />
+                        <q-btn color="secondary" flat round icon="edit" v-if="selectedSecond.length>=0" @click="updateshow=!updateshow" />
                         <q-btn color="negative" flat round icon="delete" @click="deleteRow" />
                         <div class="col" />
                     </template>
@@ -30,7 +30,7 @@
                         <q-carousel
                                 color="white"
                                 arrows
-                                height="80px"
+                                height="120px"
                         >
                             <q-carousel-slide v-for="item in props.value" :key="item.id" :img-src="'/img/media/'+item.id+'/'+item.file_name">
                             </q-carousel-slide>

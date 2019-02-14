@@ -1,6 +1,6 @@
 <template>
     <q-modal v-model="show" position="">
-        <form class="layout-padding" @submit.prevent="validateForm">
+        <form class="layout-padding" @submit.prevent="validateForm" ref="addprodform">
             <q-field
                 class="q-mb-md"
                 >
@@ -135,6 +135,10 @@ export default {
         if (response.data.success) {
           this.show = false
           this.$emit('refreshPData', false)
+          for (let key in this.form) {
+            this.form[key] = null
+          }
+          this.$refs.fileuper.reset()
           this.$q.notify({
             message: response.data.messages,
             type: 'positive'

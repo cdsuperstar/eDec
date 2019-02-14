@@ -56,6 +56,7 @@ Route::name('api.business.')
             Route::post('updateProduct','API\ProductController@updateProduct')->name('productUpdate');
 
             Route::get('getMyProducts','API\ProductController@getMyProducts')->name('productMyProducts');
+            Route::get('getAllProducts','API\ProductController@getAllProducts')->name('productAllProducts');
             Route::delete('delMany','API\ProductController@delMany')->name('productDelMany');
 
         });

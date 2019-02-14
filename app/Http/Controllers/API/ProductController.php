@@ -19,6 +19,15 @@ class ProductController extends Controller
         //
     }
 
+    public function getAllProducts()
+    {
+        $oItems = Product::with('media')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $oItems->toArray()
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -105,7 +114,8 @@ class ProductController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
     }
 
@@ -126,6 +136,7 @@ class ProductController extends Controller
 
         if ($oItem->save()) {
             if ($request->files->count() > 0) {
+                $oItem->getMedia('productAvatars')->each->delete();
                 $oMedias = $oItem->addAllMediaFromRequest();
                 foreach ($oMedias as $key => $oMedia) {
                     $oMedia->toMediaCollection('productAvatars');
@@ -153,13 +164,13 @@ class ProductController extends Controller
         //
     }
 
-    public function delMany( Request $request )
+    public function delMany(Request $request)
     {
-        try{
-            $aItems=Product::whereIn('id',collect($request->input('toDel'))->pluck('id'))->get();
-            $oItems=$aItems->count();
-            if($oItems>0){
-                foreach ($aItems as $key =>$val){
+        try {
+            $aItems = Product::whereIn('id', collect($request->input('toDel'))->pluck('id'))->get();
+            $oItems = $aItems->count();
+            if ($oItems > 0) {
+                foreach ($aItems as $key => $val) {
                     $val->delete();
                 }
                 return response()->json([
@@ -167,13 +178,13 @@ class ProductController extends Controller
                         'success' => true,
                     ]
                 );
-            }else{
+            } else {
                 return response()->json([
                     'success' => false,
                     'messages' => "未知错误"
                 ], 500);
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'messages' => $e->getMessage()

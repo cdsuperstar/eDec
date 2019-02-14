@@ -144,6 +144,10 @@ export default {
         if (response.data.success) {
           this.show = false
           this.$emit('refreshPData', false)
+          this.$refs.fileuper.reset()
+          for (let key in this.form) {
+            this.form[key] = null
+          }
           this.$q.notify({
             message: response.data.messages,
             type: 'positive'
