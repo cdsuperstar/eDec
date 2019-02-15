@@ -15,7 +15,22 @@ class CreatePrcouponsTable extends Migration
     {
         Schema::create('prcoupons', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+			$table->unsignedInteger('product_id');
+
+			$table->string('name',30)->default('请设置打折劵名称');
+			$table->decimal('discount', 2, 2);
+			//一共多少张
+			$table->integer('total')->unsigned();
+			//每人限领
+			$table->integer('maximum')->unsigned();
+			//开始日期
+			$table->date('startdate');
+			$table->date('enddate');
+			$table->text('memo')->nullable();
+
+			$table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+
+			$table->timestamps();
         });
     }
 

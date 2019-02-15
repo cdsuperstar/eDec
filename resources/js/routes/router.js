@@ -1,111 +1,116 @@
-import VueRouter from 'vue-router'
-import { AuthManager } from './auth-manager'
+import VueRouter from "vue-router";
+import { AuthManager } from "./auth-manager";
 
-import * as All from './external-import/external-files'
+import * as All from "./external-import/external-files";
 
 const router = new VueRouter({
-  routes: [
-    {
-      path: '/',
-      components: {
-        default: All.PublicLayout,
-        'top-menu': All.WelcomeToolbar,
-        'app-footer': All.AppFooter
-      },
-      children: [
+    routes: [
         {
-          path: '/',
-          name: 'public.index',
-          component: All.Welcome
+            path: "/",
+            components: {
+                default: All.PublicLayout,
+                "top-menu": All.WelcomeToolbar,
+                "app-footer": All.AppFooter
+            },
+            children: [
+                {
+                    path: "/",
+                    name: "public.index",
+                    component: All.Welcome
+                },
+                {
+                    path: "products",
+                    name: "public.products",
+                    component: All.Products
+                },
+                {
+                    path: "packages",
+                    name: "public.packages",
+                    component: All.Packages
+                }
+            ],
+            beforeEnter(to, from, next) {
+                AuthManager.optionalAuth(to, from, next);
+            }
         },
         {
-          path: 'products',
-          name: 'public.products',
-          component: All.Products
+            path: "/user",
+            components: {
+                default: All.UserLayout,
+                "top-menu": All.UserToolbar,
+                "app-footer": All.AppFooter
+            },
+            children: [
+                {
+                    path: "/",
+                    name: "user.index",
+                    component: All.User
+                },
+                {
+                    path: "applyb",
+                    name: "user.applyb",
+                    component: All.ApplyB
+                },
+                {
+                    path: "mycompany",
+                    name: "user.mycompany",
+                    component: All.MyCompany
+                },
+                {
+                    path: "myaccount",
+                    name: "user.myaccount",
+                    component: All.MyAccount
+                },
+                {
+                    path: "myvendor",
+                    name: "user.myvendor",
+                    component: All.MyVendor
+                },
+                {
+                    path: "coupons",
+                    name: "user.coupons",
+                    component: All.Coupons
+                }
+            ],
+            beforeEnter(to, from, next) {
+                AuthManager.forceAuth(to, from, next);
+            }
         },
         {
-          path: 'packages',
-          name: 'public.packages',
-          component: All.Packages
+            path: "/e404",
+            components: {
+                default: All.ErrorLayout,
+                "top-menu": All.ErrorToolbar,
+                "app-footer": All.AppFooter
+            },
+            children: [
+                {
+                    path: "/",
+                    name: "e404",
+                    component: All.NotFound
+                }
+            ],
+            beforeEnter(to, from, next) {
+                AuthManager.optionalAuth(to, from, next);
+            }
+        },
+        {
+            path: "*",
+            redirect: {
+                name: "e404"
+            }
         }
-      ],
-      beforeEnter (to, from, next) {
-        AuthManager.optionalAuth(to, from, next)
-      }
-    },
-    {
-      path: '/user',
-      components: {
-        default: All.UserLayout,
-        'top-menu': All.UserToolbar,
-        'app-footer': All.AppFooter
-      },
-      children: [
-        {
-          path: '/',
-          name: 'user.index',
-          component: All.User
-        },
-        {
-          path: 'applyb',
-          name: 'user.applyb',
-          component: All.ApplyB
-        },
-        {
-          path: 'mycompany',
-          name: 'user.mycompany',
-          component: All.MyCompany
-        },
-        {
-          path: 'myaccount',
-          name: 'user.myaccount',
-          component: All.MyAccount
-        },
-        {
-          path: 'myvendor',
-          name: 'user.myvendor',
-          component: All.MyVendor
-        }
-      ],
-      beforeEnter (to, from, next) {
-        AuthManager.forceAuth(to, from, next)
-      }
-    },
-    {
-      path: '/e404',
-      components: {
-        default: All.ErrorLayout,
-        'top-menu': All.ErrorToolbar,
-        'app-footer': All.AppFooter
-      },
-      children: [
-        {
-          path: '/',
-          name: 'e404',
-          component: All.NotFound
-        }
-      ],
-      beforeEnter (to, from, next) {
-        AuthManager.optionalAuth(to, from, next)
-      }
-    },
-    {
-      path: '*',
-      redirect: {
-        name: 'e404'
-      }
-    }
-  ],
-  mode: 'history',
-  linkActiveClass: 'active'
-})
+    ],
+    mode: "history",
+    linkActiveClass: "active"
+});
 
 router.beforeEach((to, from, next) => {
-  if (typeof router.app.$root.$master.self === 'undefined') {
-    router.app.$root.$master.self = router.app.$root
-    router.app.$root.$master._setAxiosDefault()
-  }
-  next()
-})
+    if (typeof router.app.$root.$master.self === "undefined") {
+        router.app.$root.$master.self = router.app.$root;
+        router.app.$root.$master._setAxiosDefault();
+    }
+    next();
+});
 
-export { router }
+export { router };

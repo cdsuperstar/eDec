@@ -1,6 +1,6 @@
 <template>
     <q-page padding class="docs-table">
-        <p class="caption">您的商品（服务）列表</p>
+        <p class="caption">打折劵列表</p>
         <q-table
             :data="tableData"
             ref="dataTable"
@@ -80,7 +80,7 @@ import addprod from "../business/addprod";
 import updateprod from "../business/updateprod";
 
 export default {
-    name: "my-vendor",
+    name: "coupons",
     components: {
         addprod,
         updateprod
