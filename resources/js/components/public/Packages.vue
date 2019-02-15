@@ -1,55 +1,94 @@
 <template>
-    <q-page class="card-examples row items-start">
-        <div v-for="(prod , index ) in tableData" :key="prod.id">
+    <q-page class="card-examples row items-start justify-center">
+        <div class="doc-container items-center">
+            <div class="col row">
+                <q-search
+                    style="width: 250px; max-width: 80vw;"
+                    color="amber"
+                    v-model="filter"
+                    clearable
+                    no-icon
+                    float-label="查找您感兴趣的商品。"
+                />
+                <q-btn flat icon="search" label="查找" @click="initData" />
+            </div>
+            <div>共有 {{ this.cnt }} 项供您选择。</div>
 
-            <q-card inline class="q-ma-sm" >
-                <q-card-media>
-                    <q-carousel
-                            color="white"
-                            arrows
-                            height="120px"
-                    >
-                        <q-carousel-slide v-for="item in prod.media" :key="item.id" :img-src="'/img/media/'+item.id+'/'+item.file_name">
-                        </q-carousel-slide>
-                    </q-carousel>
-                </q-card-media>
-                <q-card-title>
-                    {{ prod.name }}
-                    <span slot="subtitle"> 公司：{{ prod.company.name }}（<q-icon name="local_phone" class="fa-sm" />{{prod.company.tel}}） </span>
-                </q-card-title>
-                <q-card-main>
-                    <q-list>
-                        <q-item>
-                            <q-item-side>
-                                <q-item-tile color="primary" icon="euro_symbol" />
-                            </q-item-side>
-                            <q-item-main>
-                                <q-item-tile label>价格</q-item-tile>
-                                <q-item-tile sublabel>{{ prod.price}}</q-item-tile>
-                            </q-item-main>
-                        </q-item>
-                        <q-item>
-                            <q-item-side>
-                                <q-item-tile color="black" icon="event_note" />
-                            </q-item-side>
-                            <q-item-main>
-                                <q-item-tile label>介绍</q-item-tile>
-                                <q-item-tile sublabel>{{ prod.memo }}</q-item-tile>
-                            </q-item-main>
-                        </q-item>
-                        <q-item>
-                            <q-item-side>
-                                <q-item-tile color="secondary" icon="card_giftcard" />
-                            </q-item-side>
-                            <q-item-main>
-                                <q-item-tile label>打折劵</q-item-tile>
-                                <q-item-tile sublabel>满1000元9折劵 满5000元8折劵 满10000元7折劵</q-item-tile>
-                            </q-item-main>
-                        </q-item>
-                    </q-list>
-                </q-card-main>
-            </q-card>
-
+            <div class="row items-start " inline>
+                <div v-for="prod in tableData" :key="prod.id">
+                    <q-card class="q-ma-sm">
+                        <q-card-media>
+                            <q-carousel color="white" arrows height="120px">
+                                <q-carousel-slide
+                                    v-for="item in prod.media"
+                                    :key="item.id"
+                                    :img-src="
+                                        '/img/media/' +
+                                            item.id +
+                                            '/' +
+                                            item.file_name
+                                    "
+                                ></q-carousel-slide>
+                            </q-carousel>
+                        </q-card-media>
+                        <q-card-title>
+                            {{ prod.name }}
+                            <span slot="subtitle">
+                                公司：{{ prod.company.name }}（
+                                <q-icon name="local_phone" class="fa-sm" />
+                                {{ prod.company.tel }}）
+                            </span>
+                        </q-card-title>
+                        <q-card-main>
+                            <q-list>
+                                <q-item>
+                                    <q-item-side>
+                                        <q-item-tile
+                                            color="primary"
+                                            icon="euro_symbol"
+                                        />
+                                    </q-item-side>
+                                    <q-item-main>
+                                        <q-item-tile label>价格</q-item-tile>
+                                        <q-item-tile sublabel>
+                                            {{ prod.price }}
+                                        </q-item-tile>
+                                    </q-item-main>
+                                </q-item>
+                                <q-item>
+                                    <q-item-side>
+                                        <q-item-tile
+                                            color="black"
+                                            icon="event_note"
+                                        />
+                                    </q-item-side>
+                                    <q-item-main>
+                                        <q-item-tile label>介绍</q-item-tile>
+                                        <q-item-tile sublabel>
+                                            {{ prod.memo }}
+                                        </q-item-tile>
+                                    </q-item-main>
+                                </q-item>
+                                <q-item>
+                                    <q-item-side>
+                                        <q-item-tile
+                                            color="secondary"
+                                            icon="card_giftcard"
+                                        />
+                                    </q-item-side>
+                                    <q-item-main>
+                                        <q-item-tile label>打折劵</q-item-tile>
+                                        <q-item-tile sublabel
+                                            >满1000元9折劵 满5000元8折劵
+                                            满10000元7折劵</q-item-tile
+                                        >
+                                    </q-item-main>
+                                </q-item>
+                            </q-list>
+                        </q-card-main>
+                    </q-card>
+                </div>
+            </div>
         </div>
 
         <q-inner-loading :visible="loader">
@@ -59,81 +98,58 @@
 </template>
 
 <script>
+// import { filter } from "quasar";
+
 export default {
-  name: 'packages',
-  components: {
-  },
-  $_veeValidate: {
-  },
-  created: function () {
-    this.initData()
-  },
-  methods: {
-    initData: function () {
-      this.$axios({
-        method: 'get',
-        url: '/api/v1/product/getAllProducts/装修公司'
-      }).then((response) => {
-        if (response.data.success) {
-          let resAcc = response.data.data
-          this.tableData = resAcc
-        } else {
-          this.$q.notify({
-            message: '数据获取失败',
-            type: 'negative'
-          })
-        }
-      })
+    name: "packages",
+    components: {},
+    $_veeValidate: {},
+    created: function() {
+        this.initData();
     },
-    handleSubmit: function (submitEvent) {
-    }
-  },
-  watch: {
-  },
-  data () {
-    return {
-      loader: false,
-      tableData: [],
-      columns: [
-        {
-          name: 'media',
-          required: true,
-          label: '图片',
-          align: 'left',
-          field: 'media',
-          sortable: true
+    methods: {
+        initData: function() {
+            this.loader = true;
+            this.$axios({
+                method: "get",
+                url: "/api/v1/product/getAllProducts/装修公司/" + this.filter
+            }).then(response => {
+                this.loader = false;
+                if (response.data.success) {
+                    this.tableData = response.data.data;
+                    this.cnt = response.data.count;
+                } else {
+                    this.$q.notify({
+                        message: "数据获取失败",
+                        type: "negative"
+                    });
+                }
+            });
+            this.loader = false;
         },
-        {
-          name: 'name',
-          required: true,
-          label: '商品（服务）名',
-          align: 'left',
-          field: 'name',
-          sortable: true
-        },
-        { name: 'price', label: '价格', field: 'price', sortable: true },
-        { name: 'unit', label: '单位', field: 'unit', sortable: true },
-        { name: 'memo', label: '说明介绍', field: 'memo' }
-      ],
-      filter: '',
-      visibleColumns: ['name', 'price', 'unit', 'memo'],
-      separator: 'horizontal',
-      paginationControl: { rowsPerPage: 3, page: 1 },
-      selectedSecond: [],
-      dark: true
+        handleSubmit: function(submitEvent) {}
+    },
+    watch: {},
+    data() {
+        return {
+            cnt: 0,
+            loader: false,
+            tableData: [],
+            filter: "",
+            dark: true
+        };
     }
-  }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
-    .card-examples
+.card-examples
+    .q-card
+        width 300px
+    .bigger
+        width 450px
+        max-width 90vw
+    @media (max-width $breakpoint-xs-max)
         .q-card
-            width 300px
-        .bigger
-            width 450px
-            max-width 90vw
-        @media (max-width $breakpoint-xs-max)
-            .q-card
-                width 100%
+            width 100%
 </style>

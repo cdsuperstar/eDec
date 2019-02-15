@@ -79,7 +79,7 @@ Route::name('api.business.')
 			});
 
 		Route::prefix('product')->group(function () {
-			Route::get('getAllProducts/{ctype?}', 'API\ProductController@getAllProducts')
+			Route::get('getAllProducts/{ctype?}/{search?}', 'API\ProductController@getAllProducts')
 				->name('productAllProducts');
 		});
 

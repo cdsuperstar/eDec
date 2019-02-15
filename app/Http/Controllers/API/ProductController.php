@@ -20,23 +20,26 @@ class ProductController extends Controller
 		//
 	}
 
-	public function getAllProducts(String $ctype = null)
+	public function getAllProducts(String $ctype = null, String $search = null)
 	{
-		switch ($ctype){
-			case '主材商户':
-				$oCompanys=Company::where('ctype','=',$ctype)->get(['id']);
-				$oItems = Product::with('media', 'company')->wherein('company_id',$oCompanys->toArray())->get();
-				break;
-			case '装修公司':
-				$oCompanys=Company::where('ctype','=',$ctype)->get(['id']);
-				$oItems = Product::with('media', 'company')->wherein('company_id',$oCompanys->toArray())->get();
-				break;
-			default:
-				$oItems = Product::with('media', 'company')->get();
-				break;
+		if ($ctype) {
+			$oCompanys = Company::where('ctype', '=', $ctype)->get(['id']);
+			if ($search) {
+				$oItems = Product::with('media', 'company')
+					->wherein('company_id', $oCompanys->toArray())
+					->where('name', 'like', "%$search%")
+					->get();
+			} else {
+				$oItems = Product::with('media', 'company')->wherein('company_id', $oCompanys->toArray())->get();
+			}
+		} else {
+			$oItems = Product::with('media', 'company')->get();
+
 		}
+
 		return response()->json([
 			'success' => true,
+			'count' => $oItems->count(),
 			'data' => $oItems->toArray()
 		]);
 	}

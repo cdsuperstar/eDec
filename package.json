@@ -1,7 +1,7 @@
 {
-    "name": "laravel-quasar",
+    "name": "eDec",
     "version": "1.0.0",
-    "description": "Laravel with Quasar Framework (SPA) by Manfred047.",
+    "description": "eDec descri.",
     "keywords": [
         "laravel",
         "php",
@@ -19,16 +19,16 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Manfred047/laravel-quasar.git"
+        "url": "git+"
     },
     "author": {
-        "name": "Emanuel Chable Concepcion",
-        "email": "manfred@manfred047.com",
-        "url": "https://manfred047.com/"
+        "name": "",
+        "email": "",
+        "url": ""
     },
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Manfred047/laravel-quasar/issues"
+        "url": ""
     },
     "homepage": "http://quasar-framework.org",
     "scripts": {
@@ -47,6 +47,7 @@
         "clean-webpack-plugin": "^0.1.19",
         "cross-env": "^5.2.0",
         "eslint": "^5.13.0",
+        "eslint-config-prettier": "^4.0.0",
         "eslint-config-standard": "^12.0.0",
         "eslint-plugin-import": "^2.16.0",
         "eslint-plugin-node": "^8.0.1",
@@ -62,6 +63,7 @@
         "sass-loader": "^7.1.0",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.2",
+        "tslint-config-prettier": "^1.18.0",
         "vee-validate": "^2.1.0-beta.8",
         "vue": "^2.5.17",
         "vue-i18n": "^8.1.0",
@@ -71,5 +73,7 @@
         "vuex": "^3.0.1",
         "webpack-require-http": "^0.4.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "uninstall": "0.0.0"
+    }
 }

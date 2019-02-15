@@ -1,11 +1,11 @@
-import { master } from '../../../plugins/master';
+import { master } from "../../../plugins/master";
 
 export default {
     SET_LANGUAGE(state, lang) {
-        master.self.$q.cookies.set('lang', lang, {
+        master.self.$q.cookies.set("lang", lang, {
             expires: 30,
-            path: '/'
+            path: "/"
         });
         state.language = lang;
     }
-}
+};

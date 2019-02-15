@@ -1,14 +1,14 @@
-import Vuex from 'vuex'
-import auth from './modules/auth/index'
-import lang from './modules/lang/index'
+import Vuex from "vuex";
+import auth from "./modules/auth/index";
+import lang from "./modules/lang/index";
 
 const modules = {
-  auth,
-  lang
-}
+    auth,
+    lang
+};
 
 const store = new Vuex.Store({
-  modules
-})
+    modules
+});
 
-export { store }
+export { store };
