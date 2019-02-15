@@ -34,9 +34,13 @@
                         <q-card-title>
                             {{ prod.name }}
                             <span slot="subtitle">
-                                公司：{{ prod.company.name }}（
-                                <q-icon name="local_phone" class="fa-sm" />
-                                {{ prod.company.tel }}）
+                                公司：{{ prod.company.name }}
+                                <a :href="'tel:' + prod.company.tel">
+                                    <q-icon
+                                        name="local_phone"
+                                        class="fa-sm"
+                                    />{{ prod.company.tel }}
+                                </a>
                             </span>
                         </q-card-title>
                         <q-card-main>

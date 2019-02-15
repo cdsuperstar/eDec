@@ -17,4 +17,9 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsTo('App\Company');
     }
+
+	public function prcoupons()
+	{
+		return $this->hasMany('App\Prcoupon');
+    }
 }

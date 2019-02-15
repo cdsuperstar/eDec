@@ -243,25 +243,59 @@ export default {
             tableData: [],
             columns: [
                 {
-                    name: "media",
+                    name: "product",
                     required: true,
-                    label: "图片",
+                    label: "商品名",
                     align: "left",
-                    field: "media",
+                    field: "product",
                     sortable: true
                 },
                 {
                     name: "name",
                     required: true,
-                    label: "商品（服务）名",
+                    label: "打折劵名",
                     align: "left",
                     field: "name",
                     sortable: true
                 },
                 {
-                    name: "price",
-                    label: "价格",
-                    field: "price",
+                    name: "discount",
+                    required: true,
+                    label: "折扣力度",
+                    align: "left",
+                    field: "discount",
+                    sortable: true
+                },
+                {
+                    name: "total",
+                    required: true,
+                    label: "劵总量",
+                    align: "left",
+                    field: "total",
+                    sortable: true
+                },
+                {
+                    name: "maximum",
+                    required: true,
+                    label: "人均申领上限",
+                    align: "left",
+                    field: "maximum",
+                    sortable: true
+                },
+                {
+                    name: "startdate",
+                    required: true,
+                    label: "活动开始时间",
+                    align: "left",
+                    field: "startdate",
+                    sortable: true
+                },
+                {
+                    name: "enddate",
+                    required: true,
+                    label: "活动结束时间",
+                    align: "left",
+                    field: "enddate",
                     sortable: true
                 },
                 { name: "unit", label: "单位", field: "unit", sortable: true },
@@ -269,9 +303,18 @@ export default {
             ],
 
             filter: "",
-            visibleColumns: ["name", "price", "unit", "memo"],
+            visibleColumns: [
+                "product",
+                "name",
+                "discount",
+                "total",
+                "maximum",
+                "startdate",
+                "enddate",
+                "memo"
+            ],
             separator: "horizontal",
-            paginationControl: { rowsPerPage: 3, page: 1 },
+            paginationControl: { rowsPerPage: 10, page: 1 },
             loading: false,
             selectedSecond: [],
             dark: true
