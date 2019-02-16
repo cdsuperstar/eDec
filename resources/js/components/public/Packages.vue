@@ -1,6 +1,6 @@
 <template>
-    <q-page class="card-examples row items-start justify-center">
-        <div class="doc-container items-center">
+    <q-page class="card-examples row items-start ">
+        <div class="doc-container ">
             <div class="col row">
                 <q-search
                     style="width: 250px; max-width: 80vw;"
@@ -14,7 +14,7 @@
             </div>
             <div>共有 {{ this.cnt }} 项供您选择。</div>
 
-            <div class="row items-start " inline>
+            <div class="row items-start justify-center" inline>
                 <div v-for="prod in tableData" :key="prod.id">
                     <q-card class="q-ma-sm">
                         <q-card-media>

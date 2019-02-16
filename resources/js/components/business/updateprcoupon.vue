@@ -1,10 +1,18 @@
 <template>
     <q-modal v-model="show" position="">
         <form
+            v-if="selectedRows.length > 0"
             class="layout-padding"
             @submit.prevent="validateForm"
-            ref="addprodform"
         >
+            <q-carousel color="white" arrows height="80px">
+                <q-carousel-slide
+                    v-for="item in selectedRows[0].media"
+                    :key="item.id"
+                    :img-src="'/img/media/' + item.id + '/' + item.file_name"
+                />
+            </q-carousel>
+
             <q-field class="q-mb-md">
                 <q-uploader
                     ref="fileuper"
@@ -17,8 +25,7 @@
                     color="amber"
                     float-label="商品照片"
                     url=""
-                >
-                </q-uploader>
+                />
             </q-field>
 
             <q-field
@@ -29,13 +36,12 @@
             >
                 <q-input
                     v-model="form.name"
+                    v-validate="form_rules.name"
                     name="username"
                     type="text"
-                    v-validate="form_rules.name"
                     data-vv-as="名称"
                     stack-label="名称"
-                >
-                </q-input>
+                />
             </q-field>
 
             <q-field class="q-mb-md">
@@ -44,8 +50,7 @@
                     name="unit"
                     type="text"
                     stack-label="计量单位"
-                >
-                </q-input>
+                />
             </q-field>
 
             <q-field class="q-mb-md" helper="请填写商品原价">
@@ -61,61 +66,74 @@
 
             <q-field helper="请填写介绍及说明">
                 <q-input
-                    float-label="介绍及说明"
                     v-model="form.memo"
+                    float-label="介绍及说明"
                     type="textarea"
                 />
             </q-field>
 
             <div class="row justify-center q-mt-md">
-                <q-btn type="submit" color="primary" label=" 添加商品 ">
-                </q-btn>
+                <q-btn type="submit" color="primary" label=" 保存商品 " />
                 <div class="col" />
                 <q-btn
                     color="secondary"
-                    @click="$emit('childByValue', false)"
                     label="关闭"
+                    @click="$emit('childByValueUpdate', false)"
                 />
             </div>
         </form>
         <q-inner-loading :visible="loader">
-            <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
+            <q-spinner-gears size="50px" color="primary" />
         </q-inner-loading>
     </q-modal>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
-    name: "addprod",
-    props: ["addshow"],
-    // computed: {
-    //     ...mapState("bus", ["products"])
-    // },
+    name: "Updateprcoupon",
+    components: {
+        // VueRecaptcha
+    },
+    props: ["updateshow", "selectedRows"],
     $_veeValidate: {
         validator: "new"
     },
-    components: {
-        // VueRecaptcha
+    data() {
+        return {
+            loader: false,
+            form: {
+                product: null,
+                product_id: null,
+                name: null,
+                discount: null,
+                total: null,
+                maximum: null,
+                startdate: null,
+                enddate: null,
+                memo: null,
+                username: null
+            },
+            form_rules: {
+                name: "required|max:50"
+            }
+        };
     },
     computed: {
         show: {
             get: function() {
-                return this.addshow;
+                return this.updateshow;
             },
             set: function(show) {
-                this.$emit("childByValue", false);
+                this.$emit("childByValueUpdate", false);
             }
         }
     },
     watch: {
         selectedRows(value) {
-            // this.$master.setRecaptchaLang(this.$refs.recaptcha.$el, value);
+            this.form = value[0];
         }
     },
     methods: {
-        ...mapActions("bus", ["addMyproduct"]),
         validateForm() {
             this.$validator
                 .validateAll()
@@ -125,9 +143,7 @@ export default {
                         return false;
                     }
                 })
-                .catch(errors => {
-                    console.log(errors);
-                });
+                .catch(() => {});
         },
         addproduct() {
             this.loader = true;
@@ -138,44 +154,48 @@ export default {
             for (let key in this.form) {
                 formData.append(key, this.form[key]);
             }
-            this.addMyproduct(formData).then(
-                response => {
-                    for (let key in this.form) {
-                        this.form[key] = null;
+            this.$axios({
+                method: "post",
+                url: this.$master.api("/product/updateProduct"),
+                data: formData
+            })
+                .then(response => {
+                    if (response.data.success) {
+                        this.show = false;
+                        this.$emit("refreshPData", false);
+                        this.$refs.fileuper.reset();
+                        for (let key in this.form) {
+                            this.form[key] = null;
+                        }
+                        this.$q.notify({
+                            message: response.data.messages,
+                            type: "positive"
+                        });
+                    } else {
+                        this.$q.notify({
+                            message: response.data.messages,
+                            type: "negative"
+                        });
                     }
-                    this.$refs.fileuper.reset();
+                })
+                .catch(errors => {
+                    let list = this.$master.hasErrors(errors);
+                    if (list) {
+                        for (const key of Object.keys(list)) {
+                            if (list.hasOwnProperty(key)) {
+                                this.errors.add({
+                                    field: key,
+                                    msg: list[key][0],
+                                    rule: key
+                                });
+                            }
+                        }
+                    }
+                })
+                .finally(() => {
                     this.loader = false;
-                    this.$master.self.$q.notify({
-                        message: response.data.messages,
-                        type: "positive"
-                    });
-                },
-                errors => {
-                    this.loader = false;
-                    this.$master.self.$q.notify({
-                        message: errors,
-                        type: "negative"
-                    });
-                    console.log(errors);
-                }
-            );
+                });
         }
-    },
-    data() {
-        return {
-            loader: false,
-            form: {
-                name: null,
-                files: null,
-                unit: null,
-                price: null,
-                memo: null,
-                username: null
-            },
-            form_rules: {
-                name: "required|max:50"
-            }
-        };
     }
 };
 </script>

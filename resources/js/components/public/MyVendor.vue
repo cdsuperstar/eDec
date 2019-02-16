@@ -2,7 +2,7 @@
     <q-page padding class="docs-table">
         <p class="caption">您的商品（服务）列表</p>
         <q-table
-            :data="tableData"
+            :data="products"
             ref="dataTable"
             :columns="columns"
             :filter="filter"
@@ -61,15 +61,11 @@
         <q-inner-loading :visible="loader">
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
-        <addprod
-            :addshow="addshow"
-            v-on:refreshPData="initData"
-            v-on:childByValue="childByValue"
-        ></addprod>
+        <addprod :addshow="addshow" v-on:childByValue="childByValue"></addprod>
         <updateprod
             :updateshow="updateshow"
             :selectedRows="selectedSecond"
-            v-on:refreshPData="initData"
+            v-on:refreshPData="selectedSecond = []"
             v-on:childByValueUpdate="childByValueUpdate"
         ></updateprod>
     </q-page>
@@ -78,6 +74,7 @@
 <script>
 import addprod from "../business/addprod";
 import updateprod from "../business/updateprod";
+import { mapActions, mapState } from "vuex";
 
 export default {
     name: "my-vendor",
@@ -85,13 +82,21 @@ export default {
         addprod,
         updateprod
     },
+    computed: {
+        ...mapState("bus", ["products"])
+    },
     $_veeValidate: {
         validator: "newapply"
     },
     created: function() {
-        this.initData();
+        // this.initData();
     },
     methods: {
+        ...mapActions("bus", [
+            "getMyproducts",
+            "updateMycompany",
+            "delMyproducts"
+        ]),
         childByValue: function(childValue) {
             this.addshow = childValue;
         },
@@ -107,25 +112,21 @@ export default {
                     cancel: "取消"
                 })
                 .then(() => {
-                    this.$axios({
-                        method: "delete",
-                        url: "/api/v1/product/delMany",
-                        data: { toDel: this.selectedSecond }
-                    }).then(response => {
-                        if (response.data.success) {
-                            this.initData();
-                            this.$q.notify({
+                    this.delMyproducts(this.selectedSecond).then(
+                        response => {
+                            this.selectedSecond = [];
+                            this.$master.self.$q.notify({
                                 message: response.data.messages,
                                 type: "positive"
                             });
-                            // this.$refs.dataTable.loading = false
-                        } else {
-                            this.$q.notify({
-                                message: "数据删除失败",
+                        },
+                        errors => {
+                            this.$master.self.$q.notify({
+                                message: errors,
                                 type: "negative"
                             });
                         }
-                    });
+                    );
                 })
                 .catch(() => {
                     // this.$q.notify('Disagreed...')
@@ -133,87 +134,6 @@ export default {
         },
         initData: function() {
             this.selectedSecond = [];
-            this.$axios({
-                method: "get",
-                url: "/api/v1/product/getMyProducts"
-            }).then(response => {
-                if (response.data.success) {
-                    let resAcc = response.data.data;
-                    // console.log(resAcc[0].media)
-                    this.tableData = resAcc;
-                    // this.$refs.dataTable.loading = false
-                } else {
-                    this.$q.notify({
-                        message: "数据获取失败",
-                        type: "negative"
-                    });
-                }
-            });
-        },
-
-        handleSubmit: function(submitEvent) {
-            this.$validator
-                .validateAll()
-                .then(result => {
-                    if (result) {
-                        this.updateaccount();
-                        return false;
-                    } else {
-                        console.log(result, "validate failed.");
-                    }
-                })
-                .catch(e => {
-                    this.loader = false;
-                    console.log(this.errors, "validate exception line 109.", e);
-                });
-        },
-        updateaccount() {
-            this.loader = true;
-            let formData = new FormData();
-            for (let key in this.form) {
-                formData.append(key, this.form[key]);
-            }
-            this.$axios({
-                method: "post",
-                url: "/api/v1/vendor/apply",
-                data: formData
-            })
-                .then(response => {
-                    this.initData();
-                    this.$q.notify({
-                        message: response.data.messages,
-                        type: "positive"
-                    });
-                    this.loader = false;
-                })
-                .catch(errors => {
-                    let list = this.$master.hasErrors(errors);
-                    if (list) {
-                        let message = this.$master.getValue(errors, [
-                            "response",
-                            "data",
-                            "message"
-                        ]);
-                        let type = message;
-                        for (const key of Object.keys(list)) {
-                            if (list.hasOwnProperty(key)) {
-                                type =
-                                    message === "invalid_credentials"
-                                        ? "auth"
-                                        : key;
-                                this.errors.add({
-                                    field: key,
-                                    msg: list[key][0],
-                                    rule: type
-                                });
-                                console.log(this.errors);
-                            }
-                        }
-                    }
-                })
-                .finally(() => {
-                    this.loader = false;
-                });
         }
     },
     watch: {

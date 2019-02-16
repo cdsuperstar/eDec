@@ -24,11 +24,34 @@ export default {
             }
         }
     },
+    created: function() {
+        this.getMycompany();
+        this.getMyproducts().then(
+            r => {},
+            e => {
+                this.$master.self.$q.notify({
+                    message: e,
+                    type: "negative"
+                });
+            }
+        );
+        this.getPrcoupons().then(
+            r => {},
+            e => {
+                this.$master.self.$q.notify({
+                    message: "数据获取失败",
+                    type: "negative"
+                });
+            }
+        );
+    },
     computed: {
         ...mapState("auth", ["auth"])
+        // ...mapState("bus", ["company"])
     },
     methods: {
-        ...mapActions("auth", ["getUserInfo"])
+        ...mapActions("auth", ["getUserInfo"]),
+        ...mapActions("bus", ["getMycompany", "getMyproducts", "getPrcoupons"])
     }
 };
 </script>

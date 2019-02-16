@@ -78,6 +78,19 @@ Route::name('api.business.')
 
 			});
 
+		// 打折劵
+		Route::prefix('prcoupon')
+			->middleware(['client.oauth', 'auth:api'])
+			->group(function () {
+				Route::post('add', 'API\PrCouponsController@add')
+					->name('prcouponAdd');
+
+				Route::get('getCoupons', 'API\PrCouponsController@getCoupons')
+					->name('prcouponCoupons');
+				Route::delete('delMany', 'API\PrCouponsController@delMany')
+					->name('prcouponDelMany');
+			});
+
 		Route::prefix('product')->group(function () {
 			Route::get('getAllProducts/{ctype?}/{search?}', 'API\ProductController@getAllProducts')
 				->name('productAllProducts');

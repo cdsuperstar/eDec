@@ -61,29 +61,31 @@
         <q-inner-loading :visible="loader">
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
-        <addprod
+        <addprcoupon
             :addshow="addshow"
             v-on:refreshPData="initData"
             v-on:childByValue="childByValue"
-        ></addprod>
-        <updateprod
+        ></addprcoupon>
+        <updateprcoupon
             :updateshow="updateshow"
             :selectedRows="selectedSecond"
             v-on:refreshPData="initData"
             v-on:childByValueUpdate="childByValueUpdate"
-        ></updateprod>
+        ></updateprcoupon>
     </q-page>
 </template>
 
 <script>
-import addprod from "../business/addprod";
-import updateprod from "../business/updateprod";
+// import addprcoupon from () => {return "../business/addprcoupon"};
+const addprcoupon = () => import("../business/addprcoupon");
+
+import updateprcoupon from "../business/updateprcoupon";
 
 export default {
     name: "coupons",
     components: {
-        addprod,
-        updateprod
+        addprcoupon,
+        updateprcoupon
     },
     $_veeValidate: {
         validator: "newapply"
@@ -135,12 +137,11 @@ export default {
             this.selectedSecond = [];
             this.$axios({
                 method: "get",
-                url: "/api/v1/product/getMyProducts"
+                url: "/api/v1/prcoupon/getCoupons"
             }).then(response => {
                 if (response.data.success) {
-                    let resAcc = response.data.data;
-                    // console.log(resAcc[0].media)
-                    this.tableData = resAcc;
+                    this.tableData = response.data.data;
+                    // console.log(response.data);
                     // this.$refs.dataTable.loading = false
                 } else {
                     this.$q.notify({
@@ -298,7 +299,6 @@ export default {
                     field: "enddate",
                     sortable: true
                 },
-                { name: "unit", label: "单位", field: "unit", sortable: true },
                 { name: "memo", label: "说明介绍", field: "memo" }
             ],
 

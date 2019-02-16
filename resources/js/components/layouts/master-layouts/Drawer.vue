@@ -32,7 +32,7 @@
                         sublabel="管理我的公司（商铺）信息"
                     />
                 </q-item>
-                <q-item to="/user/myvendor" v-show="true">
+                <q-item to="/user/myvendor" v-show="company.id ? true : false">
                     <q-item-side icon="shopping_cart" />
                     <q-item-main
                         style="color:black"
@@ -40,7 +40,7 @@
                         sublabel="管理我的商品服务信息"
                     />
                 </q-item>
-                <q-item to="/user/coupons" v-show="true">
+                <q-item to="/user/coupons" v-show="company.id ? true : false">
                     <q-item-side icon="receipt" />
                     <q-item-main
                         style="color:black"
@@ -54,12 +54,16 @@
 </template>
 
 <script>
-import { openURL } from "quasar-framework/dist/quasar.mat.esm";
+import { mapActions, mapState } from "vuex";
 
 export default {
     name: "drawer",
+    watch: {},
+    computed: {
+        ...mapState("bus", ["company"])
+    },
     methods: {
-        openURL
+        // ...mapActions("bus", ["getMycompany"])
     },
     data() {
         return {

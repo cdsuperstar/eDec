@@ -89,6 +89,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "Updateprod",
     components: {
@@ -130,6 +132,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions("bus", ["updateMyproduct"]),
         validateForm() {
             this.$validator
                 .validateAll()
@@ -150,47 +153,29 @@ export default {
             for (let key in this.form) {
                 formData.append(key, this.form[key]);
             }
-            this.$axios({
-                method: "post",
-                url: this.$master.api("/product/updateProduct"),
-                data: formData
-            })
-                .then(response => {
-                    if (response.data.success) {
-                        this.show = false;
-                        this.$emit("refreshPData", false);
-                        this.$refs.fileuper.reset();
-                        for (let key in this.form) {
-                            this.form[key] = null;
-                        }
-                        this.$q.notify({
-                            message: response.data.messages,
-                            type: "positive"
-                        });
-                    } else {
-                        this.$q.notify({
-                            message: response.data.messages,
-                            type: "negative"
-                        });
+
+            this.updateMyproduct(formData).then(
+                r => {
+                    this.show = false;
+                    this.$emit("refreshPData");
+                    this.$refs.fileuper.reset();
+                    for (let key in this.form) {
+                        this.form[key] = null;
                     }
-                })
-                .catch(errors => {
-                    let list = this.$master.hasErrors(errors);
-                    if (list) {
-                        for (const key of Object.keys(list)) {
-                            if (list.hasOwnProperty(key)) {
-                                this.errors.add({
-                                    field: key,
-                                    msg: list[key][0],
-                                    rule: key
-                                });
-                            }
-                        }
-                    }
-                })
-                .finally(() => {
+                    this.$q.notify({
+                        message: r.data.messages,
+                        type: "positive"
+                    });
                     this.loader = false;
-                });
+                },
+                errors => {
+                    this.$q.notify({
+                        message: errors,
+                        type: "negative"
+                    });
+                    this.loader = false;
+                }
+            );
         }
     }
 };
