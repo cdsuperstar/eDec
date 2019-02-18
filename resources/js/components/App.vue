@@ -21,33 +21,39 @@ export default {
         auth(value) {
             if (value) {
                 this.getUserInfo();
+                this.getMycompany().then(
+                    () => {
+                        this.getMyproducts().then(
+                            () => {
+                                this.getPrcoupons().then(
+                                    () => {},
+                                    () => {
+                                        // this.$master.self.$q.notify({
+                                        //     message: "数据获取失败"+e,
+                                        //     type: "negative"
+                                        // });
+                                    }
+                                );
+                            },
+                            () => {
+                                // this.$master.self.$q.notify({
+                                //     message: e + " app1",
+                                //     type: "negative"
+                                // });
+                            }
+                        );
+                    },
+                    () => {}
+                );
             }
         }
-    },
-    created: function() {
-        this.getMycompany();
-        this.getMyproducts().then(
-            r => {},
-            e => {
-                this.$master.self.$q.notify({
-                    message: e,
-                    type: "negative"
-                });
-            }
-        );
-        this.getPrcoupons().then(
-            r => {},
-            e => {
-                this.$master.self.$q.notify({
-                    message: "数据获取失败",
-                    type: "negative"
-                });
-            }
-        );
+        // company(value) {
+        //     console.log(value);
+        // }
     },
     computed: {
-        ...mapState("auth", ["auth"])
-        // ...mapState("bus", ["company"])
+        ...mapState("auth", ["auth"]),
+        ...mapState("bus", ["company"])
     },
     methods: {
         ...mapActions("auth", ["getUserInfo"]),

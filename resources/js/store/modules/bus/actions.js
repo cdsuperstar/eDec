@@ -1,29 +1,25 @@
 import { master } from "../../../plugins/master";
 
 export default {
-    showLogin({ commit }, value) {
-        commit("SHOW_LOGIN", value);
-        commit("SHOW_REGISTER", false);
-    },
-    showRegister({ commit }, value) {
-        commit("SHOW_REGISTER", value);
-        commit("SHOW_LOGIN", false);
-    },
     getMycompany({ commit }) {
-        master.self
-            .$axios({
-                method: "get",
-                url: "/api/v1/company/mine"
-            })
-            .then(response => {
-                if (response.data.id) {
-                    commit("set_company_info", response.data);
-                } else {
-                    master.self.$router.push("/user/applyb");
-                }
-            });
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "get",
+                    url: "/api/v1/company/mine"
+                })
+                .then(response => {
+                    if (response.data.data.id) {
+                        commit("set_company_info", response.data.data);
+                        resolve(response.data);
+                    } else {
+                        reject(response.data.errors);
+                        // master.self.$router.push("/user/applyb");
+                    }
+                });
+        });
     },
-    async updateMycompany({ dispatch, state }) {
+    updateMycompany({ dispatch, state }) {
         return new Promise((resolve, reject) => {
             master.self
                 .$axios({
@@ -61,7 +57,7 @@ export default {
                 });
         });
     },
-    async updateMyproduct({ dispatch }, payload) {
+    updateMyproduct({ dispatch }, payload) {
         return new Promise((resolve, reject) => {
             master.self
                 .$axios({
@@ -82,7 +78,7 @@ export default {
                 });
         });
     },
-    async addMyproduct({ dispatch }, payload) {
+    addMyproduct({ dispatch }, payload) {
         return new Promise((resolve, reject) => {
             master.self
                 .$axios({
@@ -144,33 +140,4 @@ export default {
                 });
         });
     }
-    // logout({ commit }) {
-    //     master.self
-    //         .$axios({
-    //             method: "post",
-    //             url: master.api("/oauth/logout")
-    //         })
-    //         .then(response => {
-    //             commit("SET_AUTH_STATUS", false);
-    //             commit("SET_USER_INFO", {});
-    //             let timer = new master.Timer(() => {
-    //                 auth(commit);
-    //             }, 300000);
-    //             commit("RELOAD_AUTH_STATUS", timer);
-    //             let routeName = master.getValue(master.self.$route, ["name"]);
-    //             if (routeName) {
-    //                 let route = routeName.split(".")[0].toLowerCase();
-    //                 switch (route) {
-    //                     case "user":
-    //                         master.self.$router.replace({
-    //                             name: "public.index"
-    //                         });
-    //                         break;
-    //                     default:
-    //                         //
-    //                         break;
-    //                 }
-    //             }
-    //         });
-    // }
 };

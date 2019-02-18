@@ -24,7 +24,7 @@
                         sublabel="管理我的平台帐户信息"
                     />
                 </q-item>
-                <q-item to="/user/mycompany">
+                <q-item to="/user/mycompany" v-show="company.id ? true : false">
                     <q-item-side icon="home" />
                     <q-item-main
                         style="color:black"
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
     name: "drawer",
@@ -64,6 +64,9 @@ export default {
     },
     methods: {
         // ...mapActions("bus", ["getMycompany"])
+    },
+    created: function() {
+        // console.log(this.company);
     },
     data() {
         return {

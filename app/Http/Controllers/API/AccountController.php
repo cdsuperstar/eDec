@@ -37,12 +37,15 @@ class AccountController extends Controller
     public function getMyAccount()
     {
         $oItem=Account::where(["user_id" => auth()->guard('api')->user()->id])->first();
+        if($oItem){
+			if($oItem->hasMedia('userAvatars')){
+				$oItem->avatar=$oItem->getMedia('userAvatars')[0]->getFullUrl();
+			}
+		}
 
-        if($oItem->hasMedia('userAvatars')){
-            $oItem->avatar=$oItem->getMedia('userAvatars')[0]->getFullUrl();
-        }
         return response()->json($oItem);
     }
+
     public function updateUserAccount(Request $request)
     {
         $oItem = Account::firstOrNew(["user_id" => auth()->guard('api')->user()->id]);
