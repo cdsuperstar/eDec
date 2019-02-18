@@ -10,7 +10,7 @@
                     name="product_id"
                     stack-label="商品（服务）名称"
                     v-model="form.product_id"
-                    :options="form.product"
+                    :options="product"
                 />
             </q-field>
 
@@ -45,6 +45,12 @@
                     :max="0.99"
                     label
                 />
+                <q-input
+                    v-model="form.discount"
+                    type="number"
+                    :min="0.01"
+                    :max="0.99"
+                />
             </q-field>
 
             <q-field
@@ -55,7 +61,6 @@
                 <q-input
                     v-model="form.total"
                     type="number"
-                    :step="10"
                     :min="1"
                     :decimals="0"
                     :max="99999"
@@ -78,7 +83,27 @@
                 />
             </q-field>
 
+            <q-field helper="请填写优惠起始日期">
+                <q-datetime-picker
+                    minimal
+                    color="orange"
+                    :max="form.enddate"
+                    v-model="form.startdate"
+                    type="date"
+                />
+            </q-field>
+
             <q-field helper="请填写介绍及说明">
+                <q-datetime-picker
+                    minimal
+                    :min="form.startdate"
+                    color="orange"
+                    v-model="form.enddate"
+                    type="date"
+                />
+            </q-field>
+
+            <q-field helper="请填写优惠结束日期">
                 <q-input
                     float-label="介绍及说明"
                     v-model="form.memo"
@@ -104,6 +129,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
     name: "addprcoupon",
     props: ["addshow"],
@@ -114,6 +141,7 @@ export default {
         // VueRecaptcha
     },
     computed: {
+        ...mapState("bus", ["products"]),
         show: {
             get: function() {
                 return this.addshow;
@@ -123,12 +151,10 @@ export default {
             }
         }
     },
-    watch: {
-        selectedRows(value) {
-            // this.$master.setRecaptchaLang(this.$refs.recaptcha.$el, value);
-        }
-    },
+    watch: {},
     methods: {
+        ...mapActions("bus", ["addPrcoupon"]),
+        // ...mapActions("bus", ["addPrcoupon", "getMyproducts"]),
         validateForm() {
             this.$validator
                 .validateAll()
@@ -141,28 +167,12 @@ export default {
                 .catch(() => {});
         },
         initData: function() {
-            this.$axios({
-                method: "get",
-                url: "/api/v1/product/getMyProducts"
-            }).then(response => {
-                if (response.data.success) {
-                    for (let key in response.data.data) {
-                        // this.form.product[key].label =
-                        //     response.data.data[key].name;
-                        // this.form.product[key].value =
-                        //     response.data.data[key].id;
-                        this.form.product.push({
-                            label: response.data.data[key].name,
-                            value: response.data.data[key].id
-                        });
-                    }
-                } else {
-                    this.$q.notify({
-                        message: "数据获取失败",
-                        type: "negative"
-                    });
-                }
-            });
+            for (let key in this.products) {
+                this.product.push({
+                    label: this.products[key].name,
+                    value: this.products[key].id
+                });
+            }
         },
         addproduct() {
             this.loader = true;
@@ -170,46 +180,25 @@ export default {
             for (let key in this.form) {
                 formData.append(key, this.form[key]);
             }
-            this.$axios({
-                method: "post",
-                url: this.$master.api("/prcoupon/add"),
-                data: formData
-            })
-                .then(response => {
-                    if (response.data.success) {
-                        this.show = false;
-                        this.$emit("refreshPData", false);
-                        for (let key in this.form) {
-                            // this.form[key] = null;
-                        }
-                        this.$q.notify({
-                            message: response.data.messages,
-                            type: "positive"
-                        });
-                    } else {
-                        this.$q.notify({
-                            message: response.data.messages,
-                            type: "negative"
-                        });
+            this.addPrcoupon(formData).then(
+                response => {
+                    for (let key in this.form) {
+                        this.form[key] = null;
                     }
-                })
-                .catch(errors => {
-                    let list = this.$master.hasErrors(errors);
-                    if (list) {
-                        for (const key of Object.keys(list)) {
-                            if (list.hasOwnProperty(key)) {
-                                this.errors.add({
-                                    field: key,
-                                    msg: list[key][0],
-                                    rule: key
-                                });
-                            }
-                        }
-                    }
-                })
-                .finally(() => {
                     this.loader = false;
-                });
+                    this.$master.self.$q.notify({
+                        message: response.data.messages,
+                        type: "positive"
+                    });
+                },
+                errors => {
+                    this.loader = false;
+                    // this.$master.self.$q.notify({
+                    //     message: errors.messages,
+                    //     type: "negative"
+                    // });
+                }
+            );
         }
     },
     created: function() {
@@ -218,17 +207,16 @@ export default {
     data() {
         return {
             loader: false,
+            product: [],
             form: {
-                product: [],
                 product_id: null,
-                name: null,
-                discount: 0,
-                total: null,
-                maximum: null,
-                startdate: null,
-                enddate: null,
-                memo: null,
-                username: null
+                name: "8折劵",
+                discount: 0.8,
+                total: 100,
+                maximum: 2,
+                startdate: "2019-2-10",
+                enddate: "2019-2-20",
+                memo: "8折劵你服不服？ 拿去过年"
             },
             form_rules: {
                 name: "required|max:50",

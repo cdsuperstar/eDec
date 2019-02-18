@@ -85,8 +85,8 @@ class LoginController extends AccessTokenController
             ->where('access_token_id', $accessToken->id)
             ->delete();
         $accessToken->delete();
-        cookie()->forget('oauth');
-        return Master::success();
+		$cookie=cookie()->forget('oauth');
+        return Master::success($cookie)->withCookie($cookie);
     }
 
 }

@@ -44,7 +44,7 @@
                 dense
                 class="col"
                 icon="extension"
-                label="配置"
+                label="设置"
                 @click="$router.replace({ name: 'user.index' })"
             >
             </q-btn>

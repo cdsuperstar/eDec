@@ -84,9 +84,12 @@ Route::name('api.business.')
 			->group(function () {
 				Route::post('add', 'API\PrCouponsController@add')
 					->name('prcouponAdd');
+				Route::post('updateItem', 'API\PrCouponsController@updateItem')
+					->name('prcouponUpdateItem');
 
 				Route::get('getCoupons', 'API\PrCouponsController@getCoupons')
 					->name('prcouponCoupons');
+
 				Route::delete('delMany', 'API\PrCouponsController@delMany')
 					->name('prcouponDelMany');
 			});

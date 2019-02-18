@@ -1,30 +1,16 @@
 <template>
     <q-modal v-model="show" position="">
         <form
-            v-if="selectedRows.length > 0"
             class="layout-padding"
             @submit.prevent="validateForm"
+            ref="addprodform"
         >
-            <q-carousel color="white" arrows height="80px">
-                <q-carousel-slide
-                    v-for="item in selectedRows[0].media"
-                    :key="item.id"
-                    :img-src="'/img/media/' + item.id + '/' + item.file_name"
-                />
-            </q-carousel>
-
             <q-field class="q-mb-md">
-                <q-uploader
-                    ref="fileuper"
-                    expand-style="Object"
-                    auto-expand
-                    multiple
-                    hide-upload-button
-                    hide-upload-progress
-                    extensions=".gif,.jpg,.jpeg,.png,.bmp"
-                    color="amber"
-                    float-label="商品照片"
-                    url=""
+                <q-select
+                    name="product_id"
+                    stack-label="商品（服务）名称"
+                    v-model="form.product_id"
+                    :options="product"
                 />
             </q-field>
 
@@ -36,61 +22,118 @@
             >
                 <q-input
                     v-model="form.name"
-                    v-validate="form_rules.name"
                     name="username"
                     type="text"
+                    v-validate="form_rules.name"
                     data-vv-as="名称"
                     stack-label="名称"
-                />
+                >
+                </q-input>
             </q-field>
 
-            <q-field class="q-mb-md">
-                <q-input
-                    v-model="form.unit"
-                    name="unit"
-                    type="text"
-                    stack-label="计量单位"
+            <q-field
+                class="q-mb-md"
+                icon="money_off"
+                label="折扣力度"
+                :helper="form.discount + ' * 商品价格'"
+            >
+                <q-slider
+                    class="dark"
+                    v-model="form.discount"
+                    :step="0.01"
+                    :min="0.01"
+                    :max="0.99"
+                    label
                 />
-            </q-field>
-
-            <q-field class="q-mb-md" helper="请填写商品原价">
                 <q-input
-                    v-model="form.price"
+                    v-model="form.discount"
                     type="number"
-                    :decimals="2"
-                    :max="9999999"
-                    prefix="￥"
-                    stack-label="价格"
+                    :step="0.01"
+                    :min="0.01"
+                    :max="0.99"
+                />
+            </q-field>
+
+            <q-field
+                class="q-mb-md"
+                label="打折劵总量"
+                helper="请填写此次发布的打折劵总量"
+            >
+                <q-input
+                    v-model="form.total"
+                    type="number"
+                    :min="1"
+                    :decimals="0"
+                    :max="99999"
+                    stack-label="打折劵总量"
+                />
+            </q-field>
+            <q-field
+                class="q-mb-md"
+                label="限领张数"
+                helper="请填写此次发布的打折劵每人限领张数"
+            >
+                <q-input
+                    v-model="form.maximum"
+                    type="number"
+                    :step="1"
+                    :min="1"
+                    :decimals="0"
+                    :max="99999"
+                    stack-label="限领张数"
+                />
+            </q-field>
+
+            <q-field helper="请填写优惠起始日期">
+                <q-datetime-picker
+                    minimal
+                    color="orange"
+                    :max="form.enddate"
+                    v-model="form.startdate"
+                    type="date"
                 />
             </q-field>
 
             <q-field helper="请填写介绍及说明">
+                <q-datetime-picker
+                    minimal
+                    :min="form.startdate"
+                    color="orange"
+                    v-model="form.enddate"
+                    type="date"
+                />
+            </q-field>
+
+            <q-field helper="请填写优惠结束日期">
                 <q-input
-                    v-model="form.memo"
                     float-label="介绍及说明"
+                    v-model="form.memo"
                     type="textarea"
                 />
             </q-field>
 
             <div class="row justify-center q-mt-md">
-                <q-btn type="submit" color="primary" label=" 保存商品 " />
+                <q-btn type="submit" color="primary" label=" 修改商品 ">
+                </q-btn>
                 <div class="col" />
                 <q-btn
                     color="secondary"
+                    @click="$emit('childByValue', false)"
                     label="关闭"
-                    @click="$emit('childByValueUpdate', false)"
                 />
             </div>
         </form>
         <q-inner-loading :visible="loader">
-            <q-spinner-gears size="50px" color="primary" />
+            <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
     </q-modal>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
-    name: "Updateprcoupon",
+    name: "UpdatePrcoupon",
     components: {
         // VueRecaptcha
     },
@@ -101,8 +144,8 @@ export default {
     data() {
         return {
             loader: false,
+            product: [],
             form: {
-                product: null,
                 product_id: null,
                 name: null,
                 discount: null,
@@ -119,6 +162,7 @@ export default {
         };
     },
     computed: {
+        ...mapState("bus", ["products"]),
         show: {
             get: function() {
                 return this.updateshow;
@@ -128,12 +172,21 @@ export default {
             }
         }
     },
+    created: function() {
+        for (let key in this.products) {
+            this.product.push({
+                label: this.products[key].name,
+                value: this.products[key].id
+            });
+        }
+    },
     watch: {
         selectedRows(value) {
-            this.form = value[0];
+            if (value[0]) this.form = value[0];
         }
     },
     methods: {
+        ...mapActions("bus", ["updatePrcoupon"]),
         validateForm() {
             this.$validator
                 .validateAll()
@@ -148,53 +201,32 @@ export default {
         addproduct() {
             this.loader = true;
             let formData = new FormData();
-            for (let key in this.$refs.fileuper.files) {
-                formData.append("avatar[]", this.$refs.fileuper.files[key]);
-            }
+
             for (let key in this.form) {
                 formData.append(key, this.form[key]);
             }
-            this.$axios({
-                method: "post",
-                url: this.$master.api("/product/updateProduct"),
-                data: formData
-            })
-                .then(response => {
-                    if (response.data.success) {
-                        this.show = false;
-                        this.$emit("refreshPData", false);
-                        this.$refs.fileuper.reset();
-                        for (let key in this.form) {
-                            this.form[key] = null;
-                        }
-                        this.$q.notify({
-                            message: response.data.messages,
-                            type: "positive"
-                        });
-                    } else {
-                        this.$q.notify({
-                            message: response.data.messages,
-                            type: "negative"
-                        });
-                    }
-                })
-                .catch(errors => {
-                    let list = this.$master.hasErrors(errors);
-                    if (list) {
-                        for (const key of Object.keys(list)) {
-                            if (list.hasOwnProperty(key)) {
-                                this.errors.add({
-                                    field: key,
-                                    msg: list[key][0],
-                                    rule: key
-                                });
-                            }
-                        }
-                    }
-                })
-                .finally(() => {
+
+            this.updatePrcoupon(formData).then(
+                response => {
+                    this.show = false;
                     this.loader = false;
-                });
+                    for (let key in this.form) {
+                        this.form[key] = null;
+                    }
+                    this.$q.notify({
+                        message: response.data.messages,
+                        type: "positive"
+                    });
+                },
+                errors => {
+                    this.show = false;
+                    this.loader = false;
+                    this.$q.notify({
+                        message: errors.messages,
+                        type: "negative"
+                    });
+                }
+            );
         }
     }
 };

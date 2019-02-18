@@ -128,7 +128,7 @@ export default {
     },
     watch: {
         selectedRows(value) {
-            this.form = value[0];
+            if (value[0]) this.form = value[0];
         }
     },
     methods: {

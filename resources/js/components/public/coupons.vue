@@ -2,7 +2,7 @@
     <q-page padding class="docs-table">
         <p class="caption">打折劵列表</p>
         <q-table
-            :data="tableData"
+            :data="this.prcoupons"
             ref="dataTable"
             :columns="columns"
             :filter="filter"
@@ -45,59 +45,53 @@
                 />
                 <div class="col" />
             </template>
-            <q-td slot="body-cell-media" slot-scope="props" :props="props">
-                <q-carousel color="white" arrows height="120px">
-                    <q-carousel-slide
-                        v-for="item in props.value"
-                        :key="item.id"
-                        :img-src="
-                            '/img/media/' + item.id + '/' + item.file_name
-                        "
-                    >
-                    </q-carousel-slide>
-                </q-carousel>
-            </q-td>
         </q-table>
         <q-inner-loading :visible="loader">
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
+
         <addprcoupon
             :addshow="addshow"
-            v-on:refreshPData="initData"
             v-on:childByValue="childByValue"
         ></addprcoupon>
-        <updateprcoupon
+        <UpdatePrcoupon
             :updateshow="updateshow"
             :selectedRows="selectedSecond"
-            v-on:refreshPData="initData"
             v-on:childByValueUpdate="childByValueUpdate"
-        ></updateprcoupon>
+        ></UpdatePrcoupon>
     </q-page>
 </template>
 
 <script>
 // import addprcoupon from () => {return "../business/addprcoupon"};
-const addprcoupon = () => import("../business/addprcoupon");
 
-import updateprcoupon from "../business/updateprcoupon";
+import { mapActions, mapState } from "vuex";
+const addprcoupon = () => import("../business/addprcoupon");
+const UpdatePrcoupon = () => import("../business/updateprcoupon");
+// import UpdatePrcoupon from "../business/updateprcoupon";
 
 export default {
     name: "coupons",
     components: {
         addprcoupon,
-        updateprcoupon
+        UpdatePrcoupon
+    },
+    computed: {
+        ...mapState("bus", ["prcoupons"])
     },
     $_veeValidate: {
         validator: "newapply"
     },
     created: function() {
-        this.initData();
+        this.selectedSecond = [];
     },
     methods: {
+        ...mapActions("bus", ["delPrcoupons"]),
         childByValue: function(childValue) {
             this.addshow = childValue;
         },
         childByValueUpdate: function(childValue) {
+            this.selectedSecond = [];
             this.updateshow = childValue;
         },
         deleteRow() {
@@ -109,115 +103,30 @@ export default {
                     cancel: "取消"
                 })
                 .then(() => {
-                    this.$axios({
-                        method: "delete",
-                        url: "/api/v1/product/delMany",
-                        data: { toDel: this.selectedSecond }
-                    }).then(response => {
-                        if (response.data.success) {
-                            this.initData();
+                    this.delPrcoupons(this.selectedSecond).then(
+                        resp => {
                             this.$q.notify({
-                                message: response.data.messages,
+                                message: resp.data.messages,
                                 type: "positive"
                             });
-                            // this.$refs.dataTable.loading = false
-                        } else {
+                        },
+                        errors => {
                             this.$q.notify({
                                 message: "数据删除失败",
                                 type: "negative"
                             });
                         }
-                    });
+                    );
                 })
                 .catch(() => {
                     // this.$q.notify('Disagreed...')
                 });
-        },
-        initData: function() {
-            this.selectedSecond = [];
-            this.$axios({
-                method: "get",
-                url: "/api/v1/prcoupon/getCoupons"
-            }).then(response => {
-                if (response.data.success) {
-                    this.tableData = response.data.data;
-                    // console.log(response.data);
-                    // this.$refs.dataTable.loading = false
-                } else {
-                    this.$q.notify({
-                        message: "数据获取失败",
-                        type: "negative"
-                    });
-                }
-            });
-        },
-
-        handleSubmit: function(submitEvent) {
-            this.$validator
-                .validateAll()
-                .then(result => {
-                    if (result) {
-                        this.updateaccount();
-                        return false;
-                    } else {
-                        console.log(result, "validate failed.");
-                    }
-                })
-                .catch(e => {
-                    this.loader = false;
-                    console.log(this.errors, "validate exception line 109.", e);
-                });
-        },
-        updateaccount() {
-            this.loader = true;
-            let formData = new FormData();
-            for (let key in this.form) {
-                formData.append(key, this.form[key]);
-            }
-            this.$axios({
-                method: "post",
-                url: "/api/v1/vendor/apply",
-                data: formData
-            })
-                .then(response => {
-                    this.initData();
-                    this.$q.notify({
-                        message: response.data.messages,
-                        type: "positive"
-                    });
-                    this.loader = false;
-                })
-                .catch(errors => {
-                    let list = this.$master.hasErrors(errors);
-                    if (list) {
-                        let message = this.$master.getValue(errors, [
-                            "response",
-                            "data",
-                            "message"
-                        ]);
-                        let type = message;
-                        for (const key of Object.keys(list)) {
-                            if (list.hasOwnProperty(key)) {
-                                type =
-                                    message === "invalid_credentials"
-                                        ? "auth"
-                                        : key;
-                                this.errors.add({
-                                    field: key,
-                                    msg: list[key][0],
-                                    rule: type
-                                });
-                                console.log(this.errors);
-                            }
-                        }
-                    }
-                })
-                .finally(() => {
-                    this.loader = false;
-                });
         }
     },
     watch: {
+        prcoupons(value) {
+            // this.tableData = value;
+        },
         "paginationControl.page"(page) {
             this.$q.notify({
                 color: "secondary",
@@ -248,7 +157,7 @@ export default {
                     required: true,
                     label: "商品名",
                     align: "left",
-                    field: "product",
+                    field: row => row.product.name,
                     sortable: true
                 },
                 {

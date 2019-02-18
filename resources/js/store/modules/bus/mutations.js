@@ -6,6 +6,6 @@ export default {
         state.products = value;
     },
     set_prcoupons_info(state, value) {
-        state.procupons = value;
+        state.prcoupons = value;
     }
 };

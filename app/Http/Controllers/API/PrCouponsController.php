@@ -114,10 +114,34 @@ class PrCouponsController extends Controller
     {
         //
     }
+	public function updateItem(Request $request)
+	{
+		//
+		try {
+			$oItem = Prcoupon::find($request->input('id'));
+			$oItem->fill($request->input());
+		} catch (Exception $e) {
+			return response()->json([
+				'messages' => "错误啦！ " . $e->getCode(),
+				'success' => false,
+			]);
+		}
+
+		if ($oItem->save()) {
+			return response()->json(array_merge([
+					'messages' => '保存成功，ID:' . $oItem->id,
+					'success' => true,
+				], $oItem->toArray()
+				)
+			);
+		} else {
+			return response()->json(['messages' => $oItem->errors()->all()]);
+		}
+	}
 
 	public function delMany(Request $request)
 	{
-		try {
+//		try {
 			$aItems = Prcoupon::whereIn('id', collect($request->input('toDel'))->pluck('id'))->get();
 			$oItems = $aItems->count();
 			if ($oItems > 0) {
@@ -135,12 +159,12 @@ class PrCouponsController extends Controller
 					'messages' => "未知错误"
 				], 500);
 			}
-		} catch (Exception $e) {
-			return response()->json([
-				'success' => false,
-				'messages' => $e->getMessage()
-			], 500);
-		}
+//		} catch (Exception $e) {
+//			return response()->json([
+//				'success' => false,
+//				'messages' => $e->getMessage()
+//			], 500);
+//		}
 	}
 
 }

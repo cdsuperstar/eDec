@@ -139,5 +139,68 @@ export default {
                     reject(e);
                 });
         });
+    },
+    updatePrcoupon({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "post",
+                    url: master.api("/prcoupon/updateItem"),
+                    data: payload
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        dispatch("getPrcoupons");
+                        resolve(response);
+                    } else {
+                        reject(response.data.messages);
+                    }
+                })
+                .catch(errors => {
+                    reject(errors);
+                });
+        });
+    },
+    addPrcoupon({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "post",
+                    url: master.api("/prcoupon/add"),
+                    data: payload
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        dispatch("getPrcoupons");
+                        resolve(response);
+                    } else {
+                        reject(response.data.messages);
+                    }
+                })
+                .catch(errors => {
+                    reject(errors);
+                });
+        });
+    },
+    delPrcoupons({ dispatch, commit }, payload) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "delete",
+                    url: "/api/v1/prcoupon/delMany",
+                    data: { toDel: payload }
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        dispatch("getPrcoupons");
+                        resolve(response);
+                    } else {
+                        reject(response.data.messages);
+                    }
+                })
+                .catch(e => {
+                    reject(e);
+                });
+        });
     }
 };

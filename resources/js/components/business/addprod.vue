@@ -99,6 +99,7 @@ export default {
     components: {
         // VueRecaptcha
     },
+
     computed: {
         show: {
             get: function() {
