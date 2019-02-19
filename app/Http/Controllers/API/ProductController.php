@@ -61,7 +61,6 @@ class ProductController extends Controller
 			$oItems = Product::with('media', 'company','prcoupons')->get();
 
 		}
-		dump($oItems->toArray());
 		return response()->json([
 			'success' => true,
 			'count' => $oItems->count(),
