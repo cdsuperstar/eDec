@@ -15,7 +15,7 @@
             <div>共有 {{ this.cnt }} 项供您选择。</div>
 
             <div class="row items-start justify-center" inline>
-                <div v-for="prod in tableData" :key="prod.id">
+                <div v-for="prod in allProducts" :key="prod.id">
                     <q-card class="q-ma-sm">
                         <q-card-media>
                             <q-carousel color="white" arrows height="120px">
@@ -34,7 +34,7 @@
                         <q-card-title>
                             {{ prod.name }}
                             <span slot="subtitle">
-                                公司：{{ prod.company.name }}
+                                {{ prod.company.name }}
                                 <a :href="'tel:' + prod.company.tel">
                                     <q-icon
                                         name="local_phone"
@@ -80,12 +80,27 @@
                                             icon="card_giftcard"
                                         />
                                     </q-item-side>
-                                    <q-item-main>
+                                    <q-item-main class="top left">
                                         <q-item-tile label>打折劵</q-item-tile>
-                                        <q-item-tile sublabel
-                                            >满1000元9折劵 满5000元8折劵
-                                            满10000元7折劵</q-item-tile
+                                        <q-list
+                                            separator
+                                            v-show="
+                                                Boolean(prod.prcoupons.length)
+                                            "
                                         >
+                                            <q-collapsible
+                                                v-for="item in prod.prcoupons"
+                                                :key="item.id"
+                                                :label="item.name"
+                                            >
+                                                <div>
+                                                    {{ item.memo }}
+                                                    (活动时间：{{
+                                                        item.startdate
+                                                    }}至{{ item.enddate }})
+                                                </div>
+                                            </q-collapsible>
+                                        </q-list>
                                     </q-item-main>
                                 </q-item>
                             </q-list>
@@ -103,6 +118,7 @@
 
 <script>
 // import { filter } from "quasar";
+import { mapActions, mapState } from "vuex";
 
 export default {
     name: "packages",
@@ -111,25 +127,25 @@ export default {
     created: function() {
         this.initData();
     },
+    computed: {
+        ...mapState("bus", ["allProducts"])
+    },
     methods: {
+        ...mapActions("bus", ["searchAllproduct"]),
         initData: function() {
             this.loader = true;
-            this.$axios({
-                method: "get",
-                url: "/api/v1/product/getAllProducts/装修公司/" + this.filter
-            }).then(response => {
-                this.loader = false;
-                if (response.data.success) {
-                    this.tableData = response.data.data;
-                    this.cnt = response.data.count;
-                } else {
-                    this.$q.notify({
-                        message: "数据获取失败",
-                        type: "negative"
-                    });
+            let fm = new FormData();
+            fm.append("ctype", "装修公司");
+            fm.append("filter", this.filter);
+            this.searchAllproduct(fm).then(
+                resp => {
+                    this.loader = false;
+                    this.cnt = this.allProducts.length;
+                },
+                errors => {
+                    this.loader = false;
                 }
-            });
-            this.loader = false;
+            );
         },
         handleSubmit: function(submitEvent) {}
     },

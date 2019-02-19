@@ -118,7 +118,7 @@
                 <div class="col" />
                 <q-btn
                     color="secondary"
-                    @click="$emit('childByValue', false)"
+                    @click="$emit('childByValueUpdate', false)"
                     label="关闭"
                 />
             </div>

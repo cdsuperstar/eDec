@@ -2,7 +2,7 @@
     <q-page padding class="docs-table">
         <p class="caption">打折劵列表</p>
         <q-table
-            :data="this.prcoupons"
+            :data="prcoupons"
             ref="dataTable"
             :columns="columns"
             :filter="filter"
@@ -150,14 +150,15 @@ export default {
             addshow: false,
             updateshow: false,
             loader: false,
-            tableData: [],
+            // tableData: [],
             columns: [
                 {
                     name: "product",
                     required: true,
                     label: "商品名",
                     align: "left",
-                    field: row => row.product.name,
+                    field: row => (row.product ? row.product.name : row.name),
+                    // field: row => row.product.name,
                     sortable: true
                 },
                 {

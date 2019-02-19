@@ -3,5 +3,6 @@ export default {
     show_prcoupons: false,
     company: null,
     products: [],
+    allProducts: [],
     prcoupons: []
 };

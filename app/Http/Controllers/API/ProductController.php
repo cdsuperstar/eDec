@@ -43,6 +43,31 @@ class ProductController extends Controller
 			'data' => $oItems->toArray()
 		]);
 	}
+	public function searchAllProducts(Request $request)
+	{
+		$ctype=$request->input('ctype');
+		$search=$request->input('filter');
+		if ($ctype) {
+			$oCompanys = Company::where('ctype', '=', $ctype)->get(['id']);
+			if ($search) {
+				$oItems = Product::with('media', 'company')
+					->wherein('company_id', $oCompanys->toArray())
+					->where('name', 'like', "%$search%")
+					->get();
+			} else {
+				$oItems = Product::with('media', 'company','prcoupons')->wherein('company_id', $oCompanys->toArray())->get();
+			}
+		} else {
+			$oItems = Product::with('media', 'company','prcoupons')->get();
+
+		}
+		dump($oItems->toArray());
+		return response()->json([
+			'success' => true,
+			'count' => $oItems->count(),
+			'data' => $oItems->toArray()
+		]);
+	}
 
 	/**
 	 * Store a newly created resource in storage.

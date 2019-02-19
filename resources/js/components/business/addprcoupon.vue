@@ -210,13 +210,13 @@ export default {
             product: [],
             form: {
                 product_id: null,
-                name: "8折劵",
-                discount: 0.8,
-                total: 100,
-                maximum: 2,
-                startdate: "2019-2-10",
-                enddate: "2019-2-20",
-                memo: "8折劵你服不服？ 拿去过年"
+                name: null,
+                discount: null,
+                total: null,
+                maximum: null,
+                startdate: null,
+                enddate: null,
+                memo: null
             },
             form_rules: {
                 name: "required|max:50",

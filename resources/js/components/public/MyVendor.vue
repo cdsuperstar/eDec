@@ -101,6 +101,7 @@ export default {
             this.addshow = childValue;
         },
         childByValueUpdate: function(childValue) {
+            this.selectedSecond = [];
             this.updateshow = childValue;
         },
         deleteRow() {

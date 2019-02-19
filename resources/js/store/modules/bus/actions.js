@@ -78,6 +78,27 @@ export default {
                 });
         });
     },
+    searchAllproduct({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "post",
+                    url: master.api("/product/searchAllProducts"),
+                    data: payload
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        commit("set_allproducts_info", response.data.data);
+                        resolve(response);
+                    } else {
+                        reject(response.data.messages);
+                    }
+                })
+                .catch(errors => {
+                    reject(errors);
+                });
+        });
+    },
     addMyproduct({ dispatch }, payload) {
         return new Promise((resolve, reject) => {
             master.self

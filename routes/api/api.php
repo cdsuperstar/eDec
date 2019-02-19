@@ -97,6 +97,8 @@ Route::name('api.business.')
 		Route::prefix('product')->group(function () {
 			Route::get('getAllProducts/{ctype?}/{search?}', 'API\ProductController@getAllProducts')
 				->name('productAllProducts');
+			Route::post('searchAllProducts', 'API\ProductController@searchAllProducts')
+				->name('productSearchAllProducts');
 		});
 
 
