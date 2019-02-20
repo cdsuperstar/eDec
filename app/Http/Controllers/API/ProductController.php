@@ -55,12 +55,13 @@ class ProductController extends Controller
 					->where('name', 'like', "%$search%")
 					->get();
 			} else {
-				$oItems = Product::with('media', 'company','prcoupons')->wherein('company_id', $oCompanys->toArray())->get();
+				$oItems = Product::with('media', 'company','prcoupons.users')->wherein('company_id', $oCompanys->toArray())->get();
 			}
 		} else {
-			$oItems = Product::with('media', 'company','prcoupons')->get();
+			$oItems = Product::with('media', 'company','prcoupons.users')->get();
 
 		}
+
 		return response()->json([
 			'success' => true,
 			'count' => $oItems->count(),

@@ -73,34 +73,24 @@
                                         </q-item-tile>
                                     </q-item-main>
                                 </q-item>
-                                <q-item>
+                                <q-item
+                                    v-show="Boolean(prod.prcoupons.length)"
+                                    v-for="item in prod.prcoupons"
+                                    :key="item.id"
+                                >
                                     <q-item-side>
                                         <q-item-tile
                                             color="secondary"
                                             icon="card_giftcard"
                                         />
                                     </q-item-side>
-                                    <q-item-main class="top left">
-                                        <q-item-tile label>打折劵</q-item-tile>
-                                        <q-list
-                                            separator
-                                            v-show="
-                                                Boolean(prod.prcoupons.length)
-                                            "
-                                        >
-                                            <q-collapsible
-                                                v-for="item in prod.prcoupons"
-                                                :key="item.id"
-                                                :label="item.name"
-                                            >
-                                                <div>
-                                                    {{ item.memo }}
-                                                    (活动时间：{{
-                                                        item.startdate
-                                                    }}至{{ item.enddate }})
-                                                </div>
-                                            </q-collapsible>
-                                        </q-list>
+                                    <q-item-main>
+                                        <q-item-tile label>
+                                            {{ item.name }}
+                                        </q-item-tile>
+                                        <q-item-tile sublabel>
+                                            {{ item.memo }}
+                                        </q-item-tile>
                                     </q-item-main>
                                 </q-item>
                             </q-list>

@@ -95,4 +95,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Company');
     }
 
+	public function prcoupons()
+	{
+		return $this->belongsToMany('App\Prcoupon','user_prcoupon')->withPivot('id','isused');
+    }
+
 }

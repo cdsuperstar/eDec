@@ -182,6 +182,26 @@ export default {
                 });
         });
     },
+    takePrcoupon({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "post",
+                    url: master.api("/prcoupon/takePrcoupon"),
+                    data: payload
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        resolve(response);
+                    } else {
+                        reject(response.data.messages);
+                    }
+                })
+                .catch(errors => {
+                    reject(errors);
+                });
+        });
+    },
     addPrcoupon({ dispatch }, payload) {
         return new Promise((resolve, reject) => {
             master.self

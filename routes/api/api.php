@@ -78,6 +78,14 @@ Route::name('api.business.')
 
 			});
 
+
+		Route::prefix('product')->group(function () {
+			Route::get('getAllProducts/{ctype?}/{search?}', 'API\ProductController@getAllProducts')
+				->name('productAllProducts');
+			Route::post('searchAllProducts', 'API\ProductController@searchAllProducts')
+				->name('productSearchAllProducts');
+		});
+
 		// 打折劵
 		Route::prefix('prcoupon')
 			->middleware(['client.oauth', 'auth:api'])
@@ -87,18 +95,22 @@ Route::name('api.business.')
 				Route::post('updateItem', 'API\PrCouponsController@updateItem')
 					->name('prcouponUpdateItem');
 
+				Route::post('takePrcoupon', 'API\PrCouponsController@takePrcoupon')
+					->name('prcouponTakePrcoupon');
+
 				Route::get('getCoupons', 'API\PrCouponsController@getCoupons')
-					->name('prcouponCoupons');
+					->name('prcouponGetCoupons');
+				Route::get('getMyCoupons', 'API\PrCouponsController@getMyCoupons')
+					->name('prcouponGetMyCoupons');
 
 				Route::delete('delMany', 'API\PrCouponsController@delMany')
 					->name('prcouponDelMany');
 			});
 
-		Route::prefix('product')->group(function () {
-			Route::get('getAllProducts/{ctype?}/{search?}', 'API\ProductController@getAllProducts')
-				->name('productAllProducts');
-			Route::post('searchAllProducts', 'API\ProductController@searchAllProducts')
-				->name('productSearchAllProducts');
+		Route::prefix('prcoupon')->group(function () {
+//			Route::post('searchAllProducts', 'API\ProductController@searchAllProducts')
+//				->name('productSearchAllProducts');
+
 		});
 
 
