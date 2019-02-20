@@ -49,7 +49,7 @@
                                     <q-item-side>
                                         <q-item-tile
                                             color="primary"
-                                            icon="euro_symbol"
+                                            icon="attach_money"
                                         />
                                     </q-item-side>
                                     <q-item-main>
