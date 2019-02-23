@@ -67,6 +67,11 @@ const router = new VueRouter({
                     component: All.MyVendor
                 },
                 {
+                    path: "mycoupons",
+                    name: "user.mycoupons",
+                    component: All.MyCoupons
+                },
+                {
                     path: "coupons",
                     name: "user.coupons",
                     component: All.Coupons

@@ -11,6 +11,8 @@ const MyAccount = () => import("../../components/public/MyAccount");
 const MyVendor = () => import("../../components/public/MyVendor");
 const Coupons = () => import("../../components/public/coupons");
 
+const MyCoupons = () => import("../../components/public/MyCoupons");
+
 // 公共页
 const Packages = () => import("../../components/public/Packages");
 const Products = () => import("../../components/public/Products");
@@ -42,6 +44,7 @@ export {
     MyAccount,
     MyVendor,
     Coupons,
+    MyCoupons,
     User,
     NotFound,
     ErrorToolbar,

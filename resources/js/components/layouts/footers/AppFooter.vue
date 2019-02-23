@@ -6,7 +6,14 @@
             :glossy="$q.theme === 'mat'"
             :inverted="$q.theme === 'ios'"
         >
-            <q-btn flat dense class="col" label="我的优惠劵" icon="receipt">
+            <q-btn
+                flat
+                dense
+                class="col"
+                to="/user/mycoupons"
+                label="我的优惠劵"
+                icon="receipt"
+            >
             </q-btn>
             <q-btn
                 flat

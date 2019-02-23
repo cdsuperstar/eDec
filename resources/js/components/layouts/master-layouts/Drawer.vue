@@ -24,7 +24,7 @@
                         sublabel="管理我的平台帐户信息"
                     />
                 </q-item>
-                <q-item to="/user/mycompany" v-show="company.id ? true : false">
+                <q-item to="/user/mycompany" v-show="hasCompany">
                     <q-item-side icon="home" />
                     <q-item-main
                         style="color:black"
@@ -32,7 +32,7 @@
                         sublabel="管理我的公司（商铺）信息"
                     />
                 </q-item>
-                <q-item to="/user/myvendor" v-show="company.id ? true : false">
+                <q-item to="/user/myvendor" v-show="hasCompany">
                     <q-item-side icon="shopping_cart" />
                     <q-item-main
                         style="color:black"
@@ -40,7 +40,7 @@
                         sublabel="管理我的商品服务信息"
                     />
                 </q-item>
-                <q-item to="/user/coupons" v-show="company.id ? true : false">
+                <q-item to="/user/coupons" v-show="hasCompany">
                     <q-item-side icon="receipt" />
                     <q-item-main
                         style="color:black"
@@ -66,10 +66,12 @@ export default {
         // ...mapActions("bus", ["getMycompany"])
     },
     created: function() {
+        this.hasCompany = Boolean(this.company.id);
         // console.log(this.company);
     },
     data() {
         return {
+            hasCompany: false,
             leftDrawerOpen: this.$q.platform.is.desktop
         };
     }
