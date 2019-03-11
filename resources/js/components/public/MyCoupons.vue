@@ -31,13 +31,14 @@
 
             <q-tab-pane name="unused">
                 <q-list separator>
-                    <q-collapsible avatar="/img/media/53/175-2-1600x900.jpg" label="富森美家居" opened>
+                    <q-collapsible avatar="/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg" label="富森美家居" opened>
 
                         <q-card flat color="lime-1">
-                            <q-item color="amber-1">
-                                <q-item-side image="/img/media/53/175-2-1600x900.jpg" />
+                            <q-item >
+                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
                                 <q-item-main inset>
-                                    <q-item-tile label text-color="black"> <font color="red" size="14px">￥50 </font> <font color="red" >满99减50</font></q-item-tile>
+                                    <q-item-tile label text-color="red"> <font size="14px">￥50 </font>  </q-item-tile>
+                                    <q-item-tile label text-color="red"> 满99减50 </q-item-tile>
                                     <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
                                     </q-item-tile>
                                 </q-item-main>
@@ -49,10 +50,11 @@
                         <q-card-separator />
 
                         <q-card flat color="lime-1">
-                            <q-item color="amber-1">
-                                <q-item-side image="/img/media/53/175-2-1600x900.jpg" />
+                            <q-item >
+                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
                                 <q-item-main inset>
-                                    <q-item-tile label text-color="black"> <font color="red" size="14px">￥100 </font> <font color="red" >满499减100</font></q-item-tile>
+                                    <q-item-tile label text-color="red"> <font size="14px">￥100 </font>  </q-item-tile>
+                                    <q-item-tile label text-color="red"> 满499减10 </q-item-tile>
                                     <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
                                     </q-item-tile>
                                 </q-item-main>
@@ -68,10 +70,11 @@
                     <q-collapsible avatar="/img/media/53/175-2-1600x900.jpg" label="XXX生活馆">
 
                         <q-card flat color="lime-1">
-                            <q-item color="amber-1">
-                                <q-item-side image="/img/media/53/175-2-1600x900.jpg" />
+                            <q-item >
+                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
                                 <q-item-main inset>
-                                    <q-item-tile label text-color="black"> <font color="red" size="14px">￥50 </font> <font color="red" >满99减50</font></q-item-tile>
+                                    <q-item-tile label text-color="red"> <font size="14px">￥50 </font>  </q-item-tile>
+                                    <q-item-tile label text-color="red"> 满99减50 </q-item-tile>
                                     <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
                                     </q-item-tile>
                                 </q-item-main>
@@ -83,10 +86,11 @@
                         <q-card-separator />
 
                         <q-card flat color="lime-1">
-                            <q-item color="amber-1">
-                                <q-item-side image="/img/media/53/175-2-1600x900.jpg" />
+                            <q-item >
+                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
                                 <q-item-main inset>
-                                    <q-item-tile label text-color="black"> <font color="red" size="14px">￥100 </font> <font color="red" >满499减100</font></q-item-tile>
+                                    <q-item-tile label text-color="red"> <font size="14px">￥100 </font>  </q-item-tile>
+                                    <q-item-tile label text-color="red"> 满499减10 </q-item-tile>
                                     <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
                                     </q-item-tile>
                                 </q-item-main>
