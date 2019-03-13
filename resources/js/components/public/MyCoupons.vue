@@ -31,11 +31,11 @@
 
             <q-tab-pane name="unused">
                 <q-list separator>
-                    <q-collapsible avatar="/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg" label="富森美家居" opened>
+                    <q-collapsible avatar="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" label="富森美家居" opened>
 
                         <q-card flat color="lime-1">
                             <q-item >
-                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
+                                <q-item-side avatar="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" class="qitemcircle"/>
                                 <q-item-main inset>
                                     <q-item-tile label text-color="red"> <font size="14px">￥50 </font>  </q-item-tile>
                                     <q-item-tile label text-color="red"> 满99减50 </q-item-tile>
@@ -51,7 +51,7 @@
 
                         <q-card flat color="lime-1">
                             <q-item >
-                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
+                                <q-item-side avatar="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg"  class="qitemcircle"/>
                                 <q-item-main inset>
                                     <q-item-tile label text-color="red"> <font size="14px">￥100 </font>  </q-item-tile>
                                     <q-item-tile label text-color="red"> 满499减10 </q-item-tile>
@@ -71,7 +71,7 @@
 
                         <q-card flat color="lime-1">
                             <q-item >
-                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
+                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg"  class="qitemcircle"/>
                                 <q-item-main inset>
                                     <q-item-tile label text-color="red"> <font size="14px">￥50 </font>  </q-item-tile>
                                     <q-item-tile label text-color="red"> 满99减50 </q-item-tile>
@@ -87,7 +87,7 @@
 
                         <q-card flat color="lime-1">
                             <q-item >
-                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" style="width: "/>
+                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg"  class="qitemcircle"/>
                                 <q-item-main inset>
                                     <q-item-tile label text-color="red"> <font size="14px">￥100 </font>  </q-item-tile>
                                     <q-item-tile label text-color="red"> 满499减10 </q-item-tile>
@@ -103,12 +103,12 @@
 
                     </q-collapsible>
                 </q-list>
-
-
                 未使用的
-
             </q-tab-pane>
-            <q-tab-pane name="used">已使用的</q-tab-pane>
+            <q-tab-pane name="used">
+
+
+                已使用的</q-tab-pane>
             <q-tab-pane name="outdated">过期的</q-tab-pane>
         </q-tabs>
 
@@ -243,4 +243,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+
+<style type="text/css">
+    .qitemcircle img{
+        border-radius: 10%;
+    }
+</style>
