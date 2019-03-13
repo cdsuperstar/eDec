@@ -30,85 +30,59 @@
             />
 
             <q-tab-pane name="unused">
-                <q-list separator>
-                    <q-collapsible avatar="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" label="富森美家居" opened>
-
-                        <q-card flat color="lime-1">
-                            <q-item >
-                                <q-item-side avatar="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg" class="qitemcircle"/>
+                <q-list
+                    separator
+                    v-for="prod in tableData"
+                    v-bind:key="prod.id"
+                >
+                    <q-collapsible
+                        :avatar="prod.picurl"
+                        :label="prod.name"
+                        opened
+                    >
+                        <q-card
+                            flat
+                            color="lime-1"
+                            v-for="item in prod.offer"
+                            v-bind:key="item.id"
+                        >
+                            <q-item>
+                                <q-item-side
+                                    :avatar="item.picurl"
+                                    class="qitemcircle"
+                                />
                                 <q-item-main inset>
-                                    <q-item-tile label text-color="red"> <font size="14px">￥50 </font>  </q-item-tile>
-                                    <q-item-tile label text-color="red"> 满99减50 </q-item-tile>
-                                    <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
+                                    <q-item-tile label text-color="red">
+                                        <font size="6px"
+                                            >￥{{ item.facevalue }}
+                                        </font>
+                                    </q-item-tile>
+                                    <q-item-tile label text-color="red">
+                                        {{ item.condition }}
+                                    </q-item-tile>
+                                    <q-item-tile label-lines text-color="black"
+                                        >[ {{ item.type }} ] 有效期：{{
+                                            item.validityperiodstart
+                                        }}
+                                        - {{ item.validityperiodend }}
                                     </q-item-tile>
                                 </q-item-main>
                                 <q-card-actions>
-                                    <q-btn glossy style="background: #FA8B23; color: white" rounded label=" 去使用 " />
+                                    <q-btn
+                                        glossy
+                                        rounded
+                                        class="btmnowrap"
+                                        label=" 去使用 "
+                                    />
                                 </q-card-actions>
                             </q-item>
                         </q-card>
                         <q-card-separator />
-
-                        <q-card flat color="lime-1">
-                            <q-item >
-                                <q-item-side avatar="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg"  class="qitemcircle"/>
-                                <q-item-main inset>
-                                    <q-item-tile label text-color="red"> <font size="14px">￥100 </font>  </q-item-tile>
-                                    <q-item-tile label text-color="red"> 满499减10 </q-item-tile>
-                                    <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
-                                    </q-item-tile>
-                                </q-item-main>
-                                <q-card-actions>
-                                    <q-btn glossy style="background: #FA8B23; color: white" rounded label=" 去使用 " />
-                                </q-card-actions>
-                            </q-item>
-                        </q-card>
-                        <q-card-separator />
-
-                    </q-collapsible>
-
-                    <q-collapsible avatar="/img/media/53/175-2-1600x900.jpg" label="XXX生活馆">
-
-                        <q-card flat color="lime-1">
-                            <q-item >
-                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg"  class="qitemcircle"/>
-                                <q-item-main inset>
-                                    <q-item-tile label text-color="red"> <font size="14px">￥50 </font>  </q-item-tile>
-                                    <q-item-tile label text-color="red"> 满99减50 </q-item-tile>
-                                    <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
-                                    </q-item-tile>
-                                </q-item-main>
-                                <q-card-actions>
-                                    <q-btn glossy style="background: #FA8B23; color: white" rounded label=" 去使用 " />
-                                </q-card-actions>
-                            </q-item>
-                        </q-card>
-                        <q-card-separator />
-
-                        <q-card flat color="lime-1">
-                            <q-item >
-                                <q-item-side image="/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg"  class="qitemcircle"/>
-                                <q-item-main inset>
-                                    <q-item-tile label text-color="red"> <font size="14px">￥100 </font>  </q-item-tile>
-                                    <q-item-tile label text-color="red"> 满499减10 </q-item-tile>
-                                    <q-item-tile label-lines text-color="black">[ 店铺优惠券 ] 有效期：2019.3.1-2019.4.30
-                                    </q-item-tile>
-                                </q-item-main>
-                                <q-card-actions>
-                                    <q-btn glossy style="background: #FA8B23; color: white" rounded label=" 去使用 " />
-                                </q-card-actions>
-                            </q-item>
-                        </q-card>
-                        <q-card-separator />
-
                     </q-collapsible>
                 </q-list>
                 未使用的
             </q-tab-pane>
-            <q-tab-pane name="used">
-
-
-                已使用的</q-tab-pane>
+            <q-tab-pane name="used"> 已使用的</q-tab-pane>
             <q-tab-pane name="outdated">过期的</q-tab-pane>
         </q-tabs>
 
@@ -203,32 +177,111 @@ export default {
             addshow: false,
             updateshow: false,
             loader: false,
-            tableData: [],
-            columns: [
+            tableData: [
                 {
-                    name: "media",
-                    required: true,
-                    label: "图片",
-                    align: "left",
-                    field: "media",
-                    sortable: true
+                    id: 1,
+                    name: "富森美家居",
+                    picurl:
+                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
+                    storeid: 2,
+                    offer: [
+                        {
+                            id: 1,
+                            name: "三合板主材",
+                            picurl:
+                                "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                            facevalue: 50,
+                            validityperiodstart: "2019-3-13 12:00",
+                            validityperiodend: "2019-3-23 12:00",
+                            condition: "满99使用50",
+                            type: "店铺优惠券"
+                        },
+                        {
+                            id: 2,
+                            name: "木工板",
+                            picurl:
+                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                            facevalue: 150,
+                            validityperiodstart: "2019-3-16 12:00",
+                            validityperiodend: "2019-3-28 12:00",
+                            condition: "满399使用150",
+                            type: "店铺优惠券"
+                        }
+                    ]
                 },
                 {
-                    name: "name",
-                    required: true,
-                    label: "商品（服务）名",
-                    align: "left",
-                    field: "name",
-                    sortable: true
+                    id: 2,
+                    name: "箭牌卫浴",
+                    picurl:
+                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
+                    storeid: 2,
+                    offer: [
+                        {
+                            id: 1,
+                            name: "花洒",
+                            picurl:
+                                "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                            facevalue: 200,
+                            validityperiodstart: "2019-3-13 12:00",
+                            validityperiodend: "2019-3-23 12:00",
+                            condition: "满599使用200",
+                            type: "店铺优惠券"
+                        },
+                        {
+                            id: 2,
+                            name: "洗面台",
+                            picurl:
+                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
+                            facevalue: 1500,
+                            validityperiodstart: "2019-3-16 12:00",
+                            validityperiodend: "2019-3-28 12:00",
+                            condition: "满3909使用1500",
+                            type: "店铺优惠券"
+                        }
+                    ]
                 },
                 {
-                    name: "price",
-                    label: "价格",
-                    field: "price",
-                    sortable: true
-                },
-                { name: "unit", label: "单位", field: "unit", sortable: true },
-                { name: "memo", label: "说明介绍", field: "memo" }
+                    id: 3,
+                    name: "蒙娜丽莎瓷砖",
+                    picurl:
+                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
+                    storeid: 2,
+                    offer: [
+                        {
+                            id: 1,
+                            name: "大理石",
+                            picurl:
+                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                            facevalue: 200,
+                            validityperiodstart: "2019-3-13 12:00",
+                            validityperiodend: "2019-3-23 12:00",
+                            condition: "满499使用200",
+                            type: "店铺优惠券"
+                        },
+                        {
+                            id: 2,
+                            name: "窗台石",
+                            picurl:
+                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
+                            facevalue: 1500,
+                            validityperiodstart: "2019-3-16 12:00",
+                            validityperiodend: "2019-3-28 12:00",
+                            condition: "满3909使用1500",
+                            type: "店铺优惠券"
+                        },
+                        {
+                            id: 3,
+                            name: "窗台石",
+                            picurl:
+                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
+                            facevalue: 600,
+                            validityperiodstart: "2019-3-16 12:00",
+                            validityperiodend: "2019-3-28 12:00",
+                            condition: "满5909使用600",
+                            type: "店铺优惠券"
+                        }
+                    ]
+                }
             ],
 
             filter: "",
@@ -243,9 +296,16 @@ export default {
 };
 </script>
 
-
 <style type="text/css">
-    .qitemcircle img{
-        border-radius: 10%;
-    }
+.qitemcircle img {
+    border-radius: 10%;
+}
+.btmnowrap {
+    background: #fa8b23;
+    text-color: white;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    /*text-overflow:ellipsis;*/
+}
 </style>
