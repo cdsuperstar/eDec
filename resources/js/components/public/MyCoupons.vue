@@ -35,11 +35,7 @@
                     v-for="prod in tableData"
                     v-bind:key="prod.id"
                 >
-                    <q-collapsible
-                        :avatar="prod.picurl"
-                        :label="prod.name"
-                        opened
-                    >
+                    <q-collapsible :avatar="prod.picurl" :label="prod.name">
                         <q-card
                             flat
                             color="lime-1"
