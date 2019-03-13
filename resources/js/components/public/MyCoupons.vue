@@ -35,46 +35,39 @@
                     v-for="prod in tableData"
                     v-bind:key="prod.id"
                 >
-                    <q-collapsible :avatar="prod.picurl" :label="prod.name">
-                        <q-card
-                            flat
-                            color="lime-1"
-                            v-for="item in prod.offer"
-                            v-bind:key="item.id"
-                        >
-                            <q-item>
-                                <q-item-side
-                                    :avatar="item.picurl"
-                                    class="qitemcircle"
+                    <q-card flat color="lime-1">
+                        <q-item>
+                            <q-item-side
+                                :avatar="prod.picurl"
+                                class="qitemcircle"
+                            />
+                            <q-item-main inset>
+                                <q-item-tile label text-color="red">
+                                    <font size="6px"
+                                        >￥{{ prod.facevalue }}
+                                    </font>
+                                </q-item-tile>
+                                <q-item-tile label text-color="red">
+                                    {{ prod.condition }}
+                                </q-item-tile>
+                                <q-item-tile label-lines text-color="black"
+                                    >[ {{ prod.type }} ] 有效期：{{
+                                        prod.validityperiodstart
+                                    }}
+                                    - {{ prod.validityperiodend }}
+                                </q-item-tile>
+                            </q-item-main>
+                            <q-card-actions>
+                                <q-btn
+                                    glossy
+                                    rounded
+                                    class="btmnowrap"
+                                    label=" 去使用 "
                                 />
-                                <q-item-main inset>
-                                    <q-item-tile label text-color="red">
-                                        <font size="6px"
-                                            >￥{{ item.facevalue }}
-                                        </font>
-                                    </q-item-tile>
-                                    <q-item-tile label text-color="red">
-                                        {{ item.condition }}
-                                    </q-item-tile>
-                                    <q-item-tile label-lines text-color="black"
-                                        >[ {{ item.type }} ] 有效期：{{
-                                            item.validityperiodstart
-                                        }}
-                                        - {{ item.validityperiodend }}
-                                    </q-item-tile>
-                                </q-item-main>
-                                <q-card-actions>
-                                    <q-btn
-                                        glossy
-                                        rounded
-                                        class="btmnowrap"
-                                        label=" 去使用 "
-                                    />
-                                </q-card-actions>
-                            </q-item>
-                        </q-card>
-                        <q-card-separator />
-                    </q-collapsible>
+                            </q-card-actions>
+                        </q-item>
+                    </q-card>
+                    <q-card-separator />
                 </q-list>
                 未使用的
             </q-tab-pane>
@@ -176,695 +169,267 @@ export default {
             tableData: [
                 {
                     id: 1,
-                    name: "富森美家居",
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "三合板主材",
-                            picurl:
-                                "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
-                            facevalue: 50,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满99使用50",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "木工板",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 150,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满399使用150",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
                     id: 2,
-                    name: "箭牌卫浴",
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "花洒",
-                            picurl:
-                                "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满599使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "洗面台",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 4,
+                    name: "三合板主材",
+                    picurl:
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
                     id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 5,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 6,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 7,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 8,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 9,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 11,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 10,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 12,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 13,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 14,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 15,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 16,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 17,
+                    name: "三合板主材",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
                 },
                 {
-                    id: 3,
-                    name: "蒙娜丽莎瓷砖",
+                    id: 18,
+                    name: "木工板",
                     picurl:
-                        "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                    storeid: 2,
-                    offer: [
-                        {
-                            id: 1,
-                            name: "大理石",
-                            picurl:
-                                "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
-                            facevalue: 200,
-                            validityperiodstart: "2019-3-13 12:00",
-                            validityperiodend: "2019-3-23 12:00",
-                            condition: "满499使用200",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 2,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 1500,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满3909使用1500",
-                            type: "店铺优惠券"
-                        },
-                        {
-                            id: 3,
-                            name: "窗台石",
-                            picurl:
-                                "/img/media/20/a3f4793a3b70d0d896d9acb94272b325.jpg",
-                            facevalue: 600,
-                            validityperiodstart: "2019-3-16 12:00",
-                            validityperiodend: "2019-3-28 12:00",
-                            condition: "满5909使用600",
-                            type: "店铺优惠券"
-                        }
-                    ]
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 19,
+                    name: "三合板主材",
+                    picurl:
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 20,
+                    name: "木工板",
+                    picurl:
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 21,
+                    name: "三合板主材",
+                    picurl:
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 22,
+                    name: "木工板",
+                    picurl:
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 23,
+                    name: "三合板主材",
+                    picurl:
+                        "/img/media/16/34559833bed1ea6c3d0c6b34e3dea8c5.jpg",
+                    facevalue: 50,
+                    validityperiodstart: "2019-3-13 12:00",
+                    validityperiodend: "2019-3-23 12:00",
+                    condition: "满99使用50",
+                    type: "店铺优惠券"
+                },
+                {
+                    id: 24,
+                    name: "木工板",
+                    picurl:
+                        "/img/media/47/F1EBBA58-D8AD-47EA-9E95-A10FC871B040.jpeg",
+                    facevalue: 150,
+                    validityperiodstart: "2019-3-16 12:00",
+                    validityperiodend: "2019-3-28 12:00",
+                    condition: "满399使用150",
+                    type: "店铺优惠券"
                 }
             ],
 
