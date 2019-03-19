@@ -11,6 +11,7 @@
         </q-btn>
         <q-layout-drawer
             side="left"
+            overlay
             v-model="leftDrawerOpen"
             :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
         >
