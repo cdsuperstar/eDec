@@ -100,8 +100,15 @@ Route::name('api.business.')
 
 				Route::get('getCoupons', 'API\PrCouponsController@getCoupons')
 					->name('prcouponGetCoupons');
+				//得到未过期
 				Route::get('getMyCoupons', 'API\PrCouponsController@getMyCoupons')
 					->name('prcouponGetMyCoupons');
+				//得到已用
+				Route::get('getMyUsedCoupons', 'API\PrCouponsController@getMyUsedCoupons')
+					->name('prcouponGetMyUsedCoupons');
+				//得到未过期
+				Route::get('getMyExpCoupons', 'API\PrCouponsController@getMyExpCoupons')
+					->name('prcouponGetMyExpCoupons');
 
 				Route::delete('delMany', 'API\PrCouponsController@delMany')
 					->name('prcouponDelMany');
@@ -115,9 +122,4 @@ Route::name('api.business.')
 
 
 //        Route::apiResource('/companys','CompanyController');
-//        Route::apiResource('/vendors','VendorController');
-//        Route::apiResource('/cavatars','CavatarController');
-//        Route::apiResource('/vavatars','VavatarController');
-//        Route::apiResource('/products','ProductController');
-//        Route::apiResource('/packages','PackageController');
 	});

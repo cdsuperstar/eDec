@@ -25,33 +25,33 @@
             >
             </q-btn>
             <q-btn
-                    v-if="!isAuth"
-                    flat
-                    class="col"
-                    icon="vpn_key"
-                    dense
-                    :label="$t('login.title')"
-                    @click="showLogin(true)"
+                v-if="!isAuth"
+                flat
+                class="col"
+                icon="vpn_key"
+                dense
+                :label="$t('login.title')"
+                @click="showLogin(true)"
             >
             </q-btn>
             <q-btn
-                    v-if="!isAuth"
-                    flat
-                    dense
-                    icon="assignment_ind"
-                    class="col"
-                    :label="$t('register.title')"
-                    @click="showRegister(true)"
+                v-if="!isAuth"
+                flat
+                dense
+                icon="assignment_ind"
+                class="col"
+                :label="$t('register.title')"
+                @click="showRegister(true)"
             >
             </q-btn>
             <q-btn
-                    v-else
-                    flat
-                    icon="exit_to_app"
-                    class="col"
-                    dense
-                    :label="$t('login.logout')"
-                    @click="logout()"
+                v-else
+                flat
+                icon="exit_to_app"
+                class="col"
+                dense
+                :label="$t('login.logout')"
+                @click="logout()"
             >
             </q-btn>
         </q-toolbar>
@@ -65,7 +65,6 @@
 import { mapActions, mapGetters } from "vuex";
 import Login from "../../auth/Login";
 import Register from "../../auth/Register";
-
 
 export default {
     name: "app-footer",

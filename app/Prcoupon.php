@@ -20,7 +20,7 @@ class Prcoupon extends Model
 
 	public function users()
 	{
-		return $this->belongsToMany('App\User','user_prcoupon')->withPivot('id','isused');
+		return $this->belongsToMany('App\User','user_prcoupon')->withPivot(['id','isused']);
 	}
 
 

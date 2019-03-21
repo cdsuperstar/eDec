@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Prcoupon;
 use App\Product;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -50,24 +52,15 @@ class PrCouponsController extends Controller
 	}
 
 
-	//得到我选的优惠劵 TODO
+	//得到我选的未过期优惠劵
 	public function getMyCoupons()
 	{
-		$row = DB::table('tbscore')
-			->select(DB::raw('count(score) as score, subject'))
-			->whereIn('userid', [1, 2, 3])
-			->group('subject')
-			->get();
 		try {
-			$company_id = auth()
-				->guard('api')
-				->user()
-				->company
-				->id;
-			$oProd = Product::where('company_id', '=', $company_id)
-				->get(['id']);
-			$oItems = Prcoupon::with('product')
-				->whereIn('product_id', $oProd->toArray())
+			$oU=User::find(auth()->user()->id);
+			$oItems = $oU->mycoupons()
+				->where('enddate','>=',Carbon::now())
+				->wherePivot('isused',false)
+				->with(['product'])
 				->get();
 		} catch (Exception $e) {
 			return response()->json([
@@ -75,8 +68,6 @@ class PrCouponsController extends Controller
 				'success' => false,
 			]);
 		}
-
-
 		return response()->json([
 				'success' => true,
 				'data' => $oItems->toArray(),
@@ -84,6 +75,54 @@ class PrCouponsController extends Controller
 		);
 
 	}
+
+	//得到我选的已使用优惠劵
+	public function getMyUsedCoupons()
+	{
+		try {
+			$oU=User::find(auth()->user()->id);
+			$oItems = $oU->mycoupons()
+				->wherePivot('isused',true)
+				->with(['product'])
+				->get();
+		} catch (Exception $e) {
+			return response()->json([
+				'messages' => "错误啦！ " . $e->getCode(),
+				'success' => false,
+			]);
+		}
+		return response()->json([
+				'success' => true,
+				'data' => $oItems->toArray(),
+			]
+		);
+
+	}
+
+	//得到我选的已过期优惠劵
+	public function getMyExpCoupons()
+	{
+		try {
+			$oU=User::find(auth()->user()->id);
+			$oItems = $oU->mycoupons()
+				->where('enddate','<',Carbon::now())
+				->wherePivot('isused',false)
+				->with(['product'])
+				->get();
+		} catch (Exception $e) {
+			return response()->json([
+				'messages' => "错误啦！ " . $e->getCode(),
+				'success' => false,
+			]);
+		}
+		return response()->json([
+				'success' => true,
+				'data' => $oItems->toArray(),
+			]
+		);
+
+	}
+
 
 	/**
 	 * Store a newly created resource in storage.
