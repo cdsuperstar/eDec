@@ -60,7 +60,7 @@ class PrCouponsController extends Controller
 			$oItems = $oU->mycoupons()
 				->where('enddate','>=',Carbon::now())
 				->wherePivot('isused',false)
-				->with(['product'])
+				->with(['product.media'])
 				->get();
 		} catch (Exception $e) {
 			return response()->json([
@@ -83,7 +83,7 @@ class PrCouponsController extends Controller
 			$oU=User::find(auth()->user()->id);
 			$oItems = $oU->mycoupons()
 				->wherePivot('isused',true)
-				->with(['product'])
+				->with(['product.media'])
 				->get();
 		} catch (Exception $e) {
 			return response()->json([
@@ -107,7 +107,7 @@ class PrCouponsController extends Controller
 			$oItems = $oU->mycoupons()
 				->where('enddate','<',Carbon::now())
 				->wherePivot('isused',false)
-				->with(['product'])
+				->with(['product.media'])
 				->get();
 		} catch (Exception $e) {
 			return response()->json([
