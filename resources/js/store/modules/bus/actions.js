@@ -243,5 +243,24 @@ export default {
                     reject(e);
                 });
         });
+    },
+    getMycoupons({ commit }) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "get",
+                    url: "/api/v1/product/getMyProducts"
+                    // /api/v1/prcoupon/getMyCoupons
+                })
+                .then(response => {
+                    if (response.data.data.length) {
+                        commit("set_mycoupons_info", response.data.data);
+                        resolve(response.data);
+                    } else {
+                        reject(response.data.errors);
+                        // master.self.$router.push("/user/applyb");
+                    }
+                });
+        });
     }
 };

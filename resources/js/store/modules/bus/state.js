@@ -4,5 +4,6 @@ export default {
     company: null,
     products: [],
     allProducts: [],
-    prcoupons: []
+    prcoupons: [],
+    mycoupons: []
 };

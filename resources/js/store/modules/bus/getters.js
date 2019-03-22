@@ -5,6 +5,9 @@ export default {
     myproducts(state) {
         return state.products;
     },
+    mycoupons(state) {
+        return state.products;
+    },
     prcoupons(state) {
         return state.prcoupons;
     }

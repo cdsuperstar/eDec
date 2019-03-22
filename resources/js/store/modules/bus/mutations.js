@@ -8,6 +8,9 @@ export default {
     set_allproducts_info(state, value) {
         state.allProducts = value;
     },
+    set_mycoupons_info(state, value) {
+        state.mycoupons = value;
+    },
     set_prcoupons_info(state, value) {
         state.prcoupons = value;
     }
