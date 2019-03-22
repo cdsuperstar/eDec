@@ -27,35 +27,43 @@
                     separator
                     v-for="prod in mycoupons"
                     v-bind:key="prod.id"
+                    class="toothbg"
+                    style="background-color: #F7FFB8;border-radius: 2%;"
                 >
-                    <q-list-header>
-                        <q-card-media>
-                            <q-carousel color="white" arrows height="120px">
-                                <q-carousel-slide
-                                    v-for="item in prod.media"
-                                    :key="item.id"
-                                    :img-src="
-                                        '/img/media/' +
-                                            item.id +
-                                            '/' +
-                                            item.file_name
-                                    "
-                                ></q-carousel-slide>
-                            </q-carousel>
-                        </q-card-media>
-                        阿斯顿发放
+                    <q-list-header style="background-color: #ffffff">
+                        商品名称：{{ prod.memo }} <br />
+                        有效期：{{ prod.created_at }}
+                        -
+                        {{ prod.updated_at }}
                     </q-list-header>
-                    <q-item>
+                    <q-item style="background-color:#F7FFD4">
+                        <q-item-side left>
+                            <q-card-media>
+                                <q-carousel
+                                    color="white"
+                                    arrows
+                                    height="80px"
+                                    style="border-radius: 10%;"
+                                >
+                                    <q-carousel-slide
+                                        v-for="item in prod.media"
+                                        :key="item.id"
+                                        :img-src="
+                                            '/img/media/' +
+                                                item.id +
+                                                '/' +
+                                                item.file_name
+                                        "
+                                    ></q-carousel-slide>
+                                </q-carousel>
+                            </q-card-media>
+                        </q-item-side>
                         <q-item-main>
                             <q-item-tile label text-color="red">
                                 <font size="6px">￥{{ prod.price }} </font>
                             </q-item-tile>
                             <q-item-tile label text-color="red">
-                                [ {{ prod.name }} ] {{ prod.memo }}
-                            </q-item-tile>
-                            <q-item-tile label-lines text-color="black"
-                                >有效期：{{ prod.created_at }} -
-                                {{ prod.updated_at }}
+                                [ {{ prod.name }} ]
                             </q-item-tile>
                         </q-item-main>
                         <q-item-side right>
@@ -64,7 +72,7 @@
                                 rounded
                                 class="btmnowrap"
                                 style="color: goldenrod;"
-                                label="立即使用"
+                                label="使用"
                             />
                         </q-item-side>
                     </q-item>
@@ -92,7 +100,7 @@ export default {
     created: function() {
         this.getMycoupons().then(
             () => {
-                // console.log(this.mycoupons);
+                console.log(this.mycoupons);
             },
             () => {
                 // console.log("111111111");
@@ -118,10 +126,10 @@ export default {
 </script>
 
 <style type="text/css">
-/*div .q-card-media .relative-position {*/
-/*width: 120px;*/
-/*border-radius: 10%;*/
-/*}*/
+div .q-card-media {
+    width: 100px;
+    border-radius: 10%;
+}
 .btmnowrap {
     background: #fa8b23;
     color: white;
