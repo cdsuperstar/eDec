@@ -232,7 +232,7 @@ class PrCouponsController extends Controller
 		}
 
 		try {
-			auth()->user()->prcoupons()->attach($oItem);
+			auth()->user()->mycoupons()->attach($oItem);
 			return response()->json([
 					'messages' => '领取成功！ID:'.$oItem->id,
 					'success' => true,
