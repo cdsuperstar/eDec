@@ -131,7 +131,7 @@
                         </q-item-main>
                         <q-item-side right>
                             <div class="symnowrap">
-                                <font size="6" face="黑体">已使用</font>
+                                <font size="4" face="黑体">已使用</font>
                             </div>
                         </q-item-side>
                     </q-item>
@@ -186,7 +186,7 @@
                         </q-item-main>
                         <q-item-side right>
                             <div class="symnowrap">
-                                <font size="6" face="黑体">已过期</font>
+                                <font size="4" face="黑体">已过期</font>
                             </div>
                         </q-item-side>
                     </q-item>
@@ -300,5 +300,12 @@ div .q-card-media {
     -o-transform: rotate(-30deg); /* Opera */
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
     /*text-overflow:ellipsis;*/
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #737373;
+    color: #979797;
+    line-height: 50px;
+    text-align: center;
 }
 </style>
