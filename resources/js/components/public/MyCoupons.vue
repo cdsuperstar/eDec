@@ -25,16 +25,16 @@
             <q-tab-pane name="unused">
                 <q-list
                     separator
-                    v-for="prod in mycoupons"
-                    v-bind:key="prod.id"
+                    v-for="prod in MyCoupons"
+                    v-bind:key="prod.pivot.id"
                     class="toothbg"
                     style="background-color: #F7FFB8;border-radius: 2%;"
                 >
                     <q-list-header style="background-color: #ffffff">
-                        商品名称：{{ prod.memo }} <br />
-                        有效期：{{ prod.created_at }}
-                        -
-                        {{ prod.updated_at }}
+                        商品名称：{{ prod.product.name }} <br />
+                        有效期：{{ prod.startdate }}
+                        至
+                        {{ prod.enddate }}
                     </q-list-header>
                     <q-item style="background-color:#F7FFD4">
                         <q-item-side left>
@@ -46,7 +46,7 @@
                                     style="border-radius: 10%;"
                                 >
                                     <q-carousel-slide
-                                        v-for="item in prod.media"
+                                        v-for="item in prod.product.media"
                                         :key="item.id"
                                         :img-src="
                                             '/img/media/' +
@@ -60,10 +60,13 @@
                         </q-item-side>
                         <q-item-main>
                             <q-item-tile label text-color="red">
-                                <font size="6px">￥{{ prod.price }} </font>
+                                <font size="8px" face="微软雅黑"
+                                    >{{ prod.discount * 10 }}
+                                    <font size="6px">折扣券</font>
+                                </font>
                             </q-item-tile>
                             <q-item-tile label text-color="red">
-                                [ {{ prod.name }} ]
+                                [ {{ prod.name }} ]{{ prod.memo }}
                             </q-item-tile>
                         </q-item-main>
                         <q-item-side right>
@@ -73,34 +76,167 @@
                                 class="btmnowrap"
                                 style="color: goldenrod;"
                                 label="使用"
+                                v-on:click="GetMyQR(prod.pivot.id)"
                             />
                         </q-item-side>
                     </q-item>
                 </q-list>
             </q-tab-pane>
-            <q-tab-pane name="used"> 已使用的</q-tab-pane>
-            <q-tab-pane name="outdated">过期的</q-tab-pane>
+            <q-tab-pane name="used">
+                <q-list
+                    separator
+                    v-for="prod in MyUsedCoupons"
+                    v-bind:key="prod.pivot.id"
+                    class="toothbg"
+                    style="background-color: #e1ebfb;border-radius: 2%;"
+                >
+                    <q-list-header style="background-color: #ffffff">
+                        商品名称：{{ prod.product.name }} <br />
+                        有效期：{{ prod.startdate }}
+                        至
+                        {{ prod.enddate }}
+                    </q-list-header>
+                    <q-item style="background-color:#f1f6fd">
+                        <q-item-side left>
+                            <q-card-media>
+                                <q-carousel
+                                    color="white"
+                                    arrows
+                                    height="80px"
+                                    style="border-radius: 10%;"
+                                >
+                                    <q-carousel-slide
+                                        v-for="item in prod.product.media"
+                                        :key="item.id"
+                                        :img-src="
+                                            '/img/media/' +
+                                                item.id +
+                                                '/' +
+                                                item.file_name
+                                        "
+                                    ></q-carousel-slide>
+                                </q-carousel>
+                            </q-card-media>
+                        </q-item-side>
+                        <q-item-main>
+                            <q-item-tile label text-color="red">
+                                <font size="8px" face="微软雅黑"
+                                    >{{ prod.discount * 10 }}
+                                    <font size="6px">折扣券</font>
+                                </font>
+                            </q-item-tile>
+                            <q-item-tile label text-color="red">
+                                [ {{ prod.name }} ] {{ prod.memo }}
+                            </q-item-tile>
+                        </q-item-main>
+                        <q-item-side right>
+                            <div class="symnowrap">
+                                <font size="6" face="黑体">已使用</font>
+                            </div>
+                        </q-item-side>
+                    </q-item>
+                </q-list>
+            </q-tab-pane>
+            <q-tab-pane name="outdated">
+                <q-list
+                    separator
+                    v-for="prod in MyExpCoupons"
+                    v-bind:key="prod.pivot.id"
+                    class="toothbg"
+                    style="background-color: #e7e4e4;border-radius: 2%;"
+                >
+                    <q-list-header style="background-color: #ffffff">
+                        商品名称：{{ prod.product.name }} <br />
+                        有效期：{{ prod.startdate }}
+                        至
+                        {{ prod.enddate }}
+                    </q-list-header>
+                    <q-item style="background-color:#F7F5F5">
+                        <q-item-side left>
+                            <q-card-media>
+                                <q-carousel
+                                    color="white"
+                                    arrows
+                                    height="80px"
+                                    style="border-radius: 10%;"
+                                >
+                                    <q-carousel-slide
+                                        v-for="item in prod.product.media"
+                                        :key="item.id"
+                                        :img-src="
+                                            '/img/media/' +
+                                                item.id +
+                                                '/' +
+                                                item.file_name
+                                        "
+                                    ></q-carousel-slide>
+                                </q-carousel>
+                            </q-card-media>
+                        </q-item-side>
+                        <q-item-main>
+                            <q-item-tile label text-color="red">
+                                <font size="8px" face="微软雅黑"
+                                    >{{ prod.discount * 10 }}
+                                    <font size="6px">折扣券</font>
+                                </font>
+                            </q-item-tile>
+                            <q-item-tile label text-color="red">
+                                [ {{ prod.name }} ]{{ prod.memo }}
+                            </q-item-tile>
+                        </q-item-main>
+                        <q-item-side right>
+                            <div class="symnowrap">
+                                <font size="6" face="黑体">已过期</font>
+                            </div>
+                        </q-item-side>
+                    </q-item>
+                </q-list>
+            </q-tab-pane>
         </q-tabs>
 
         <q-inner-loading :visible="loader">
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
         </q-inner-loading>
+        <QRIMG
+            :QRimgshow="QRimgshow"
+            v-on:QRchildByValueUpdate="QRchildByValueUpdate"
+        ></QRIMG>
     </q-page>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import QRIMG from "./QRmodel";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
     name: "mycoupons",
-    components: {},
+    components: {
+        QRIMG
+    },
     computed: {
-        ...mapState("bus", ["mycoupons"])
+        // ...mapState("bus", ["MyCoupons", "MyUsedCoupons", "MyExpCoupons"]),
+        ...mapGetters("bus", ["MyCoupons", "MyUsedCoupons", "MyExpCoupons"])
     },
     created: function() {
         this.getMycoupons().then(
             () => {
-                console.log(this.mycoupons);
+                console.log(this.MyCoupons);
+            },
+            () => {
+                // console.log("111111111");
+            }
+        );
+        this.getMyUsedCoupons().then(
+            () => {
+                console.log(this.MyUsedCoupons);
+            },
+            () => {
+                // console.log("111111111");
+            }
+        );
+        this.getMyExpCoupons().then(
+            () => {
+                console.log(this.MyExpCoupons);
             },
             () => {
                 // console.log("111111111");
@@ -109,12 +245,25 @@ export default {
         // this.initData();
     },
     methods: {
-        ...mapActions("bus", ["getMycoupons"])
+        ...mapActions("bus", [
+            "getMycoupons",
+            "getMyUsedCoupons",
+            "getMyExpCoupons"
+        ]),
+        QRchildByValueUpdate: function(childValue) {
+            this.QRimgshow = childValue;
+        },
+        GetMyQR: function(itid) {
+            this.Qrimgid = itid;
+            this.QRimgshow = true;
+        }
     },
     watch: {},
     data() {
         return {
             loader: false,
+            Qrimgid: null,
+            QRimgshow: false,
             form_rules: {
                 // name: 'required|max:30',
                 phone: "required|max:15|numeric",
@@ -131,11 +280,25 @@ div .q-card-media {
     border-radius: 10%;
 }
 .btmnowrap {
-    background: #fa8b23;
+    background: #e9f3fc;
     color: white;
     display: block;
     white-space: nowrap;
     overflow: hidden;
+    /*text-overflow:ellipsis;*/
+}
+.symnowrap {
+    /*background: #e9f3fc;*/
+    /*color: white;*/
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: rotate(-30deg);
+    -ms-transform: rotate(-30deg); /* Internet Explorer 9*/
+    -moz-transform: rotate(-30deg); /* Firefox */
+    -webkit-transform: rotate(-30deg); /* Safari 和 Chrome */
+    -o-transform: rotate(-30deg); /* Opera */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
     /*text-overflow:ellipsis;*/
 }
 </style>
