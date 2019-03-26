@@ -1,5 +1,5 @@
 <template>
-    <q-modal v-model="QRshow" position="">
+    <q-modal v-model="QRshow" minimized position="">
         <!--<img src="/img/media/59/563143.jpg" width="300px" height="300px" />-->
         <!--<img :src="Qrimgshowid" width="300px" height="300px" />-->
         <q-card>
