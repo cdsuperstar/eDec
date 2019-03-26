@@ -249,12 +249,50 @@ export default {
             master.self
                 .$axios({
                     method: "get",
-                    url: "/api/v1/product/getMyProducts"
-                    // /api/v1/prcoupon/getMyCoupons
+                    url: "/api/v1/prcoupon/getMyCoupons"
                 })
                 .then(response => {
+                    // console.log(response);
                     if (response.data.data.length) {
-                        commit("set_mycoupons_info", response.data.data);
+                        commit("set_MyCoupons_info", response.data.data);
+                        resolve(response.data);
+                    } else {
+                        reject(response.data.errors);
+                        // master.self.$router.push("/user/applyb");
+                    }
+                });
+        });
+    },
+    getMyUsedCoupons({ commit }) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "get",
+                    url: "/api/v1/prcoupon/getMyUsedCoupons"
+                })
+                .then(response => {
+                    // console.log(response);
+                    if (response.data.data.length) {
+                        commit("set_MyUsedCoupons_info", response.data.data);
+                        resolve(response.data);
+                    } else {
+                        reject(response.data.errors);
+                        // master.self.$router.push("/user/applyb");
+                    }
+                });
+        });
+    },
+    getMyExpCoupons({ commit }) {
+        return new Promise((resolve, reject) => {
+            master.self
+                .$axios({
+                    method: "get",
+                    url: "/api/v1/prcoupon/getMyExpCoupons"
+                })
+                .then(response => {
+                    // console.log(response);
+                    if (response.data.data.length) {
+                        commit("set_MyExpCoupons_info", response.data.data);
                         resolve(response.data);
                     } else {
                         reject(response.data.errors);

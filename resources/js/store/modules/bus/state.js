@@ -5,5 +5,7 @@ export default {
     products: [],
     allProducts: [],
     prcoupons: [],
-    mycoupons: []
+    MyCoupons: [],
+    MyUsedCoupons: [],
+    MyExpCoupons: []
 };

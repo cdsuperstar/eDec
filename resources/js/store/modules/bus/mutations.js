@@ -8,8 +8,14 @@ export default {
     set_allproducts_info(state, value) {
         state.allProducts = value;
     },
-    set_mycoupons_info(state, value) {
-        state.mycoupons = value;
+    set_MyCoupons_info(state, value) {
+        state.MyCoupons = value;
+    },
+    set_MyUsedCoupons_info(state, value) {
+        state.MyUsedCoupons = value;
+    },
+    set_MyExpCoupons_info(state, value) {
+        state.MyExpCoupons = value;
     },
     set_prcoupons_info(state, value) {
         state.prcoupons = value;
