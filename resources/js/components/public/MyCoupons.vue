@@ -60,10 +60,15 @@
                         </q-item-side>
                         <q-item-main>
                             <q-item-tile label text-color="red">
-                                <font size="8px" face="微软雅黑"
+                                <font size="6px" face="微软雅黑"
                                     >{{ prod.discount * 10 }}
-                                    <font size="6px">折扣券</font>
                                 </font>
+                                <font
+                                    size="4px"
+                                    face="黑体"
+                                    style="font-weight:bold"
+                                    >折</font
+                                >
                             </q-item-tile>
                             <q-item-tile label text-color="red">
                                 [ {{ prod.name }} ]{{ prod.memo }}
@@ -120,10 +125,15 @@
                         </q-item-side>
                         <q-item-main>
                             <q-item-tile label text-color="red">
-                                <font size="8px" face="微软雅黑"
+                                <font size="6px" face="微软雅黑"
                                     >{{ prod.discount * 10 }}
-                                    <font size="6px">折扣券</font>
                                 </font>
+                                <font
+                                    size="4px"
+                                    face="黑体"
+                                    style="font-weight:bold"
+                                    >折</font
+                                >
                             </q-item-tile>
                             <q-item-tile label text-color="red">
                                 [ {{ prod.name }} ] {{ prod.memo }}
@@ -175,10 +185,15 @@
                         </q-item-side>
                         <q-item-main>
                             <q-item-tile label text-color="red">
-                                <font size="8px" face="微软雅黑"
+                                <font size="6px" face="微软雅黑"
                                     >{{ prod.discount * 10 }}
-                                    <font size="6px">折扣券</font>
                                 </font>
+                                <font
+                                    size="4px"
+                                    face="黑体"
+                                    style="font-weight:bold"
+                                    >折</font
+                                >
                             </q-item-tile>
                             <q-item-tile label text-color="red">
                                 [ {{ prod.name }} ]{{ prod.memo }}
