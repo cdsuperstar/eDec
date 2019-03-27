@@ -6,12 +6,12 @@
             <q-card-media style="width: 280px;height: 325px;">
                 <q-card-title slot="overlay">
                     <div slot="subtitle" class="text-center">
-                        点击图片以外区域本窗口自动关闭
+                        点击本窗口以外区域 自动关闭
                     </div>
                 </q-card-title>
                 <img
                     src="/img/media/59/1553654171.png"
-                    style="width: 280px;height: 280px;"
+                    style="width: 280px;height: 280px;border-color: #FFFFFF;"
                     align="center"
                 />
             </q-card-media>
