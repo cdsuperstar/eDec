@@ -23,189 +23,198 @@
             />
 
             <q-tab-pane name="unused">
-                <q-list
-                    separator
+                <div
                     v-for="prod in MyCoupons"
                     v-bind:key="prod.pivot.id"
-                    class="toothbg"
-                    style="background-color: #F7FFB8;border-radius: 2%;"
+                    style="margin-bottom: 5px;"
                 >
-                    <q-list-header style="background-color: #ffffff">
-                        商品名称：{{ prod.product.name }} <br />
-                        有效期：{{ prod.startdate }}
-                        至
-                        {{ prod.enddate }}
-                    </q-list-header>
-                    <q-item style="background-color:#F7FFD4">
-                        <q-item-side left>
-                            <q-card-media>
-                                <q-carousel
-                                    color="white"
-                                    arrows
-                                    height="80px"
-                                    style="border-radius: 10%;"
-                                >
-                                    <q-carousel-slide
-                                        v-for="item in prod.product.media"
-                                        :key="item.id"
-                                        :img-src="
-                                            '/img/media/' +
-                                                item.id +
-                                                '/' +
-                                                item.file_name
-                                        "
-                                    ></q-carousel-slide>
-                                </q-carousel>
-                            </q-card-media>
-                        </q-item-side>
-                        <q-item-main>
-                            <q-item-tile label text-color="red">
-                                <font size="6px" face="微软雅黑"
-                                    >{{ prod.discount * 10 }}
-                                </font>
-                                <font
-                                    size="4px"
-                                    face="黑体"
-                                    style="font-weight:bold"
-                                    >折</font
-                                >
-                            </q-item-tile>
-                            <q-item-tile label text-color="red">
-                                [ {{ prod.name }} ]{{ prod.memo }}
-                            </q-item-tile>
-                        </q-item-main>
-                        <q-item-side right>
-                            <q-btn
-                                outline
-                                rounded
-                                class="btmnowrap"
-                                style="color: goldenrod;"
-                                label="使用"
-                                v-on:click="GetMyQR(prod.pivot.id)"
-                            />
-                        </q-item-side>
-                    </q-item>
-                </q-list>
+                    <q-list
+                        class="toothbg"
+                        style="background-color: #F7FFB8;border-radius: 2%;border-color: #F7FFD4"
+                    >
+                        <q-list-header style="background-color: #ffffff">
+                            商品名称：{{ prod.product.name }} <br />
+                            有效期：{{ prod.startdate }}
+                            至
+                            {{ prod.enddate }}
+                        </q-list-header>
+                        <q-item style="background-color:#F7FFD4">
+                            <q-item-side left>
+                                <q-card-media>
+                                    <q-carousel
+                                        color="white"
+                                        arrows
+                                        height="80px"
+                                        style="border-radius: 10%;"
+                                    >
+                                        <q-carousel-slide
+                                            v-for="item in prod.product.media"
+                                            :key="item.id"
+                                            :img-src="
+                                                '/img/media/' +
+                                                    item.id +
+                                                    '/' +
+                                                    item.file_name
+                                            "
+                                        ></q-carousel-slide>
+                                    </q-carousel>
+                                </q-card-media>
+                            </q-item-side>
+                            <q-item-main>
+                                <q-item-tile label text-color="red">
+                                    <font size="6px" face="微软雅黑"
+                                        >{{ prod.discount * 10 }}
+                                    </font>
+                                    <font
+                                        size="4px"
+                                        face="黑体"
+                                        style="font-weight:bold"
+                                        >折</font
+                                    >
+                                </q-item-tile>
+                                <q-item-tile label text-color="red">
+                                    [ {{ prod.name }} ]{{ prod.memo }}
+                                </q-item-tile>
+                            </q-item-main>
+                            <q-item-side right>
+                                <q-btn
+                                    outline
+                                    rounded
+                                    class="btmnowrap"
+                                    style="color: goldenrod;"
+                                    label="使用"
+                                    v-on:click="GetMyQR(prod.pivot.id)"
+                                />
+                            </q-item-side>
+                        </q-item>
+                    </q-list>
+                </div>
             </q-tab-pane>
             <q-tab-pane name="used">
-                <q-list
-                    separator
+                <div
                     v-for="prod in MyUsedCoupons"
                     v-bind:key="prod.pivot.id"
-                    class="toothbg"
-                    style="background-color: #e1ebfb;border-radius: 2%;"
+                    style="margin-bottom: 5px;"
                 >
-                    <q-list-header style="background-color: #ffffff">
-                        商品名称：{{ prod.product.name }} <br />
-                        有效期：{{ prod.startdate }}
-                        至
-                        {{ prod.enddate }}
-                    </q-list-header>
-                    <q-item style="background-color:#f1f6fd">
-                        <q-item-side left>
-                            <q-card-media>
-                                <q-carousel
-                                    color="white"
-                                    arrows
-                                    height="80px"
-                                    style="border-radius: 10%;"
-                                >
-                                    <q-carousel-slide
-                                        v-for="item in prod.product.media"
-                                        :key="item.id"
-                                        :img-src="
-                                            '/img/media/' +
-                                                item.id +
-                                                '/' +
-                                                item.file_name
-                                        "
-                                    ></q-carousel-slide>
-                                </q-carousel>
-                            </q-card-media>
-                        </q-item-side>
-                        <q-item-main>
-                            <q-item-tile label text-color="red">
-                                <font size="6px" face="微软雅黑"
-                                    >{{ prod.discount * 10 }}
-                                </font>
-                                <font
-                                    size="4px"
-                                    face="黑体"
-                                    style="font-weight:bold"
-                                    >折</font
-                                >
-                            </q-item-tile>
-                            <q-item-tile label text-color="red">
-                                [ {{ prod.name }} ] {{ prod.memo }}
-                            </q-item-tile>
-                        </q-item-main>
-                        <q-item-side right>
-                            <div class="symnowrap">
-                                <font size="4" face="黑体">已使用</font>
-                            </div>
-                        </q-item-side>
-                    </q-item>
-                </q-list>
+                    <q-list
+                        class="toothbg"
+                        style="background-color: #e1ebfb;border-radius: 2%;border-color: #f1f6fd"
+                    >
+                        <q-list-header style="background-color: #ffffff">
+                            商品名称：{{ prod.product.name }} <br />
+                            有效期：{{ prod.startdate }}
+                            至
+                            {{ prod.enddate }}
+                        </q-list-header>
+                        <q-item style="background-color:#f1f6fd">
+                            <q-item-side left>
+                                <q-card-media>
+                                    <q-carousel
+                                        color="white"
+                                        arrows
+                                        height="80px"
+                                        style="border-radius: 10%;"
+                                    >
+                                        <q-carousel-slide
+                                            v-for="item in prod.product.media"
+                                            :key="item.id"
+                                            :img-src="
+                                                '/img/media/' +
+                                                    item.id +
+                                                    '/' +
+                                                    item.file_name
+                                            "
+                                        ></q-carousel-slide>
+                                    </q-carousel>
+                                </q-card-media>
+                            </q-item-side>
+                            <q-item-main>
+                                <q-item-tile label text-color="red">
+                                    <font size="6px" face="微软雅黑"
+                                        >{{ prod.discount * 10 }}
+                                    </font>
+                                    <font
+                                        size="4px"
+                                        face="黑体"
+                                        style="font-weight:bold"
+                                        >折</font
+                                    >
+                                </q-item-tile>
+                                <q-item-tile label text-color="red">
+                                    [ {{ prod.name }} ] {{ prod.memo }}
+                                </q-item-tile>
+                            </q-item-main>
+                            <q-item-side right>
+                                <div class="symnowrap">
+                                    <font size="4" face="黑体">已使用</font>
+                                </div>
+                            </q-item-side>
+                        </q-item>
+                    </q-list>
+                </div>
             </q-tab-pane>
             <q-tab-pane name="outdated">
-                <q-list
-                    separator
+                <div
                     v-for="prod in MyExpCoupons"
                     v-bind:key="prod.pivot.id"
-                    class="toothbg"
-                    style="background-color: #e7e4e4;border-radius: 2%;"
+                    style="margin-bottom: 5px;"
                 >
-                    <q-list-header style="background-color: #ffffff">
-                        商品名称：{{ prod.product.name }} <br />
-                        有效期：{{ prod.startdate }}
-                        至
-                        {{ prod.enddate }}
-                    </q-list-header>
-                    <q-item style="background-color:#F7F5F5">
-                        <q-item-side left>
-                            <q-card-media>
-                                <q-carousel
-                                    color="white"
-                                    arrows
-                                    height="80px"
-                                    style="border-radius: 10%;"
-                                >
-                                    <q-carousel-slide
-                                        v-for="item in prod.product.media"
-                                        :key="item.id"
-                                        :img-src="
-                                            '/img/media/' +
-                                                item.id +
-                                                '/' +
-                                                item.file_name
-                                        "
-                                    ></q-carousel-slide>
-                                </q-carousel>
-                            </q-card-media>
-                        </q-item-side>
-                        <q-item-main>
-                            <q-item-tile label text-color="red">
-                                <font size="6px" face="微软雅黑"
-                                    >{{ prod.discount * 10 }}
-                                </font>
-                                <font
-                                    size="4px"
-                                    face="黑体"
-                                    style="font-weight:bold"
-                                    >折</font
-                                >
-                            </q-item-tile>
-                            <q-item-tile label text-color="red">
-                                [ {{ prod.name }} ]{{ prod.memo }}
-                            </q-item-tile>
-                        </q-item-main>
-                        <q-item-side right>
-                            <div class="symnowrap">
-                                <font size="4" face="黑体">已过期</font>
-                            </div>
-                        </q-item-side>
-                    </q-item>
-                </q-list>
+                    <q-list
+                        class="toothbg"
+                        style="background-color: #e7e4e4;border-radius: 2%;border-color: #F7F5F5"
+                    >
+                        <q-list-header style="background-color: #ffffff">
+                            商品名称：{{ prod.product.name }} <br />
+                            有效期：{{ prod.startdate }}
+                            至
+                            {{ prod.enddate }}
+                        </q-list-header>
+                        <q-item style="background-color:#F7F5F5">
+                            <q-item-side left>
+                                <q-card-media>
+                                    <q-carousel
+                                        color="white"
+                                        arrows
+                                        height="80px"
+                                        style="border-radius: 10%;"
+                                    >
+                                        <q-carousel-slide
+                                            v-for="item in prod.product.media"
+                                            :key="item.id"
+                                            :img-src="
+                                                '/img/media/' +
+                                                    item.id +
+                                                    '/' +
+                                                    item.file_name
+                                            "
+                                        ></q-carousel-slide>
+                                    </q-carousel>
+                                </q-card-media>
+                            </q-item-side>
+                            <q-item-main>
+                                <q-item-tile label text-color="red">
+                                    <font size="6px" face="微软雅黑"
+                                        >{{ prod.discount * 10 }}
+                                    </font>
+                                    <font
+                                        size="4px"
+                                        face="黑体"
+                                        style="font-weight:bold"
+                                        >折</font
+                                    >
+                                </q-item-tile>
+                                <q-item-tile label text-color="red">
+                                    [ {{ prod.name }} ]{{ prod.memo }}
+                                </q-item-tile>
+                            </q-item-main>
+                            <q-item-side right>
+                                <div class="symnowrap">
+                                    <font size="4" face="黑体">已过期</font>
+                                </div>
+                            </q-item-side>
+                        </q-item>
+                    </q-list>
+                </div>
             </q-tab-pane>
         </q-tabs>
 

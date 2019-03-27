@@ -3,16 +3,17 @@
         <!--<img src="/img/media/59/563143.jpg" width="300px" height="300px" />-->
         <!--<img :src="Qrimgshowid" width="300px" height="300px" />-->
         <q-card>
-            <q-card-media
-                overlay-position="top"
-                style="width: 300px;height: 300px;"
-            >
-                <img src="/img/media/59/563143.jpg" />
+            <q-card-media style="width: 280px;height: 325px;">
                 <q-card-title slot="overlay">
-                    <div slot="subtitle" class="text-left">
-                        点图片外自动退出
+                    <div slot="subtitle" class="text-center">
+                        点击图片以外区域本窗口自动关闭
                     </div>
                 </q-card-title>
+                <img
+                    src="/img/media/59/1553654171.png"
+                    style="width: 280px;height: 280px;"
+                    align="center"
+                />
             </q-card-media>
         </q-card>
     </q-modal>
